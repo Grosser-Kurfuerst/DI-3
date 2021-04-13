@@ -12,7 +12,7 @@
     </parent>
 
     <groupId>groupId</groupId>
-    <artifactId>data_integration</artifactId>
+    <artifactId>data-integration</artifactId>
     <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
     <modules>
