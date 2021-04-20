@@ -1,0 +1,11 @@
+server:
+  port: 8888
+spring:
+  datasource:
+      driver-class-name: oracle.jdbc.driver.OracleDriver
+      url: oracle:thin:@localhost:1521:name
+      username: root
+      password: root
+# 要改一下Oracle数据库相关的路径、用户名、密码
+mybatis:
+  mapper-localtions: classpath:daoImpl/*/*Mapper.xml
