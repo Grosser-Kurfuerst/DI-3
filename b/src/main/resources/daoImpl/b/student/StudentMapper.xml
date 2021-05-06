@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.data_integration.b.dao.student.StudentDao">
+
+    <resultMap id="studentResultMap" type="com.data_integration.b.pojo.student.Student">
+        <id column="sid" property="sid"/>
+        <result column="sname" property="sname"/>
+        <result column="gender" property="gender"/>
+        <result column="department" property="department"/>
+        <result column="password" property="password"/>
+    </resultMap>
+
+    <resultMap id="accountResultMap" type="com.data_integration.b.pojo.account.Account">
+        <id column="aname" property="aname"/>
+        <result column="password" property="password"/>
+        <result column="power_grade" property="power_grade"/>
+        <result column="guest_id" property="guest_id"/>
+    </resultMap>
+
+    <select id="getAccountByNameAndPassword" resultMap="accountResultMap">
+        select * from account  where aname =#{name} and password = #{password}
+    </select>
+
+    <select id="getStudentBySid" resultMap="studentResultMap">
+        select * from student where sid = #{sid}
+    </select>
+
+    <update id="updateStudentInfo" parameterType="com.data_integration.b.pojo.student.Student">
+        update student set
+            sname = nvl(#{sname}, sname), gender = nvl(#{gender}, gender), department = nvl(#{department}, department),  password = nvl(#{password}, password)
+        where sid = #{sid}
+    </update>
+
+</mapper>

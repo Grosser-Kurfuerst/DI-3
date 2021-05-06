@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.data_integration.b.dao.election.ElectionDao">
+
+
+    <resultMap id="courseResultMap" type="com.data_integration.b.pojo.course.Course">
+        <id column="course_id" property="courseId"/>
+        <result column="teacher_name" property="teacherName"/>
+        <result column="score" property="score"/>
+        <result column="course_time" property="courseTime"/>
+        <result column="course_name" property="courseName"/>
+        <result column="teaching_place" property="teachingPlace"/>
+        <result column="share_flag" property="shareFlag"/>
+    </resultMap>
+
+    <resultMap id="accountResultMap" type="com.data_integration.b.pojo.account.Account">
+        <id column="aname" property="aname"/>
+        <result column="password" property="password"/>
+        <result column="power_grade" property="power_grade"/>
+        <result column="guest_id" property="guest_id"/>
+    </resultMap>
+
+    <resultMap id="electionResultMap" type="com.data_integration.b.pojo.election.Election">
+        <result column="course_id" property="courseId"/>
+        <result column="student_id" property="studentId"/>
+        <result column="score" property="score"/>
+    </resultMap>
+
+    <select id="getElectionsBySid" resultMap="electionResultMap">
+        select * from election where student_id = #{sid}
+    </select>
+
+    <select id="getElectionByCidSid" resultMap="electionResultMap">
+        select * from election where student_id = #{sid} and course_id = #{cid}
+    </select>
+
+    <insert id="addElectionBySidCid">
+        insert into election(course_id, student_id) values(#{cid}, #{sid})
+    </insert>
+
+    <delete id="deleteElectionBySidCid">
+        delete from election where course_id = #{cid} and student_id = #{sid}
+    </delete>
+
+</mapper>

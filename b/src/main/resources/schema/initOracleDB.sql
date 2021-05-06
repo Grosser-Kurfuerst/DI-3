@@ -1,17 +1,8 @@
------------------------------------------------------------------
--- ç¬¬ä¸€éƒ¨åˆ† ï¼šdrop table if exists
------------------------------------------------------------------
 
--- åˆ é™¤student
-declare
-      num number;
-begin
-    select count(1) into num from user_tables where table_name = upper('student') ;
-    if num > 0 then
-        execute immediate 'drop table student' ;
-    end if;
-end;
--- åˆ é™¤account
+-----------------------------------------------------------------
+-- µÚÒ»²¿·Ö £ºdrop table if exists
+-----------------------------------------------------------------
+---- É¾³ıaccount
 declare
       num number;
 begin
@@ -20,16 +11,19 @@ begin
         execute immediate 'drop table account' ;
     end if;
 end;
--- åˆ é™¤student_account_match
+/
+-- É¾³ıstudent
 declare
       num number;
 begin
-    select count(1) into num from user_tables where table_name = upper('student_account_match') ;
+    select count(1) into num from user_tables where table_name = upper('student') ;
     if num > 0 then
-        execute immediate 'drop table student_account_match' ;
+        execute immediate 'drop table student' ;
     end if;
 end;
--- åˆ é™¤course
+/
+
+---- É¾³ıcourse
 declare
       num number;
 begin
@@ -38,114 +32,67 @@ begin
         execute immediate 'drop table course' ;
     end if;
 end;
--- åˆ é™¤student_course_match
+/
+---- É¾³ıelectionÑ¡¿Î±í
 declare
       num number;
 begin
-    select count(1) into num from user_tables where table_name = upper('student_course_match') ;
+    select count(1) into num from user_tables where table_name = upper('election') ;
     if num > 0 then
-        execute immediate 'drop table student_course_match' ;
+        execute immediate 'drop table election' ;
     end if;
 end;
-
+/
 
 -----------------------------------------------------------------
--- ç¬¬äºŒéƒ¨åˆ† ï¼šå»ºè¡¨
+-- µÚ¶ş²¿·Ö £º½¨±í
 -----------------------------------------------------------------
 
 create table student(
-    _id number(20) primary key, -- éšè—çš„id
-    sid varchar2(20) not null, -- å­¦å·
-    sname varchar2(40) not null,
-    gender char(1) not null default 'ç”·',
-    department_id varchar2(20) not null,
-    account_id number(20)
+    sid varchar2(9) primary key,
+    sname varchar2(10) not null,
+    gender varchar2(2) default 'ÄĞ' not null ,
+    department varchar2(16) not null,
+    password varchar2(6) default null
 );
--- åˆ›å»ºstudentè¡¨çš„è‡ªå¢åºåˆ—ä¿¡æ¯
-create sequence student_id_sequence
-increment by 1
-start with 1
-nomaxvalue
-nocycle
-nocache;
--- å»ºç«‹è‡ªå¢è§¦å‘å™¨
-create trigger student_trigger
-before
-    insert on student for each row when (new._id is null)
-begin
-    select student_id_sequence.nextval into:new._id from dual;
-end;
--- æ’å…¥å­¦ç”Ÿæ•°æ®
-insert into student values(null, '181250207', 'ZRX', 'ç”·', 'è½¯ä»¶å­¦é™¢');
-
-
--- åˆ›å»ºè´¦æˆ·è¡¨
+-- ²åÈëÑ§ÉúÊı¾İ
+insert into student values('181250207', 'ÖÜÈóĞË', 'ÄĞ', 'Èí¼ş¹¤³Ì', '122816');
+-- ´´½¨ÕË»§±í
 create table account(
-    aid number(20) primary key,
-    aname varchar2(20),
-    password varchar2(32),
-    power varchar2(20) default 'æ— æƒé™'
+    aname varchar2(12) primary key,
+    password varchar2(50),
+    power_grade number(2),
+    guest_id varchar2(9),
+    constraint guest_id foreign key (guest_id) references student(sid)
 );
 
--- åˆ›å»ºaccountè¡¨çš„è‡ªå¢åºåˆ—ä¿¡æ¯
-create sequence account_aid_sequence
-increment by 1
-start with 1
-nomaxvalue
-nocycle
-nocache;
--- å»ºç«‹è´¦æˆ·è¡¨è‡ªå¢è§¦å‘å™¨
-create trigger account_trigger
-before
-    insert on account for each row when (new.aid is null)
-begin
-    select account_aid_sequence.nextval into:new.aid from dual;
-end;
--- æ’å…¥è´¦æˆ·æ•°æ®
-insert into account values(null, 'è´¦æˆ·181250207', '123456', 'æœ‰æƒé™');
+-- ²åÈëÕË»§Êı¾İ
+insert into account values('181250207', '123456', 6, '181250207');
 
-
-
--- åˆ›å»ºå­¦ç”Ÿ-è´¦æˆ·å¯¹åº”è¡¨
-create table student_account_match(
-    sid number(20) not null,
-    aid number(20) not null,
-    unique(sid, aid)
-);
-insert into student_account_match values(1,1);
-
-
--- åˆ›å»ºè¯¾ç¨‹è¡¨
+-- ´´½¨¿Î³Ì±í
 create table course(
-    course_id number(20) primary key,
-    teacher_name varchar2(20),
-    score number(2),
-    course_time number(2,2),
-    course_name varchar2(15),
-    teaching_place varchar2(10)
+    course_id varchar2(5) primary key,
+    course_name varchar2(16),
+    course_time varchar2(2),
+    score varchar2(1),
+    teacher_name varchar2(10),
+    teaching_place varchar2(20),
+    share_flag char(1)
 );
--- åˆ›å»ºcourseè¡¨çš„è‡ªå¢åºåˆ—ä¿¡æ¯
-create sequence course_id_sequence
-increment by 1
-start with 1
-nomaxvalue
-nocycle
-nocache;
--- å»ºç«‹è‡ªå¢è§¦å‘å™¨
-create trigger course_trigger
-before
-    insert on course for each row when (new.course_id is null)
-begin
-    select course_id_sequence.nextval into:new.course_id from dual;
-end;
--- æ’å…¥è¯¾ç¨‹æ•°æ®
-insert into course values(null, 'åˆ˜å³°', '2', '4', 'æ•°æ®é›†æˆ', 'æ•™å­¦æ¥¼202');
-insert into course values(null, 'taozs', '2', '4', 'æœåŠ¡ç«¯å¼€å‘', 'å§œçš„ä¸ªäººä¼šè®®å®¤');
 
+-- ²åÈë¿Î³ÌÊı¾İ
+insert into course values('03586', 'Êı¾İ¼¯³É', 4, 2, 'Áõ·å', '½ÌÑ§Â¥202', '0');
+insert into course values('66666', '·şÎñ¶Ë¿ª·¢', 4, 2, 'taozs', '½ªµÄ¸öÈË»áÒéÊÒ', '1');
 
--- åˆ›å»ºå­¦ç”Ÿ - é€‰è¯¾ä¿¡æ¯ çš„è¡¨
-create table student_course_match(
-    student_id number(20) not null,
-    course_id number(20) not null
+-- ´´½¨Ñ§Éú - Ñ¡¿ÎĞÅÏ¢ µÄ±í
+create table election(
+    course_id varchar2(5) not null,
+    student_id varchar2(9) not null,
+    score varchar2(3) default null,
+    constraint PK_election primary key (course_id, student_id)
 ) ;
-insert into student_course_match value(1,1), (1,2);
+insert into election values('03586', '181250207', '91');
+insert into election values('66666', '181250207', '96');
+
+
+commit;
