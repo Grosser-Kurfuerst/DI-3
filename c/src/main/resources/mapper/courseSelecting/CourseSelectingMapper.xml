@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.data_integration.c.mapper.courseSelecting.CourseSelectingMapper">
+    <select id="getAllCourseSelecting" resultMap="CourseSelecting">
+        select * from course_selecting
+    </select>
+    <select id="getCourseSelectingBySno" resultMap="CourseSelecting">
+        select * from course_selecting where sno=#{sno}
+    </select>
+    <select id="getCourseSelectingByCno" resultMap="CourseSelecting">
+        select * from course_selecting where cno=#{cno}
+    </select>
+    <select id="getCourseSelectingBySnoAndCno" resultMap="CourseSelecting">
+        select * from course_selecting where sno=#{sno} and cno=#{cno}
+    </select>
+    <insert id="addCourseSelecting">
+        insert into course_selecting(cno,sno) values (#{cno},#{sno})
+    </insert>
+    <delete id="deleteCourseSelecting">
+        delete from course_selecting where cno=#{cno} and sno=#{sno}
+    </delete>
+    <update id="updateGrade">
+        update course_selecting set grd=#{grd} where sno=#{sno} and cno=#{cno}
+    </update>
+    <resultMap id="CourseSelecting" type="com.data_integration.c.PO.CourseSelecting"></resultMap>
+</mapper>
