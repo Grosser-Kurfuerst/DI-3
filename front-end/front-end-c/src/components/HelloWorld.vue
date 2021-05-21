@@ -23,11 +23,14 @@ export default {
       // }
       // console.log("尝试登录")
       // this.login(userInfo)
-      const  data = {
-        cno:'1234',
-        share:'N',
-      }
-      this.tmp(data)
+
+      // const  data = {
+      //   cno:'1234',
+      //   share:'N',
+      // }
+      // this.tmp(data)
+      console.log(111)
+      this.$router.push('/login')
     }
   }
 
