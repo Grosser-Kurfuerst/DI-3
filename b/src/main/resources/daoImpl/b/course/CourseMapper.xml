@@ -11,6 +11,7 @@
         <result column="course_name" property="courseName"/>
         <result column="teaching_place" property="teachingPlace"/>
         <result column="share_flag" property="shareFlag"/>
+        <result column="power_grade" property="powerGrade"/>
     </resultMap>
 
     <resultMap id="accountResultMap" type="com.data_integration.b.pojo.account.Account">
@@ -34,6 +35,10 @@
         update course set share_flag = #{flag} where course_id = #{courseId}
     </update>
 
+    <select id="getAllCourses" resultMap="courseResultMap">
+        select * from course
+    </select>
+
     <update id="updateCourseInfo" parameterType="com.data_integration.b.pojo.course.Course">
         update course
         set
@@ -42,7 +47,8 @@
             course_time = nvl (#{courseTime}, course_time),
             course_name = nvl (#{courseName}, course_name),
             teaching_place = nvl (#{teachingPlace}, teaching_place),
-            share_flag = nvl (#{shareFlag}, share_flag)
+            share_flag = nvl (#{shareFlag}, share_flag),
+            power_grade = nvl(#{powerGrade}, power_grade)
         where course_id = #{courseId}
     </update>
 

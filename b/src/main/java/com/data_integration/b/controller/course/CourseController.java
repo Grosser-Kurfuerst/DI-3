@@ -6,6 +6,8 @@ import com.data_integration.b.service.course.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/course")
 public class CourseController {
@@ -20,17 +22,25 @@ public class CourseController {
     }
 
 
-    @PostMapping("/setShare/{flag}/{courseId}")
-    Course setCourseShareFlag (@PathVariable String flag, @PathVariable String courseId) {
-        return courseService.setCourseShareFlag(flag, courseId);
+    @GetMapping("/setShare/{flag}/{courseId}")
+    String setCourseShareFlag (@PathVariable String flag, @PathVariable String courseId) {
+        int updateNum = courseService.setCourseShareFlag(flag, courseId);
+        if (updateNum == 1) return "修改成功";
+        return "修改失败";
     }
 
 
     @PostMapping("/updateCourse")
-    Course updateCourse (@RequestBody Course course) {
-        return courseService.update(course);
+    String updateCourse (@RequestBody Course course) {
+        int updateNum = courseService.update(course);
+        if (updateNum == 1) return "更新成功";
+        return "更新失败";
     }
 
+    @GetMapping("/getAllCourses")
+    List<Course> getAllCourses() {
+        return courseService.getAllCourses();
+    }
 
 
 }

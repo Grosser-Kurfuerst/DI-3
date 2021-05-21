@@ -4,6 +4,8 @@ package com.data_integration.b.service.student;
 import com.data_integration.b.pojo.account.Account;
 import com.data_integration.b.pojo.student.Student;
 
+import java.util.List;
+
 public interface StudentService {
 
     /**根据账号名和密码获取账号对象*/
@@ -15,4 +17,7 @@ public interface StudentService {
 
     /**更新学生对象*/
     Student updateStudentInfo(Student student);
+
+    /**获取所有学生信息*/
+    List<Student> getAllStudents();
 }

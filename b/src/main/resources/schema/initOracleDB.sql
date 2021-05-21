@@ -60,14 +60,16 @@ insert into student values('181250207', '周润兴', '男', '软件工程', '122816');
 -- 创建账户表
 create table account(
     aname varchar2(12) primary key,
-    password varchar2(50),
-    power_grade number(2),
+    password varchar2(12) not null ,
+    power_grade number(2) default 1,
     guest_id varchar2(9),
     constraint guest_id foreign key (guest_id) references student(sid)
 );
 
 -- 插入账户数据
-insert into account values('181250207', '123456', 6, '181250207');
+insert into account values('181250207', '123456', 3, '181250207');
+insert into account values('110', '123456', 6, null);
+insert into account values('911', '123456', 5, null);
 
 -- 创建课程表
 create table course(
@@ -77,12 +79,13 @@ create table course(
     score varchar2(1),
     teacher_name varchar2(10),
     teaching_place varchar2(20),
-    share_flag char(1)
+    share_flag char(1),
+    power_grade number(2) default 0
 );
 
 -- 插入课程数据
-insert into course values('03586', '数据集成', 4, 2, '刘峰', '教学楼202', '0');
-insert into course values('66666', '服务端开发', 4, 2, 'taozs', '姜的个人会议室', '1');
+insert into course values('03586', '数据集成', 4, 2, '刘峰', '教学楼202', '0',3);
+insert into course values('66666', '服务端开发', 4, 2, 'taozs', '姜的个人会议室', '1',3);
 
 -- 创建学生 - 选课信息 的表
 create table election(

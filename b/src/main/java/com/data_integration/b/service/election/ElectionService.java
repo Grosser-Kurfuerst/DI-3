@@ -14,4 +14,13 @@ public interface ElectionService {
 
     /**删除选课记录*/
     int deleteElectionBySidCid(String cid, String sid);
+
+    /**获取某门课程的选课信息*/
+    List<Election> getElectionsByCid(String cid);
+
+    /**获取所有的选课信息*/
+    List<Election> getElections();
+
+    /**更新课程成绩*/
+    int updateGrade(String cid, String sid, int score);
 }

@@ -24,10 +24,13 @@ public class Course {
     /**是否共享*/
     private String shareFlag;
 
+    /**权限*/
+    private int powerGrade;
+
     public Course() {
     }
 
-    public Course(String courseId, String teacherName, String score, String courseTime, String courseName, String teachingPlace, String shareFlag) {
+    public Course(String courseId, String teacherName, String score, String courseTime, String courseName, String teachingPlace, String shareFlag, int powerGrade) {
         this.courseId = courseId;
         this.teacherName = teacherName;
         this.score = score;
@@ -35,6 +38,15 @@ public class Course {
         this.courseName = courseName;
         this.teachingPlace = teachingPlace;
         this.shareFlag = shareFlag;
+        this.powerGrade = powerGrade;
+    }
+
+    public int getPowerGrade() {
+        return powerGrade;
+    }
+
+    public void setPowerGrade(int powerGrade) {
+        this.powerGrade = powerGrade;
     }
 
     public String getCourseId() {

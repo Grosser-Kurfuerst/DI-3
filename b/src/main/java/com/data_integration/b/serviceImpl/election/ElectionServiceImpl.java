@@ -43,4 +43,30 @@ public class ElectionServiceImpl implements ElectionService {
         return electionDao.deleteElectionBySidCid(cid, sid);
     }
 
+
+    /**
+     * 获取某门课程的选课信息
+     * @param cid 课程编号
+     */
+    @Override
+    public List<Election> getElectionsByCid(String cid) {
+        return electionDao.getElectionsByCid(cid);
+    }
+
+    /**
+     * 获取所有的选课信息
+     */
+    @Override
+    public List<Election> getElections() {
+        return electionDao.getElections();
+    }
+
+
+    /**
+     * 更新课程成绩
+     */
+    @Override
+    public int updateGrade(String cid, String sid, int score) {
+        return electionDao.updateGrade(cid, sid, score);
+    }
 }

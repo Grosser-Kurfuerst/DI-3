@@ -7,6 +7,8 @@ import com.data_integration.b.service.student.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class StudentServiceImpl implements StudentService {
 
@@ -32,5 +34,11 @@ public class StudentServiceImpl implements StudentService {
     public Student updateStudentInfo(Student student) {
         studentDao.updateStudentInfo(student);
         return getStudentBySid(student.getSid());
+    }
+
+    /**获取所有学生信息*/
+    @Override
+    public List<Student> getAllStudents() {
+        return studentDao.getAllStudents();
     }
 }

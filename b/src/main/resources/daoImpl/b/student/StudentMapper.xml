@@ -17,6 +17,11 @@
         <result column="guest_id" property="guest_id"/>
     </resultMap>
 
+    <select id="getAllStudents" resultMap="studentResultMap">
+        select * from student
+    </select>
+
+
     <select id="getAccountByNameAndPassword" resultMap="accountResultMap">
         select * from account  where aname =#{name} and password = #{password}
     </select>

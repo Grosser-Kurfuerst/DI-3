@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.data_integration.b.dao.admin.AdminDao">
+
+    <resultMap id="accountResultMap" type="com.data_integration.b.pojo.account.Account">
+        <id column="aname" property="aname"/>
+        <result column="password" property="password"/>
+        <result column="power_grade" property="power_grade"/>
+        <result column="guest_id" property="guest_id"/>
+    </resultMap>
+
+    <update id="updateAccount" parameterType="com.data_integration.b.pojo.account.Account">
+        update account set
+            password = nvl(#{password}, password),
+            power_grade = nvl(#{power_grade}, power_grade),
+            guest_id = nvl(#{guest_id}, guest_id)
+        where aname = #{aname}
+    </update>
+
+    <insert id="addAdmin">
+        insert into account values(#{aname}, #{password}, #{power_grade}, null)
+    </insert>
+
+    <select id="getAccountByNameAndPwd" resultMap="accountResultMap">
+        select * from account where aname = #{aname} and password = #{password} and power_grade > 4
+    </select>
+
+    <select id="getAllAdmins" resultMap="accountResultMap">
+        select * from account where power_grade > 4
+    </select>
+
+    <select id="getAdminByName" resultMap="accountResultMap">
+        select * from account where aname = #{sourceAname} and power_grade > 4
+    </select>
+
+    <delete id="deleteAccountByName">
+        delete from account where aname = #{targetAname}
+    </delete>
+
+</mapper>

@@ -17,4 +17,10 @@ public interface ElectionDao {
     int deleteElectionBySidCid(String cid, String sid);
 
     Election getElectionByCidSid(String cid, String sid);
+
+    List<Election> getElectionsByCid(String cid);
+
+    List<Election> getElections();
+
+    int updateGrade(String cid, String sid, int score);
 }

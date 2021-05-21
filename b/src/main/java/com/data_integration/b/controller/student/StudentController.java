@@ -6,6 +6,8 @@ import com.data_integration.b.service.student.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/student")
 public class StudentController {
@@ -16,16 +18,16 @@ public class StudentController {
 
     /**
      * 登录，
-     * 如果存在用户名密码匹配的账户，那么返回账号的客体（如学生）对应的id
+     * 如果存在用户名密码匹配的账户，那么返回账号的客体（学生）的信息
      * 不存在则返回null
      */
     @PostMapping("/login")
-    public String login(@RequestBody Account account) {
+    public Student login(@RequestBody Account account) {
         // 获取匹配的账户
         Account matchedAccount = studentService.getAccountByNameAndPassword(account.getAname(), account.getPassword());
         //判断账户是否为null
         if (matchedAccount == null) return null;
-        return matchedAccount.getGuest_id();
+        return getStudentInfoBySid(matchedAccount.getGuest_id());
     }
 
     /**
@@ -50,5 +52,12 @@ public class StudentController {
     }
 
 
+    /**
+     * 获取所有学生信息
+     */
+    @GetMapping("/getAllStudents")
+    public List<Student> getAllStudents() {
+        return studentService.getAllStudents();
+    }
 
 }

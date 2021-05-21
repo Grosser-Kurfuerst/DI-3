@@ -6,6 +6,8 @@ import com.data_integration.b.pojo.student.Student;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Mapper
 @Repository
 public interface StudentDao {
@@ -15,4 +17,6 @@ public interface StudentDao {
     Student getStudentBySid(String sid);
 
     void updateStudentInfo(Student student);
+
+    List<Student> getAllStudents();
 }

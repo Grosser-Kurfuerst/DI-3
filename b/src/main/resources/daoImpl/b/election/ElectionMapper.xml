@@ -30,8 +30,16 @@
         select * from election where student_id = #{sid}
     </select>
 
+    <select id="getElections" resultMap="electionResultMap">
+        select * from election
+    </select>
+
     <select id="getElectionByCidSid" resultMap="electionResultMap">
         select * from election where student_id = #{sid} and course_id = #{cid}
+    </select>
+
+    <select id="getElectionsByCid" resultMap="electionResultMap">
+        select * from election where course_id = #{cid}
     </select>
 
     <insert id="addElectionBySidCid">
@@ -41,5 +49,9 @@
     <delete id="deleteElectionBySidCid">
         delete from election where course_id = #{cid} and student_id = #{sid}
     </delete>
+
+    <update id="updateGrade">
+        update election set score = #{score} where student_id = #{sid} and course_id = #{cid}
+    </update>
 
 </mapper>
