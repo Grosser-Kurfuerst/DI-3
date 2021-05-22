@@ -27,15 +27,15 @@ public class AdminServiceImpl  implements AdminService {
     }
 
     /**
-     * 删除管理员账户
-     * 管理员权限为6才可以删除其它管理员账户
+     * 删除账户
+     * 管理员权限为6才可以删除其它账户
      * @param sourceAname 执行操作的管理员的账户名
      * @param targetAname 要删除的账户名
      * @return 删除成功、权限不够、删除失败
      */
     @Override
-    public String deleteAdmin(String sourceAname, String targetAname) {
-        Account sourceAdmin = adminDao.getAccountByName(sourceAname);
+    public String deleteAccount(String sourceAname, String targetAname) {
+        Account sourceAdmin = adminDao.getAdminByName(sourceAname);
         if (sourceAdmin == null) return "当前账户不存在";
         else if(sourceAdmin.getPower_grade() <= 5) return "当前账户权限不够";
         else if (sourceAdmin.getPower_grade() == 6) {
@@ -55,9 +55,9 @@ public class AdminServiceImpl  implements AdminService {
      */
     @Override
     public String addAccount(String source, Account account) {
-        Account currentAdmin = adminDao.getAccountByName(source);
-        if (currentAdmin.getPower_grade() != 6) {
-            return "权限不够";
+        Account currentAdmin = adminDao.getAdminByName(source);
+        if (currentAdmin == null) {
+            return "管理员不存在";
         }
         int addNum = adminDao.addAdmin(account.getAname(), account.getPassword(), account.getPower_grade());
         if (addNum == 1) return "添加成功";

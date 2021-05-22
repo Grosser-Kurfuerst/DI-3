@@ -1,6 +1,7 @@
 package com.data_integration.b.controller.election;
 
 import com.data_integration.b.pojo.account.Account;
+import com.data_integration.b.pojo.course.Course;
 import com.data_integration.b.pojo.election.Election;
 import com.data_integration.b.pojo.student.Student;
 import com.data_integration.b.service.course.CourseService;
@@ -54,7 +55,6 @@ public class ElectionController {
     }
 
 
-
     /**
      * 添加学生的选课
      * @param cid 长度小于等于5
@@ -64,8 +64,11 @@ public class ElectionController {
     public String addElectionByCidSid (@PathVariable String cid, @PathVariable String sid) {
         // 学生账户的权限大于课程的权限才可以添加选课记录
         Student student = studentService.getStudentBySid(sid);
-        int studentPowerGrade = studentService.getAccountByNameAndPassword(student.getSname(),student.getPassword()).getPower_grade();
-        int coursePowerGrade = courseService.getCourseByCid(cid).getPowerGrade();
+        Account account = studentService.getAccountByGuestId(student.getSid());
+        int studentPowerGrade = account.getPower_grade();
+        Course course = courseService.getCourseByCid(cid);
+        if (course == null) return "课程不存在";
+        int coursePowerGrade = course.getPowerGrade();
         if (studentPowerGrade >= coursePowerGrade) {
             // 可以选课
             electionService.addElectionBySidCid(cid, sid);

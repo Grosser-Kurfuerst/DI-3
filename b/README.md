@@ -78,7 +78,7 @@
 
 - /course/setShare/{flag}/{courseId} 修改课程共享标志
     - RequestParam1
-        - flag: ”是“、”否“
+        - flag: ”1“、”0“
     - RequestParam2
         - courseId：5位课程编号
     - 返回 String
@@ -89,7 +89,7 @@
 
 - /student/login 学生登录并返回学生信息（POST）
     - RequestBody
-      - aname: 账户名
+      - aname: 账户名 （account表中的账户名）
       - password: 密码
     - 返回Student类型的对象
 
@@ -104,29 +104,28 @@
         - gender (可有可无) （”男/女“）
         - department (可有可无)
         - password (可有可无)
-    - 返回字符串
-        - 更新成功/更新失败
+    - 返回更新后的Student对象
 
 
-## /account部分
-- /account/login 管理员登录并返回管理员信息（POST）
+## /admin部分
+- /admin/login 管理员登录并返回管理员信息（POST）
     - RequestBody
         - aname:  账户名
         - password: 密码
     - 返回Account类型的对象 （权限>4）的账户就是管理员账户
 
-- /account/getAllAdmins 获取所有管理员账号
+- /admin/getAllAdmins 获取所有管理员账号
     - 无参数
     - 返回Account对象数组
 
-- /account/deleteAccount/{sourceAname}/{targetAname} 删除管理员 (GET)
+- /admin/deleteAccount/{sourceAname}/{targetAname} 删除账户 (GET)
     - PathVariable1
         - sourceAname: 操作者账户名
     - PathVariable2
         - targetAname: 要删除的账户名
-    - 返回值String: "删除成功"、”当前账户不存在“、”当前管理员权限不够“、 ”删除失败“
+    - 返回值String: "删除成功"、”当前账户不存在“、”管理员不存在“、 ”删除失败“
 
-- /account/{source}/addAccount 添加管理员
+- /admin/{source}/addAccount 添加管理员
     - PathVariable1
         - source: varchar(12) 操作者账户名
     - RequestBody
@@ -135,9 +134,9 @@
         - power_grade: 0-6权限
     - 返回值String: “权限不够” 、 “添加成功”、“添加失败”
 
-- /account/updateAccount 更新管理员信息
+- /admin/updateAccount 更新管理员信息
     - RequestBody
-        - acc: varchar(12) 账户名
-        - passwd: varchar(12) 密码
-        - permission：int 权限
-    - 返回值String : 
+        - aname: varchar(12) 账户名
+        - password: varchar(12) 密码
+        - power_grade：int 权限
+    - 返回值String : “更新成功”，“更新失败”

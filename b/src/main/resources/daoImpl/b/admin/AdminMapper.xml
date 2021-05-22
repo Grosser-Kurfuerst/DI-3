@@ -12,7 +12,7 @@
     <update id="updateAccount" parameterType="com.data_integration.b.pojo.account.Account">
         update account set
             password = nvl(#{password}, password),
-            power_grade = nvl(#{power_grade}, power_grade),
+            power_grade = decode(#{power_grade}, 0, power_grade, #{power_grade}),
             guest_id = nvl(#{guest_id}, guest_id)
         where aname = #{aname}
     </update>

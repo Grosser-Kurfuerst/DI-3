@@ -22,6 +22,10 @@
     </select>
 
 
+    <select id="getAccountByGuestId" resultMap="accountResultMap">
+        select * from account where guest_id = #{sid}
+    </select>
+
     <select id="getAccountByNameAndPassword" resultMap="accountResultMap">
         select * from account  where aname =#{name} and password = #{password}
     </select>

@@ -13,7 +13,7 @@ public interface AdminService {
     List<Account> getAllAdmins();
 
     /**删除管理员账户*/
-    String deleteAdmin(String sourceAname, String targetAname);
+    String deleteAccount(String sourceAname, String targetAname);
 
     /**添加管理员账户*/
     String addAccount(String source, Account account);

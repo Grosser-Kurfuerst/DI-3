@@ -20,4 +20,7 @@ public interface StudentService {
 
     /**获取所有学生信息*/
     List<Student> getAllStudents();
+
+    /**根据学号获取学生Account*/
+    Account getAccountByGuestId(String sid);
 }

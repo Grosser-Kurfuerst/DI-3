@@ -19,4 +19,6 @@ public interface StudentDao {
     void updateStudentInfo(Student student);
 
     List<Student> getAllStudents();
+
+    Account getAccountByGuestId(String sid);
 }

@@ -15,7 +15,7 @@ public interface AdminDao {
 
     List<Account> getAllAdmins();
 
-    Account getAccountByName(String sourceAname);
+    Account getAdminByName(String sourceAname);
 
     int deleteAccountByName(String targetAname);
 
