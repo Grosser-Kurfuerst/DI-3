@@ -51,12 +51,9 @@ service.interceptors.request.use((config) => {
 service.interceptors.response.use((response) => {
     switch (response.status) {
         case 200:
+            console.log("axios成功")
+            console.log(response)
             return response.data
-                        // if (response.data.success && response.data.success) {
-            //     return response.data.content
-            // }
-            // message.error(response.data.message)
-            //break
         case 404:
             message.error("404~")
             return false
