@@ -3,9 +3,9 @@ server:
 
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/dataintegration
+    url: jdbc:mysql://localhost:3306/data_integration_c
     username: root
-    password: weikaixuan
+    password: root
     driver-class-name: com.mysql.cj.jdbc.Driver
 
 mybatis:
