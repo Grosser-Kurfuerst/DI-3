@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.data_integration.a.mapper.student.StudentMapper">
+    <select id="getStudentBySno" resultMap="Student">
+        select * from student where stunum=#{stunum}
+    </select>
+    <select id="getAllStudents" resultMap="Student">
+        select * from student
+    </select>
+    <update id="updateStudentInfo">
+        update student set stuname=#{stuname}, sex=#{sex}, department=#{department}, pwd=#{pwd}, permission=#{permission},account=#{account} where stunum=#{stunum}
+    </update>
+
+    <resultMap id="Student" type="com.data_integration.a.PO.Student"></resultMap>
+</mapper>
