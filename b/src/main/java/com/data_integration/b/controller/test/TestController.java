@@ -1,9 +1,14 @@
 package com.data_integration.b.controller.test;
 
 import com.data_integration.b.pojo.election.Election;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
@@ -19,6 +24,9 @@ import java.io.StringWriter;
 @RestController
 @RequestMapping("/test")
 public class TestController {
+
+    RestTemplate restTemplate = new RestTemplate();
+
     @GetMapping("/sendXml")
     public void sendXml() throws Exception {
         Election election = new Election();
@@ -55,6 +63,12 @@ public class TestController {
         String content = toFormatedXML(document);
 
         System.out.println(content);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_XML);
+        HttpMethod httpMethod = HttpMethod.POST;
+        HttpEntity<String> httpEntity = new HttpEntity<>(content,headers);
+        String res = restTemplate.postForObject("http://localhost:9000/test/test",httpEntity,String.class);
     }
 
     public static void main(String[] args) throws Exception {
