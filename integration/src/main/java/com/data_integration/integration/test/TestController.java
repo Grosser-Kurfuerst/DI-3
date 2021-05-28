@@ -11,6 +11,7 @@ public class TestController {
 
     @PostMapping("/test")
     public String test(@RequestBody String content){
+
         System.out.println(content);
         return "hello";
     }

@@ -65,7 +65,8 @@ public class TestController {
         System.out.println(content);
 
         HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_XML);
+        MediaType type = MediaType.parseMediaType("application/xml;charset=UTF-8");
+        headers.setContentType(type);
         HttpMethod httpMethod = HttpMethod.POST;
         HttpEntity<String> httpEntity = new HttpEntity<>(content,headers);
         String res = restTemplate.postForObject("http://localhost:9000/test/test",httpEntity,String.class);
