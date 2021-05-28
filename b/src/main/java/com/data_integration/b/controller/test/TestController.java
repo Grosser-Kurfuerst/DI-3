@@ -29,6 +29,7 @@ public class TestController {
 
     @GetMapping("/sendXml")
     public String sendXml() throws Exception {
+        // 创建一个对象
         Election election = new Election();
         election.setCourseId("b1234");
         election.setStudentId("b12345678");
@@ -57,27 +58,31 @@ public class TestController {
         scoreElement.setTextContent(election.getScore());
         choiceElement.appendChild(scoreElement); // 添加到choice元素中
 
+        // 形成dom树关系
         root.appendChild(choiceElement);
         document.appendChild(root);
 
+        // 转换为xml字符串
         String content = toFormatedXML(document);
 
         System.out.println(content);
 
+        // 使用RestTemplate向集成服务器发送请求
         HttpHeaders headers = new HttpHeaders();
         MediaType type = MediaType.parseMediaType("application/xml;charset=UTF-8");
         headers.setContentType(type);
-        HttpMethod httpMethod = HttpMethod.POST;
         HttpEntity<String> httpEntity = new HttpEntity<>(content,headers);
+        // TODO 这里是集成服务器url
+        // res是集成服务器的ResponseBody，是xml字符串
         String res = restTemplate.postForObject("http://localhost:9000/test/test",httpEntity,String.class);
         System.out.println(res);
         return res;
     }
 
-    public static void main(String[] args) throws Exception {
-        new TestController().sendXml();
-    }
 
+    /**
+     * xml dom转字符串
+     */
     public static String toFormatedXML(Document object) throws Exception {
         Document doc = (Document) object;
         TransformerFactory transFactory = TransformerFactory.newInstance();
@@ -99,7 +104,7 @@ public class TestController {
      * 将 XML解析成Document对象并返回
      * 如果传进来的路径是空，那么新建一个Document对象返回
      *
-     * @param xmlPath 目标XML的路径
+     * @param xmlPath 目标XML文件的路径
      * @return XML文档的模型树
      */
     public static Document getDocument(String xmlPath) throws Exception {

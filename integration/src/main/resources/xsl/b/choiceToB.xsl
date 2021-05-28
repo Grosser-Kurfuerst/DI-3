@@ -6,7 +6,7 @@
 
     <!--	匹配到根元素时-->
     <xsl:template match="jw:choices">
-        <choices xmlns="http://b.nju.edu.cn/schema" xmlns:b="http://b.nju.edu.cn/schema">
+        <choices xmlns="http://b.nju.edu.cn/schema">
             <!--    对于每一个选课-->
             <xsl:for-each select="jw:choice">
                  <choice>
