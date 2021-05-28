@@ -28,9 +28,9 @@ public class TestController {
     RestTemplate restTemplate = new RestTemplate();
 
     @GetMapping("/sendXml")
-    public void sendXml() throws Exception {
+    public String sendXml() throws Exception {
         Election election = new Election();
-        election.setCourseId("b123");
+        election.setCourseId("b1234");
         election.setStudentId("b12345678");
         election.setScore("90");
 
@@ -70,6 +70,8 @@ public class TestController {
         HttpMethod httpMethod = HttpMethod.POST;
         HttpEntity<String> httpEntity = new HttpEntity<>(content,headers);
         String res = restTemplate.postForObject("http://localhost:9000/test/test",httpEntity,String.class);
+        System.out.println(res);
+        return res;
     }
 
     public static void main(String[] args) throws Exception {
