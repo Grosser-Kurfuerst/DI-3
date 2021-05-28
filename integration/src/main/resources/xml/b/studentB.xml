@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--一个B student的例子-->
+<students xmlns="http://b.nju.edu.cn/schema">
+    <student>
+        <学号>181250207</学号>
+        <名称>周润兴</名称>
+        <性别>M</性别>
+        <专业>软件学院</专业>
+<!--        <密码>123456</密码>-->
+    </student>
+    <student>
+        <学号>181250000</学号>
+        <名称>Nobody</名称>
+        <性别>F</性别>
+        <专业>软件学院</专业>
+<!--        <密码>666666</密码>-->
+    </student>
+</students>

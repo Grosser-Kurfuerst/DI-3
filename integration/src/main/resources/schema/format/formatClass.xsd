@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema"
+        targetNamespace="http://jw.nju.edu.cn/schema"
+        xmlns:jw="http://jw.nju.edu.cn/schema"
+        elementFormDefault="qualified">
+
+    <!--    课程编号类型-->
+    <simpleType name="课程编号类型">
+        <restriction base="string">
+            <length value="9"/>
+        </restriction>
+    </simpleType>
+
+<!--    课程名称类型-->
+    <simpleType name="课程名称类型">
+        <restriction base="string">
+            <maxLength value="40"/>
+        </restriction>
+    </simpleType>
+
+<!--    课时类型-->
+    <simpleType name="课时类型">
+        <restriction base="unsignedByte"/>
+    </simpleType>
+
+<!--    学分类型-->
+    <simpleType name="学分类型">
+        <restriction base="unsignedByte">
+            <maxInclusive value="5"/>
+        </restriction>
+    </simpleType>
+
+<!--    教师名称类型-->
+    <simpleType name="授课教师类型">
+        <restriction base="string">
+            <maxLength value="20"/>
+        </restriction>
+    </simpleType>
+
+<!--    授课地点类型-->
+    <simpleType name="授课地点类型">
+        <restriction base="string">
+            <maxLength value="40"/>
+        </restriction>
+    </simpleType>
+
+<!--    单个课程类型-->
+    <complexType name="单个课程类型">
+        <all>
+            <element name="id" type="jw:课程编号类型"/>
+            <element name="name" type="jw:课程名称类型"/>
+            <element name="time" type="jw:课时类型"/>
+            <element name="score" type="jw:学分类型"/>
+            <element name="teacher" type="jw:授课教师类型"/>
+            <element name="location" type="jw:授课地点类型"/>
+        </all>
+    </complexType>
+
+<!--    所有课程类型-->
+    <complexType name="所有课程类型">
+        <sequence minOccurs="1" maxOccurs="unbounded">
+            <element name="class" type="jw:单个课程类型" />
+        </sequence>
+    </complexType>
+
+    <element name="classes" type="jw:所有课程类型"/>
+</schema>

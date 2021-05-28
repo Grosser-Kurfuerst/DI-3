@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<choices xmlns:b="http://b.nju.edu.cn/schema" xmlns:a="http://a.nju.edu.cn/schema"
+         xmlns:jw="http://jw.nju.edu.cn/schema" xmlns:c="http://c.nju.edu.cn/schema"
+         xmlns="http://jw.nju.edu.cn/schema">
+    <choice>
+        <sid>181250207</sid>
+        <cid>000001234</cid>
+        <score>60</score>
+    </choice>
+    <choice>
+        <sid>181250207</sid>
+        <cid>000005432</cid>
+        <score>95</score>
+    </choice>
+</choices>
