@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema"
+        targetNamespace="http://b.nju.edu.cn/schema"
+        xmlns:b="http://b.nju.edu.cn/schema"
+        elementFormDefault="qualified">
+
+
+    <simpleType name="学生学号类型">
+        <restriction base="string">
+            <length value="9"/>
+        </restriction>
+    </simpleType>
+
+    <simpleType name="课程编号类型">
+        <restriction base="string">
+            <length value="5"/>
+        </restriction>
+    </simpleType>
+
+    <simpleType name="成绩类型">
+        <restriction base="string">
+            <maxLength value="3"/>
+        </restriction>
+    </simpleType>
+
+    <complexType name="单个选课类型">
+        <all>
+            <element name="学生编号" type="b:学生学号类型"/>
+            <element name="课程编号" type="b:课程编号类型"/>
+            <element name="得分" type="b:成绩类型"/>
+        </all>
+    </complexType>
+
+    <complexType name="所有选课类型">
+        <sequence minOccurs="1" maxOccurs="unbounded">
+            <element name="choice" type="b:单个选课类型"/>
+        </sequence>
+    </complexType>
+
+    <element name="choices" type="b:所有选课类型"/>
+
+</schema>

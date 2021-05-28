@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<classes xmlns:b="http://b.nju.edu.cn/schema" xmlns:a="http://a.nju.edu.cn/schema" xmlns:c="http://c.nju.edu.cn/schema"
+         xmlns="http://jw.nju.edu.cn/schema">
+    <class>
+        <id>000012345</id>
+        <name>数据集成</name>
+        <time>4</time>
+        <score>2</score>
+        <teacher>刘峰</teacher>
+        <location>教学楼202</location>
+    </class>
+    <class>
+        <id>000054321</id>
+        <name>服务端开发</name>
+        <time>4</time>
+        <score>2</score>
+        <teacher>taoZS</teacher>
+        <location>姜的个人会议室</location>
+    </class>
+</classes>

@@ -19,6 +19,7 @@
         <module>a</module>
         <module>b</module>
         <module>c</module>
+        <module>integration</module>
     </modules>
 
     <properties>
