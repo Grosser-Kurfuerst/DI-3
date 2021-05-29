@@ -45,39 +45,7 @@ public class CourseService {
                 .stream()
                 .filter(course -> course.share.equals("Y"))
                 .collect(Collectors.toList());
-        Document document = Utils.getDocument(null);
-        Element root = document.createElement("classes");
-        root.setAttribute("xmlns", "http://c.nju.edu.cn/schema");
-        document.appendChild(root);
-        for (Course course:sharedCourseList){
-            Element classElement = document.createElement("class");
-            root.appendChild(classElement);
-
-            Element cnoElement = document.createElement("Cno");
-            cnoElement.setTextContent(course.cno);
-            classElement.appendChild(cnoElement);
-
-            Element cnmElement = document.createElement("Cnm");
-            cnmElement.setTextContent(course.cnm);
-            classElement.appendChild(cnmElement);
-
-            Element ctmElement = document.createElement("Ctm");
-            ctmElement.setTextContent(""+course.ctm);
-            classElement.appendChild(ctmElement);
-
-            Element cptElement = document.createElement("Cpt");
-            cptElement.setTextContent(""+course.cpt);
-            classElement.appendChild(cptElement);
-
-            Element tecElement = document.createElement("Tec");
-            tecElement.setTextContent(course.tec);
-            classElement.appendChild(tecElement);
-
-            Element plaElement = document.createElement("Pla");
-            plaElement.setTextContent(course.pla);
-            classElement.appendChild(plaElement);
-        }
-        return Utils.toFormatedXML(document);
+        return Utils.coursesToXml(sharedCourseList);
     }
 
     public List<Course> getOtherDepartmentCourses() throws Exception {

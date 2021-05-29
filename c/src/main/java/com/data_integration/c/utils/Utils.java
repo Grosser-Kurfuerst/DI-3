@@ -4,6 +4,7 @@ import com.data_integration.c.PO.Course;
 import com.fasterxml.jackson.dataformat.xml.JacksonXmlModule;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
@@ -54,6 +55,48 @@ public class Utils {
         if (content == null) return builder.newDocument();
         // 不是空的话就返回已有的document对象
         return builder.parse(new ByteArrayInputStream(content.getBytes(StandardCharsets.UTF_8)));
+    }
+
+    /**
+     * course转c课程xml
+     * @param courseList
+     * @return
+     * @throws Exception
+     */
+    public static String coursesToXml(List<Course> courseList) throws Exception {
+        Document document = getDocument(null);
+        Element root = document.createElement("classes");
+        root.setAttribute("xmlns", "http://c.nju.edu.cn/schema");
+        document.appendChild(root);
+        for (Course course:courseList){
+            Element classElement = document.createElement("class");
+            root.appendChild(classElement);
+
+            Element cnoElement = document.createElement("Cno");
+            cnoElement.setTextContent(course.cno);
+            classElement.appendChild(cnoElement);
+
+            Element cnmElement = document.createElement("Cnm");
+            cnmElement.setTextContent(course.cnm);
+            classElement.appendChild(cnmElement);
+
+            Element ctmElement = document.createElement("Ctm");
+            ctmElement.setTextContent(""+course.ctm);
+            classElement.appendChild(ctmElement);
+
+            Element cptElement = document.createElement("Cpt");
+            cptElement.setTextContent(""+course.cpt);
+            classElement.appendChild(cptElement);
+
+            Element tecElement = document.createElement("Tec");
+            tecElement.setTextContent(course.tec);
+            classElement.appendChild(tecElement);
+
+            Element plaElement = document.createElement("Pla");
+            plaElement.setTextContent(course.pla);
+            classElement.appendChild(plaElement);
+        }
+        return toFormatedXML(document);
     }
 
     /**
