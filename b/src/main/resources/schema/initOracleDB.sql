@@ -84,12 +84,12 @@ create table course(
 );
 
 -- 插入课程数据
-insert into course values('03586', '数据集成', 4, 2, '刘峰', '教学楼202', '0',3);
-insert into course values('66666', '服务端开发', 4, 2, 'taozs', '姜的个人会议室', '1',3);
+insert into course values('03586', 'sjjc', 4, 2, '6f', '202', '0',3);
+insert into course values('66666', 'fwd2021', 4, 2, 'taozs', 'zoom', '1',3);
 
 -- 创建学生 - 选课信息 的表
 create table election(
-    course_id varchar2(5) not null,
+    course_id varchar2(255) not null,
     student_id varchar2(9) not null,
     score varchar2(3) default null,
     constraint PK_election primary key (course_id, student_id)
