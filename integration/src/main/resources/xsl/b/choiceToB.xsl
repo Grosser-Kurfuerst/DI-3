@@ -14,7 +14,7 @@
                         <xsl:value-of select="jw:sid"/>
                     </学生编号>
                      <课程编号>
-                         <xsl:value-of select="substring(jw:cid, 5)"/>
+                         <xsl:value-of select="jw:cid"/>
                      </课程编号>
                      <得分>
                          <xsl:value-of select="jw:score"/>
