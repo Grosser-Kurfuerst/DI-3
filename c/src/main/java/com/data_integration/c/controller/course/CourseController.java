@@ -27,4 +27,9 @@ public class CourseController {
     public void updateCourseShare(@RequestParam String cno, @RequestParam String share){
         courseService.updateCourseShare(cno,share);
     }
+
+    @GetMapping("/getAllCoursesXml")
+    public String getAllCoursesXml() throws Exception{
+        return courseService.getAllCoursesXml();
+    }
 }

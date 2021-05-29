@@ -76,7 +76,7 @@
                         <xsl:value-of select="c:Cnm"/>
                     </name>
                     <time>
-                        <xsl:value-of select="c:课时"/>
+                        <xsl:value-of select="c:Ctm"/>
                     </time>
                     <score>
                         <xsl:value-of select="c:Cpt"/>
