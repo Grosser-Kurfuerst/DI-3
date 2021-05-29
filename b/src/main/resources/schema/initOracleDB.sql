@@ -51,12 +51,12 @@ end;
 create table student(
     sid varchar2(9) primary key,
     sname varchar2(10) not null,
-    gender varchar2(2) default '男' not null ,
+    gender varchar2(2) default 'M' not null ,
     department varchar2(16) not null,
     password varchar2(6) default null
 );
 -- 插入学生数据
-insert into student values('181250207', '周润兴', '男', '软件工程', '122816');
+insert into student values('00000001b', 'zrx', 'M', 'SE2018', '122816');
 -- 创建账户表
 create table account(
     aname varchar2(12) primary key,
@@ -67,7 +67,7 @@ create table account(
 );
 
 -- 插入账户数据
-insert into account values('181250207', '123456', 3, '181250207');
+insert into account values('181250207', '123456', 3, '00000001b');
 insert into account values('110', '123456', 6, null);
 insert into account values('911', '123456', 5, null);
 
