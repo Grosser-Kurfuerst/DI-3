@@ -13,7 +13,6 @@
 
     <simpleType name="课程编号类型">
         <restriction base="string">
-            <maxLength value="255"/>
         </restriction>
     </simpleType>
 
