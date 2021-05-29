@@ -1,5 +1,6 @@
 package com.data_integration.integration.controller.test;
 
+import com.data_integration.integration.utils.Utils;
 import org.dom4j.io.DocumentResult;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -30,36 +31,9 @@ public class TestController {
         // 使用resources中的xsd文件验证
         URL schemaUrl = getClass().getResource("/schema/b/choiceB.xsd");
         File schemaFile = new File(URLDecoder.decode(schemaUrl.getFile(),"UTF-8"));
-        validateSchema(schemaFile,content);
+        Utils.validateSchema(schemaFile,content);
         // 使用resources中的xsl转换
         URL xslUrl = getClass().getResource("/xsl/format/formatClassChoice.xsl");
-        return transform(URLDecoder.decode(xslUrl.getFile(),"UTF-8"),content);
-    }
-
-    /**
-     * 验证Schema
-     */
-    public static void validateSchema(File schemaFile,String content) throws Exception{
-        String language = XMLConstants.W3C_XML_SCHEMA_NS_URI;
-        SchemaFactory factory = SchemaFactory.newInstance(language);
-        Schema schema = factory.newSchema(schemaFile);
-        Validator validator = schema.newValidator();
-        validator.validate(new StreamSource(new ByteArrayInputStream(content.getBytes(StandardCharsets.UTF_8))));
-    }
-
-    /**
-     * 利用 xsl 将 xmlPath 对应的 xml 文件 转换成 targetPath 对应的xml 文件
-     */
-    public static String transform(String xslPath, String content) throws Exception {
-
-        // ① 获取转换器工厂
-        TransformerFactory transformerFactory = TransformerFactory.newInstance();
-        // ② 获取转换器对象实例
-        Transformer transformer = transformerFactory.newTransformer(new StreamSource(xslPath));
-        //③ 进行转换
-        DocumentResult result = new DocumentResult();
-        transformer.transform(new StreamSource(new ByteArrayInputStream(content.getBytes(StandardCharsets.UTF_8))), result);
-        org.dom4j.Document transformedDoc = result.getDocument();
-        return transformedDoc.asXML();
+        return Utils.transform(URLDecoder.decode(xslUrl.getFile(),"UTF-8"),content);
     }
 }
