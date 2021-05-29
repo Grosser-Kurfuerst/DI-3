@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/course")
+@RequestMapping("/b/course")
 public class CourseController {
 
     @Autowired
@@ -27,6 +27,11 @@ public class CourseController {
         int updateNum = courseService.setCourseShareFlag(flag, courseId);
         if (updateNum == 1) return "修改成功";
         return "修改失败";
+    }
+
+    @GetMapping("/getSharedCoursesXml")
+    String getSharedCoursesXml() {
+        return courseService.getSharedCoursesXml();
     }
 
 

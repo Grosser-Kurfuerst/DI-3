@@ -3,6 +3,7 @@ package com.data_integration.b.serviceImpl.course;
 import com.data_integration.b.dao.course.CourseDao;
 import com.data_integration.b.pojo.course.Course;
 import com.data_integration.b.service.course.CourseService;
+import com.data_integration.b.utils.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -38,5 +39,22 @@ public class CourseServiceImpl implements CourseService {
     @Override
     public List<Course> getAllCourses() {
         return courseDao.getAllCourses();
+    }
+
+    /**获取所有的 共享课程*/
+    @Override
+    public List<Course> getSharedCourses() {
+        return courseDao.getSharedCourses();
+    }
+
+    /**获取所有共享课程的XML文件*/
+    @Override
+    public String getSharedCoursesXml() {
+        List<Course> sharedClassList = getSharedCourses();
+        try {
+            String outcome = Utils.coursesToXml(sharedClassList);
+            return outcome;
+        } catch (Exception ignored) {}
+        return null;
     }
 }

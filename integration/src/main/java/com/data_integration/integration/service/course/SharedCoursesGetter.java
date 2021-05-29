@@ -29,8 +29,17 @@ public class SharedCoursesGetter {
     }
 
     // TODO 填充
-    public String getBSharedCourses(){
-        return "";
+    public String getBSharedCourses() throws Exception {
+        // 获得B的共享课程XML内容
+        String res = restTemplate.getForObject("http://localhost:8888/b/course/getSharedCoursesXml",String.class);
+        System.out.println(res);
+        // 验证
+        URL schemaUrl = getClass().getResource("/schema/b/classB.xsd");
+        File schemaFile = new File(URLDecoder.decode(schemaUrl.getFile(),"UTF-8"));
+        Utils.validateSchema(schemaFile,res);
+        // 转换为统一格式
+        URL xslUrl = getClass().getResource("/xsl/format/formatClass.xsl");
+        return Utils.transform(URLDecoder.decode(xslUrl.getFile(),"UTF-8"),res);
     }
 
     public String getCSharedCourses() throws Exception {
