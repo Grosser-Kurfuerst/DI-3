@@ -11,7 +11,7 @@
             <xsl:for-each select="jw:class">
                 <class>
                     <编号>
-                        <xsl:value-of select="substring(jw:id, 5)"/>
+                        <xsl:value-of select="jw:id"/>
                     </编号>
                     <名称>
                         <xsl:value-of select="jw:name"/>

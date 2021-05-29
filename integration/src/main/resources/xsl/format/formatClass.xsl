@@ -12,7 +12,7 @@
             <xsl:for-each select="a:class">
                 <class>
                     <id>
-                        <xsl:value-of select="substring(concat(&quot;000000000&quot;,a:课程编号),string-length(concat(&quot;000000000&quot;,a:课程编号))-8,9)"/>
+                        <xsl:value-of select="a:课程编号"/>
                     </id>
                     <name>
                         <xsl:value-of select="a:课程名称"/>
@@ -41,7 +41,7 @@
             <xsl:for-each select="b:class">
                 <class>
                     <id>
-                        <xsl:value-of select="substring(concat(&quot;000000000&quot;,b:编号),string-length(concat(&quot;000000000&quot;,b:编号))-8,9)"/>
+                        <xsl:value-of select="b:编号"/>
                     </id>
                     <name>
                         <xsl:value-of select="b:名称"/>
@@ -70,7 +70,7 @@
             <xsl:for-each select="c:class">
                 <class>
                     <id>
-                        <xsl:value-of select="substring(concat(&quot;000000000&quot;,c:Cno),string-length(concat(&quot;000000000&quot;,c:Cno))-8,9)"/>
+                        <xsl:value-of select="c:Cno"/>
                     </id>
                     <name>
                         <xsl:value-of select="c:Cnm"/>
