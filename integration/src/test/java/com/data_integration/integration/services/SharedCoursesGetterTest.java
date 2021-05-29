@@ -34,5 +34,9 @@ public class SharedCoursesGetterTest {
         int index_head = transformed.indexOf("<class>");
         transformed = transformed.substring(index_head);
         System.out.println(transformed);
+        // 从集成格式转回c格式
+        xslUrl = getClass().getResource("/xsl/c/classToC.xsl");
+        transformed = Utils.transform(URLDecoder.decode(xslUrl.getFile(),"UTF-8"),res);
+        System.out.println(transformed);
     }
 }
