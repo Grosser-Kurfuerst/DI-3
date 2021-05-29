@@ -7,5 +7,11 @@ import org.springframework.web.client.RestTemplate;
 @Service
 public class CCourseService {
     @Autowired
-    RestTemplate restTemplate;
+    SharedCoursesGetter sharedCoursesGetter;
+
+    public String getOtherDepartmentCourses(){
+        String aXml = sharedCoursesGetter.getASharedCourses();
+        String bXml = sharedCoursesGetter.getBSharedCourses();
+        return "";
+    }
 }

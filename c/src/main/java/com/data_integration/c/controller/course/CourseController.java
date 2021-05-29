@@ -28,8 +28,8 @@ public class CourseController {
         courseService.updateCourseShare(cno,share);
     }
 
-    @GetMapping("/getAllCoursesXml")
-    public String getAllCoursesXml() throws Exception{
-        return courseService.getAllCoursesXml();
+    @GetMapping("/getSharedCoursesXml")
+    public String getSharedCoursesXml() throws Exception{
+        return courseService.getSharedCoursesXml();
     }
 }

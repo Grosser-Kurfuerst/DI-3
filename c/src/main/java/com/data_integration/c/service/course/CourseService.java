@@ -40,7 +40,7 @@ public class CourseService {
         courseMapper.updateCourseShare(cno,share);
     }
 
-    public String getAllCoursesXml() throws Exception{
+    public String getSharedCoursesXml() throws Exception{
         List<Course> sharedCourseList = courseMapper.getAllCourses()
                 .stream()
                 .filter(course -> course.share.equals("Y"))
