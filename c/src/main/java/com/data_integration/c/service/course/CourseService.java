@@ -79,4 +79,10 @@ public class CourseService {
         }
         return Utils.toFormatedXML(document);
     }
+
+    public List<Course> getOtherDepartmentCourses() throws Exception {
+        // TODO 调用集成服务器接口 获得a和b的xml
+        String content = "";
+        return Utils.xmlToCourses(content);
+    }
 }

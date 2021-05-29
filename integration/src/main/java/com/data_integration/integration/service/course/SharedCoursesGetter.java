@@ -23,10 +23,12 @@ public class SharedCoursesGetter {
     @Autowired
     RestTemplate restTemplate;
 
+    // TODO 填充
     public String getASharedCourses(){
         return "";
     }
 
+    // TODO 填充
     public String getBSharedCourses(){
         return "";
     }

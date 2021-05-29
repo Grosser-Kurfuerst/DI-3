@@ -1,5 +1,6 @@
 package com.data_integration.c.controller.course;
 
+import com.data_integration.c.PO.Course;
 import com.data_integration.c.VO.CourseVO;
 import com.data_integration.c.service.course.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,5 +32,10 @@ public class CourseController {
     @GetMapping("/getSharedCoursesXml")
     public String getSharedCoursesXml() throws Exception{
         return courseService.getSharedCoursesXml();
+    }
+
+    @GetMapping("/getOtherDepartmentCourses")
+    public List<Course> getOtherDepartmentCourses() throws Exception{
+        return courseService.getOtherDepartmentCourses();
     }
 }

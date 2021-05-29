@@ -20,7 +20,7 @@ public class ACourseService {
         URL xslUrl = getClass().getResource("/xsl/a/classToA.xsl");
         String bToA = Utils.transform(URLDecoder.decode(xslUrl.getFile(),"UTF-8"),bXml);
         String cToA = Utils.transform(URLDecoder.decode(xslUrl.getFile(),"UTF-8"),cXml);
-        // bToA去掉尾，cToA去掉头，拼接返回
+        // TODO bToA去掉尾，cToA去掉头，拼接返回
         return "";
     }
 }

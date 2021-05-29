@@ -19,7 +19,9 @@ import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
+import java.io.ByteArrayInputStream;
 import java.io.StringWriter;
+import java.nio.charset.StandardCharsets;
 
 @RestController
 @RequestMapping("/test")
@@ -102,17 +104,16 @@ public class TestController {
 
     /**
      * 将 XML解析成Document对象并返回
-     * 如果传进来的路径是空，那么新建一个Document对象返回
+     * 如果传进来的是null，那么新建一个Document对象返回
      *
-     * @param xmlPath 目标XML文件的路径
      * @return XML文档的模型树
      */
-    public static Document getDocument(String xmlPath) throws Exception {
+    public static Document getDocument(String content) throws Exception {
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         DocumentBuilder builder = factory.newDocumentBuilder();
         // 如果xmlPath是空，直接创建一个新的
-        if (xmlPath == null) return builder.newDocument();
+        if (content == null) return builder.newDocument();
         // 不是空的话就返回已有的document对象
-        return builder.parse(xmlPath);
+        return builder.parse(new ByteArrayInputStream(content.getBytes(StandardCharsets.UTF_8)));
     }
 }
