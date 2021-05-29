@@ -7,14 +7,12 @@
     <!--    课程编号类型-->
     <simpleType name="课程编号类型">
         <restriction base="string">
-            <length value="9"/>
         </restriction>
     </simpleType>
 
 <!--    课程名称类型-->
     <simpleType name="课程名称类型">
         <restriction base="string">
-            <maxLength value="40"/>
         </restriction>
     </simpleType>
 
@@ -26,21 +24,18 @@
 <!--    学分类型-->
     <simpleType name="学分类型">
         <restriction base="unsignedByte">
-            <maxInclusive value="5"/>
         </restriction>
     </simpleType>
 
 <!--    教师名称类型-->
     <simpleType name="授课教师类型">
         <restriction base="string">
-            <maxLength value="20"/>
         </restriction>
     </simpleType>
 
 <!--    授课地点类型-->
     <simpleType name="授课地点类型">
         <restriction base="string">
-            <maxLength value="40"/>
         </restriction>
     </simpleType>
 

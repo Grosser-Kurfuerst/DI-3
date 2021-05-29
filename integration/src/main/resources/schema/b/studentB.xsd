@@ -7,35 +7,30 @@
     <!--    学号类型-->
     <simpleType name="学号类型">
         <restriction base="string">
-            <maxLength value="9"/>
         </restriction>
     </simpleType>
 
     <!--    学生姓名类型-->
     <simpleType name="学生姓名类型">
         <restriction base="string">
-            <maxLength value="10"/>
         </restriction>
     </simpleType>
 
 <!--    性别类型-->
     <simpleType name="性别类型">
         <restriction base="string">
-            <maxLength value="2"/>
         </restriction>
     </simpleType>
 
     <!--    专业类型-->
     <simpleType name="专业类型">
         <restriction base="string">
-            <maxLength value="16"/>
         </restriction>
     </simpleType>
 
 <!--    密码类型-->
     <simpleType name="密码类型">
         <restriction base="string">
-            <maxLength value="6"/>
         </restriction>
     </simpleType>
 

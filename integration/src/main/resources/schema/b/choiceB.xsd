@@ -7,7 +7,6 @@
 
     <simpleType name="学生学号类型">
         <restriction base="string">
-            <length value="9"/>
         </restriction>
     </simpleType>
 
@@ -18,7 +17,6 @@
 
     <simpleType name="成绩类型">
         <restriction base="string">
-            <maxLength value="3"/>
         </restriction>
     </simpleType>
 

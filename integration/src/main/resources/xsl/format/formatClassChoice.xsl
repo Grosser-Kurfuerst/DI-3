@@ -16,7 +16,7 @@
                         <xsl:value-of select="a:学号"/>
                     </sid>
                     <cid>
-                        <xsl:value-of select="substring(concat(&quot;000000000&quot;,a:课程编号),string-length(concat(&quot;000000000&quot;,a:课程编号))-9,9)"/>
+                        <xsl:value-of select="a:课程编号"/>
                     </cid>
                     <score>
                         <xsl:value-of select="a:成绩"/>
@@ -37,7 +37,7 @@
                         <xsl:value-of select="b:学生编号"/>
                     </sid>
                     <cid>
-                        <xsl:value-of select="substring(concat(&quot;000000000&quot;,b:课程编号),string-length(concat(&quot;000000000&quot;,b:课程编号))-9,9)"/>
+                        <xsl:value-of select="b:课程编号"/>
                     </cid>
                     <score>
                         <xsl:value-of select="b:得分"/>
@@ -58,7 +58,7 @@
                         <xsl:value-of select="c:Sno"/>
                     </sid>
                     <cid>
-                        <xsl:value-of select="substring(concat(&quot;000000000&quot;,c:Cno),string-length(concat(&quot;000000000&quot;,c:Cno))-9,9)"/>
+                        <xsl:value-of select="c:Cno"/>
                     </cid>
                     <score>
                         <xsl:value-of select="c:Grd"/>
