@@ -9,25 +9,25 @@ b发送xml到集成服务器，集成服务器使用xsd验证和xsl转换
 # 安排、接口名和代码大致逻辑
 - 6月4号24点总ddl  
     - 5月29号24点前写完各自服务器向集成服务器发送共享的课程列表xml的功能
-        - 各院系服务器接口名为: 集成服务器/{a,b,c}/course/getSharedCoursesXml
+        - 各院系服务器接口名为: 院系服务器ip:端口/{a,b,c}/course/getSharedCoursesXml
         - 只返回共享课程的xml
     - 5月31号24点前写完集成服务器获取其他院系课程再返回给本院系再用json返回给前端的功能  
-        - 各院系服务器给前端的接口名为: 院系服务器/{a,b,c}/course/getOtherDepartmentCourses，该接口调用集成服务器接口  
-        - 集成服务器的接口名为: 集成服务器/{a,b,c}/course/getOtherDepartmentCourses
-            - 集成服务器/a/course/getOtherDepartmentCourses 调用bc服务器的getSharedCoursesXml，返回给集成服务器
+        - 各院系服务器给前端的接口名为: 院系服务器ip:端口/{a,b,c}/course/getOtherDepartmentCourses，该接口调用集成服务器接口  
+        - 集成服务器的接口名为: 集成服务器ip:9000/{a,b,c}/course/getOtherDepartmentCourses
+            - 集成服务器ip:9000/a/course/getOtherDepartmentCourses 调用bc服务器的getSharedCoursesXml，返回给集成服务器
             - 集成服务器最终都转换为a的格式返回给a服务器
             - a服务器转化为对象，再通过springboot自动转为json返回给前端
     - 6月2号24点前写完各服务器检测到选其他院的课后发给集成服务器的功能  
         - 修改原选课接口逻辑，如果是本院课程走原流程
         - 如果学生和课程院系不一致（学生一定是本院的学生），给集成服务器发送转换为集成格式的学生信息和选课信息
-            - 集成服务器的接口名为: 集成服务器/{a,b,c}/courseSelecting/addCourseSelecting
-            - 比如a检测到选b的课，就向 集成服务器/b/courseSelecting/addCourseSelecting 发送消息
+            - 集成服务器的接口名为: 集成服务器ip:9000/{a,b,c}/courseSelecting/addCourseSelecting
+            - 比如a检测到选b的课，就向 集成服务器ip:9000/b/courseSelecting/addCourseSelecting 发送消息
         - 生成学生和选课的xml字符串，再拼接，头部加上<chooseOther>，尾部加上</chooseOther>，发送给集成服务器
     - 6月4号24点前写完集成服务器向其他院系选课的功能
-        - 如上所述，集成服务器的接口名为: 集成服务器/{a,b,c}/courseSelecting/addCourseSelecting
+        - 如上所述，集成服务器的接口名为: 集成服务器ip:9000/{a,b,c}/courseSelecting/addCourseSelecting
         - 集成服务器去除头部的<chooseOther>和尾部的</chooseOther>，分割学生xml和选课xml
         - 将学生和选课转换为课程所在院系的格式，发送给课程所在院系的服务器
-        - 院系服务器接口名为: 院系服务器/{a,b,c}/courseSelecting/addCourseSelectingXml
+        - 院系服务器接口名为: 院系服务器ip:端口/{a,b,c}/courseSelecting/addCourseSelectingXml
         - 院系服务器检验发过来的学生权限是否>=课程权限
         - 如果学生权限是否>=课程权限，数据库中插入选课并返回"true"，反之返回"false"
         - 集成服务器获得选课是否成功的信息，并原样返回
