@@ -23,9 +23,20 @@ public class SharedCoursesGetter {
     @Autowired
     RestTemplate restTemplate;
 
-    // TODO 填充
-    public String getASharedCourses(){
-        return "";
+    public String getASharedCourses() throws Exception{
+        // 获得共享课程
+        // TODO 这里是a服务器url
+        String res = restTemplate.getForObject("http://localhost:8086/a/course/getSharedCoursesXml",String.class);
+        System.out.println(res);
+
+        // 验证
+        URL schemaUrl = getClass().getResource("/schema/a/classA.xsd");
+        File schemaFile = new File(URLDecoder.decode(schemaUrl.getFile(),"UTF-8"));
+        Utils.validateSchema(schemaFile,res);
+
+        // 转换为统一格式
+        URL xslUrl = getClass().getResource("/xsl/format/formatClass.xsl");
+        return Utils.transform(URLDecoder.decode(xslUrl.getFile(),"UTF-8"),res);
     }
 
     public String getBSharedCourses() throws Exception {

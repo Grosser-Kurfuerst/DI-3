@@ -29,7 +29,10 @@ public class CourseController {
         courseService.updateCourseShare(coursenum,share);
     }
 
-    // TODO 返回共享课程
+    @GetMapping("/getSharedCoursesXml")
+    public String getSharedCoursesXml() throws Exception{
+        return courseService.getSharedCoursesXml();
+    }
 
     @GetMapping("/getOtherDepartmentCourses")
     public List<Course> getOtherDepartmentCourses() throws Exception{

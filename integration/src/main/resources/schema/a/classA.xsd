@@ -43,11 +43,11 @@
     <!--    单个课程类型-->
     <complexType name="单个课程类型">
         <all>
-            <element name="课程编号" type="a:课程编号类型"/>
-            <element name="课程名称" type="a:课程名称类型"/>
-            <element name="学分" type="a:学分类型"/>
-            <element name="授课老师" type="a:授课教师类型"/>
-            <element name="授课地点" type="a:授课地点类型"/>
+            <element name="coursenum" type="a:课程编号类型"/>
+            <element name="coursename" type="a:课程名称类型"/>
+            <element name="credit" type="a:学分类型"/>
+            <element name="teacher" type="a:授课教师类型"/>
+            <element name="place" type="a:授课地点类型"/>
             <!--            <element name="共享" type="b:共享类型"/>-->
         </all>
     </complexType>

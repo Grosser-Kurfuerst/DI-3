@@ -10,21 +10,21 @@
             <!--    对于每一个课程-->
             <xsl:for-each select="jw:class">
                 <class>
-                    <课程编号>
+                    <coursenum>
                         <xsl:value-of select="jw:id"/>
-                    </课程编号>
-                    <课程名称>
+                    </coursenum>
+                    <coursename>
                         <xsl:value-of select="jw:name"/>
-                    </课程名称>
-                    <学分>
+                    </coursename>
+                    <credit>
                         <xsl:value-of select="jw:score"/>
-                    </学分>
-                    <授课老师>
+                    </credit>
+                    <teacher>
                         <xsl:value-of select="jw:teacher"/>
-                    </授课老师>
-                    <授课地点>
+                    </teacher>
+                    <place>
                         <xsl:value-of select="jw:location"/>
-                    </授课地点>
+                    </place>
                 </class>
             </xsl:for-each>
         </classes>

@@ -19,6 +19,50 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Utils {
+
+    /**
+     * course转a课程xml
+     * @param courseList
+     * @return
+     * @throws Exception
+     */
+    public static String coursesToXml(List<Course> courseList) throws Exception {
+        Document document = getDocument(null);
+        Element root = document.createElement("classes");
+        root.setAttribute("xmlns", "http://a.nju.edu.cn/schema");
+        document.appendChild(root);
+        for (Course course:courseList){
+            Element classElement = document.createElement("class");
+            root.appendChild(classElement);
+
+            Element cnoElement = document.createElement("coursenum");
+            cnoElement.setTextContent(course.coursenum);
+            classElement.appendChild(cnoElement);
+
+            Element cnmElement = document.createElement("coursename");
+            cnmElement.setTextContent(course.coursename);
+            classElement.appendChild(cnmElement);
+//
+//            Element ctmElement = document.createElement("Ctm");
+//            ctmElement.setTextContent(""+course.ctm);
+//            classElement.appendChild(ctmElement);
+
+            Element cptElement = document.createElement("credit");
+            cptElement.setTextContent(""+course.credit);
+            classElement.appendChild(cptElement);
+
+            Element tecElement = document.createElement("teacher");
+            tecElement.setTextContent(course.teacher);
+            classElement.appendChild(tecElement);
+
+            Element plaElement = document.createElement("place");
+            plaElement.setTextContent(course.place);
+            classElement.appendChild(plaElement);
+        }
+        return toFormatedXML(document);
+    }
+
+
     /**
      * xml dom转字符串
      */

@@ -12,19 +12,19 @@
             <xsl:for-each select="a:class">
                 <class>
                     <id>
-                        <xsl:value-of select="a:课程编号"/>
+                        <xsl:value-of select="a:coursenum"/>
                     </id>
                     <name>
-                        <xsl:value-of select="a:课程名称"/>
+                        <xsl:value-of select="a:coursename"/>
                     </name>
                     <score>
-                        <xsl:value-of select="a:学分"/>
+                        <xsl:value-of select="a:credit"/>
                     </score>
                     <teacher>
-                        <xsl:value-of select="a:授课老师"/>
+                        <xsl:value-of select="a:teacher"/>
                     </teacher>
                     <location>
-                        <xsl:value-of select="a:授课地点"/>
+                        <xsl:value-of select="a:place"/>
                     </location>
                 </class>
             </xsl:for-each>
