@@ -16,11 +16,6 @@
         </restriction>
     </simpleType>
 
-<!--    课时类型-->
-    <simpleType name="课时类型">
-        <restriction base="unsignedByte"/>
-    </simpleType>
-
 <!--    学分类型-->
     <simpleType name="学分类型">
         <restriction base="unsignedByte">
@@ -44,7 +39,6 @@
         <all>
             <element name="id" type="jw:课程编号类型"/>
             <element name="name" type="jw:课程名称类型"/>
-            <element name="time" type="jw:课时类型"/>
             <element name="score" type="jw:学分类型"/>
             <element name="teacher" type="jw:授课教师类型"/>
             <element name="location" type="jw:授课地点类型"/>

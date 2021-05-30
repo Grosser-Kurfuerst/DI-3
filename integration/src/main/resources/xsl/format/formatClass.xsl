@@ -17,9 +17,6 @@
                     <name>
                         <xsl:value-of select="a:课程名称"/>
                     </name>
-                    <time>
-                        <xsl:value-of select="a:课时"/>
-                    </time>
                     <score>
                         <xsl:value-of select="a:学分"/>
                     </score>
@@ -46,9 +43,6 @@
                     <name>
                         <xsl:value-of select="b:名称"/>
                     </name>
-                    <time>
-                        <xsl:value-of select="b:课时"/>
-                    </time>
                     <score>
                         <xsl:value-of select="b:学分"/>
                     </score>
@@ -75,9 +69,6 @@
                     <name>
                         <xsl:value-of select="c:Cnm"/>
                     </name>
-                    <time>
-                        <xsl:value-of select="c:Ctm"/>
-                    </time>
                     <score>
                         <xsl:value-of select="c:Cpt"/>
                     </score>

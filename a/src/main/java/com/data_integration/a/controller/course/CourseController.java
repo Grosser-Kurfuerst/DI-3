@@ -1,5 +1,6 @@
 package com.data_integration.a.controller.course;
 
+import com.data_integration.a.PO.Course;
 import com.data_integration.a.VO.CourseVO;
 import com.data_integration.a.service.course.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,5 +27,12 @@ public class CourseController {
     @PostMapping("/updateCourseShare")
     public void updateCourseShare(@RequestParam String coursenum, @RequestParam String share){
         courseService.updateCourseShare(coursenum,share);
+    }
+
+    // TODO 返回共享课程
+
+    @GetMapping("/getOtherDepartmentCourses")
+    public List<Course> getOtherDepartmentCourses() throws Exception{
+        return courseService.getOtherDepartmentCourses();
     }
 }

@@ -17,7 +17,6 @@
                         <xsl:value-of select="jw:name"/>
                     </Cnm>
                     <Ctm>
-                        <xsl:value-of select="jw:time"/>
                     </Ctm>
                     <Cpt>
                         <xsl:value-of select="jw:score"/>

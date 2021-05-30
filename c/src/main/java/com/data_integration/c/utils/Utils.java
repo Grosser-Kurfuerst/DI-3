@@ -125,9 +125,6 @@ public class Utils {
                     case "Cnm":
                         course.cnm = nodeTextValue;
                         break;
-                    case "Ctm":
-                        course.ctm = Integer.parseInt(nodeTextValue);
-                        break;
                     case "Cpt":
                         course.cpt = Integer.parseInt(nodeTextValue);
                         break;

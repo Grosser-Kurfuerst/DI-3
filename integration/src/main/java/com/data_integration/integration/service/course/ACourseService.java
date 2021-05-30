@@ -20,7 +20,11 @@ public class ACourseService {
         URL xslUrl = getClass().getResource("/xsl/a/classToA.xsl");
         String bToA = Utils.transform(URLDecoder.decode(xslUrl.getFile(),"UTF-8"),bXml);
         String cToA = Utils.transform(URLDecoder.decode(xslUrl.getFile(),"UTF-8"),cXml);
-        // TODO bToA去掉尾，cToA去掉头，拼接返回
-        return "";
+        // bToA去掉尾，cToA去掉头，拼接返回
+        int index_tail = bToA.indexOf("</classes>");
+        bToA = bToA.substring(0,index_tail);
+        int index_head = cToA.indexOf("<class>");
+        cToA = cToA.substring(index_head);
+        return bToA+cToA;
     }
 }

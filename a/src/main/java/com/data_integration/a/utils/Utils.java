@@ -1,6 +1,6 @@
-package com.data_integration.b.utils;
+package com.data_integration.a.utils;
 
-import com.data_integration.b.pojo.course.Course;
+import com.data_integration.a.PO.Course;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -54,54 +54,9 @@ public class Utils {
         return builder.parse(new ByteArrayInputStream(content.getBytes(StandardCharsets.UTF_8)));
     }
 
-    /**
-     * course转b课程xml
-     */
-    public static String coursesToXml(List<Course> courseList) throws Exception {
-        Document document = getDocument(null);
-        Element root = document.createElement("classes");
-        root.setAttribute("xmlns", "http://b.nju.edu.cn/schema");
-        document.appendChild(root);
-        for (Course course:courseList){
-            Element classElement = document.createElement("class");
-            root.appendChild(classElement);
-
-            // 课程编号
-            Element classIdElement = document.createElement("编号");
-            classIdElement.setTextContent(course.getCourseId());
-            classElement.appendChild(classIdElement);
-
-            // 课程名
-            Element classNameElement = document.createElement("名称");
-            classNameElement.setTextContent(course.getCourseName());
-            classElement.appendChild(classNameElement);
-
-            // 课时元素
-            Element classTimeElement = document.createElement("课时");
-            classTimeElement.setTextContent(course.getCourseTime());
-            classElement.appendChild(classTimeElement);
-
-            // 学分元素
-            Element classScoreElement = document.createElement("学分");
-            classScoreElement.setTextContent(course.getScore());
-            classElement.appendChild(classScoreElement);
-
-            // 老师元素
-            Element teacherElement = document.createElement("老师");
-            teacherElement.setTextContent(course.getTeacherName());
-            classElement.appendChild(teacherElement);
-
-            // 上课地点元素
-            Element placeElement = document.createElement("地点");
-            placeElement.setTextContent(course.getTeachingPlace());
-            classElement.appendChild(placeElement);
-        }
-
-        return toFormatedXML(document);
-    }
 
     /**
-     * B格式的课程xml转对象
+     * A格式的课程xml转对象
      */
     public static List<Course> xmlToCourses(String content) throws Exception{
         List<Course> courseList = new ArrayList<>();
@@ -117,20 +72,20 @@ public class Utils {
                 String nodeName = child.getNodeName();
                 String nodeTextValue = child.getFirstChild().getNodeValue();
                 switch (nodeName){
-                    case "编号":
-                        course.setCourseId(nodeTextValue);
+                    case "课程编号":
+                        course.coursenum = nodeTextValue;
                         break;
-                    case "名称":
-                        course.setCourseName(nodeTextValue);
+                    case "课程名称":
+                        course.coursename = nodeTextValue;
                         break;
                     case "学分":
-                        course.setScore(nodeTextValue);
+                        course.credit = Integer.parseInt(nodeTextValue);
                         break;
-                    case "老师":
-                        course.setTeacherName(nodeTextValue);
+                    case "授课老师":
+                        course.teacher = nodeTextValue;
                         break;
-                    case "地点":
-                        course.setTeachingPlace(nodeTextValue);
+                    case "授课地点":
+                        course.place = nodeTextValue;
                         break;
                     default:
                         break;
@@ -141,3 +96,4 @@ public class Utils {
         return courseList;
     }
 }
+

@@ -17,5 +17,6 @@ public class UtilsTest {
     public void testXmlToCourses() throws Exception{
         String content = courseService.getSharedCoursesXml();
         Utils.xmlToCourses(content);
+        System.out.println(content);
     }
 }
