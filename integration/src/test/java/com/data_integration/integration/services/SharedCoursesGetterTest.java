@@ -10,6 +10,7 @@ import org.springframework.boot.SpringBootConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.io.File;
 import java.net.URL;
 import java.net.URLDecoder;
 
@@ -34,9 +35,14 @@ public class SharedCoursesGetterTest {
         int index_head = transformed.indexOf("<class>");
         transformed = transformed.substring(index_head);
         System.out.println(transformed);
+
         // 从集成格式转回c格式
         xslUrl = getClass().getResource("/xsl/c/classToC.xsl");
         transformed = Utils.transform(URLDecoder.decode(xslUrl.getFile(),"UTF-8"),res);
         System.out.println(transformed);
+        // 验证
+        URL schemaUrl = getClass().getResource("/schema/c/classC.xsd");
+        File schemaFile = new File(URLDecoder.decode(schemaUrl.getFile(),"UTF-8"));
+        Utils.validateSchema(schemaFile,transformed);
     }
 }
