@@ -49,8 +49,8 @@ public class CourseService {
     }
 
     public List<Course> getOtherDepartmentCourses() throws Exception {
-        // TODO 调用集成服务器接口 获得a和b的xml
-        String content = "";
+        // TODO 这里是集成服务器url
+        String content = restTemplate.getForObject("http://localhost:9000/c/course/getOtherDepartmentCourses",String.class);
         return Utils.xmlToCourses(content);
     }
 }

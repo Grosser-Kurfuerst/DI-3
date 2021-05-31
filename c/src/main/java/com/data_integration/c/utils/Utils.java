@@ -117,7 +117,10 @@ public class Utils {
             // 遍历class下元素 坑在于元素名用getNodeName() 值要getFirstChild().getNodeValue()
             for (Node child = classNode.getFirstChild(); child != null; child = child.getNextSibling()) {
                 String nodeName = child.getNodeName();
-                String nodeTextValue = child.getFirstChild().getNodeValue();
+                // 因为转换到集成格式后会丢失课时信息，所以课时的getFirstChild()为null
+                String nodeTextValue = null;
+                if (child.getFirstChild()!=null)
+                    nodeTextValue = child.getFirstChild().getNodeValue();
                 switch (nodeName){
                     case "Cno":
                         course.cno = nodeTextValue;
