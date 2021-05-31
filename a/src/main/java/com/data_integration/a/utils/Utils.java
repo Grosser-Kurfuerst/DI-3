@@ -35,27 +35,23 @@ public class Utils {
             Element classElement = document.createElement("class");
             root.appendChild(classElement);
 
-            Element cnoElement = document.createElement("coursenum");
+            Element cnoElement = document.createElement("课程编号");
             cnoElement.setTextContent(course.coursenum);
             classElement.appendChild(cnoElement);
 
-            Element cnmElement = document.createElement("coursename");
+            Element cnmElement = document.createElement("课程名称");
             cnmElement.setTextContent(course.coursename);
             classElement.appendChild(cnmElement);
-//
-//            Element ctmElement = document.createElement("Ctm");
-//            ctmElement.setTextContent(""+course.ctm);
-//            classElement.appendChild(ctmElement);
 
-            Element cptElement = document.createElement("credit");
+            Element cptElement = document.createElement("学分");
             cptElement.setTextContent(""+course.credit);
             classElement.appendChild(cptElement);
 
-            Element tecElement = document.createElement("teacher");
+            Element tecElement = document.createElement("授课老师");
             tecElement.setTextContent(course.teacher);
             classElement.appendChild(tecElement);
 
-            Element plaElement = document.createElement("place");
+            Element plaElement = document.createElement("授课地点");
             plaElement.setTextContent(course.place);
             classElement.appendChild(plaElement);
         }
