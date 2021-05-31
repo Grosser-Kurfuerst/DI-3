@@ -30,7 +30,7 @@ public class CourseController {
     }
 
     @GetMapping("/getSharedCoursesXml")
-    String getSharedCoursesXml() {
+    String getSharedCoursesXml() throws Exception {
         return courseService.getSharedCoursesXml();
     }
 

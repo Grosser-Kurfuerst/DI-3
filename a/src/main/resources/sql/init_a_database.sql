@@ -2,6 +2,9 @@
 --  注意data_integration_a和创建的 数据库名一致，不然就全部替换成你自定义名字的数据库名字
 USE [data_integration_a]
 
+-- 删除外键约束 不然不能drop account
+ALTER TABLE DBO.student DROP CONSTRAINT FK_student_account
+
 -- 账户表 要在前面，student 引用了外键
 IF OBJECT_ID('dbo.account', 'U') IS NOT NULL
 DROP TABLE dbo.account
@@ -16,9 +19,9 @@ create table account
 )
 go
 
-INSERT INTO data_integration_a.dbo.account (account, password, permission) VALUES (N'a001', N'123', N'4   ');
-INSERT INTO data_integration_a.dbo.account (account, password, permission) VALUES (N'a002', N'1234', N'2   ');
-INSERT INTO data_integration_a.dbo.account (account, password, permission) VALUES (N'm001', N'123', N'2   ');
+INSERT INTO data_integration_a.dbo.account (account, password, permission) VALUES (N'001a', N'123', N'4   ');
+INSERT INTO data_integration_a.dbo.account (account, password, permission) VALUES (N'002a', N'1234', N'2   ');
+INSERT INTO data_integration_a.dbo.account (account, password, permission) VALUES (N'003a', N'123', N'2   ');
 -- 学生表
 -- Create a new table called 'student' in schema 'dbo'
 -- Drop the table if it already exists
@@ -41,8 +44,8 @@ create table student
 )
 go
 
-INSERT INTO data_integration_a.dbo.student (stunum, stuname, sex, department, pwd, account, permission) VALUES (N'a0001', N'wkxg', N'F', N'se', N'123', N'a001', N'4');
-INSERT INTO data_integration_a.dbo.student (stunum, stuname, sex, department, pwd, account, permission) VALUES (N'a0002', N'lhy', N'M', N'rw', N'123', N'a002', N'3');
+INSERT INTO data_integration_a.dbo.student (stunum, stuname, sex, department, pwd, account, permission) VALUES (N'0001a', N'wkxg', N'F', N'se', N'123', N'001a', N'4');
+INSERT INTO data_integration_a.dbo.student (stunum, stuname, sex, department, pwd, account, permission) VALUES (N'0002a', N'lhy', N'M', N'rw', N'123', N'002a', N'3');
 
 -- 选课表
 IF OBJECT_ID('dbo.courseselection', 'U') IS NOT NULL
@@ -58,9 +61,9 @@ create table courseselection
 )
 go
 
-INSERT INTO data_integration_a.dbo.courseselection (coursenum, studentnum, record) VALUES (N'ac001', N'a0001', 90);
-INSERT INTO data_integration_a.dbo.courseselection (coursenum, studentnum, record) VALUES (N'ac002', N'a0002', 0);
-INSERT INTO data_integration_a.dbo.courseselection (coursenum, studentnum, record) VALUES (N'ac002', N'a0001', 10);
+INSERT INTO data_integration_a.dbo.courseselection (coursenum, studentnum, record) VALUES (N'0001a', N'0001a', 90);
+INSERT INTO data_integration_a.dbo.courseselection (coursenum, studentnum, record) VALUES (N'0002a', N'0002a', 0);
+INSERT INTO data_integration_a.dbo.courseselection (coursenum, studentnum, record) VALUES (N'0002a', N'0001a', 10);
 -- 课程表
 IF OBJECT_ID('dbo.course', 'U') IS NOT NULL
 DROP TABLE dbo.course
@@ -79,6 +82,6 @@ create table course
 )
 go
 
-INSERT INTO data_integration_a.dbo.course (coursenum, coursename, credit, teacher, place, share, permission) VALUES (N'ac001', N'mdxtsj', N'3', N'zh', N'ctm', N'N', N'3');
-INSERT INTO data_integration_a.dbo.course (coursenum, coursename, credit, teacher, place, share, permission) VALUES (N'ac002', N'mdljzh', N'3', N'zh', N'ctm', N'Y', N'3');
+INSERT INTO data_integration_a.dbo.course (coursenum, coursename, credit, teacher, place, share, permission) VALUES (N'0001a', N'mdxtsj', N'3', N'zh', N'ctm', N'N', N'3');
+INSERT INTO data_integration_a.dbo.course (coursenum, coursename, credit, teacher, place, share, permission) VALUES (N'0002a', N'mdljzh', N'3', N'zh', N'ctm', N'Y', N'3');
 
