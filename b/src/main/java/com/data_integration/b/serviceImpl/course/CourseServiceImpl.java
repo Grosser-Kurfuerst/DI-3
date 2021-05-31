@@ -53,22 +53,16 @@ public class CourseServiceImpl implements CourseService {
 
     /**获取所有共享课程的XML文件*/
     @Override
-    public String getSharedCoursesXml() {
+    public String getSharedCoursesXml() throws Exception {
         List<Course> sharedClassList = getSharedCourses();
-        try {
-            String outcome = Utils.coursesToXml(sharedClassList);
-            return outcome;
-        } catch (Exception ignored) {}
-        return null;
+        String outcome = Utils.coursesToXml(sharedClassList);
+        return outcome;
     }
 
     /**获取其它院系的共享课程*/
     @Override
-    public List<Course> getOtherDepartmentCourses() {
-        try {
-            String content = restTemplate.getForObject("http://localhost:9000/b/course/getOtherDepartmentCourses",String.class);
-            return Utils.xmlToCourses(content);
-        } catch (Exception ignored) {}
-        return null;
+    public List<Course> getOtherDepartmentCourses() throws Exception {
+        String content = restTemplate.getForObject("http://localhost:9000/b/course/getOtherDepartmentCourses",String.class);
+        return Utils.xmlToCourses(content);
     }
 }
