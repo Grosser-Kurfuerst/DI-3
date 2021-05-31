@@ -35,23 +35,23 @@ public class Utils {
             Element classElement = document.createElement("class");
             root.appendChild(classElement);
 
-            Element cnoElement = document.createElement("课程编号");
+            Element cnoElement = document.createElement("coursenum");
             cnoElement.setTextContent(course.coursenum);
             classElement.appendChild(cnoElement);
 
-            Element cnmElement = document.createElement("课程名称");
+            Element cnmElement = document.createElement("coursename");
             cnmElement.setTextContent(course.coursename);
             classElement.appendChild(cnmElement);
 
-            Element cptElement = document.createElement("学分");
+            Element cptElement = document.createElement("credit");
             cptElement.setTextContent(""+course.credit);
             classElement.appendChild(cptElement);
 
-            Element tecElement = document.createElement("授课老师");
+            Element tecElement = document.createElement("teacher");
             tecElement.setTextContent(course.teacher);
             classElement.appendChild(tecElement);
 
-            Element plaElement = document.createElement("授课地点");
+            Element plaElement = document.createElement("place");
             plaElement.setTextContent(course.place);
             classElement.appendChild(plaElement);
         }
@@ -112,19 +112,19 @@ public class Utils {
                 String nodeName = child.getNodeName();
                 String nodeTextValue = child.getFirstChild().getNodeValue();
                 switch (nodeName){
-                    case "课程编号":
+                    case "coursenum":
                         course.coursenum = nodeTextValue;
                         break;
-                    case "课程名称":
+                    case "coursename":
                         course.coursename = nodeTextValue;
                         break;
-                    case "学分":
+                    case "credit":
                         course.credit = Integer.parseInt(nodeTextValue);
                         break;
-                    case "授课老师":
+                    case "teacher":
                         course.teacher = nodeTextValue;
                         break;
-                    case "授课地点":
+                    case "place":
                         course.place = nodeTextValue;
                         break;
                     default:
