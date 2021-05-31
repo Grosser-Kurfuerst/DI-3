@@ -40,7 +40,7 @@ public class SharedCoursesGetter {
     }
 
     public String getBSharedCourses() throws Exception {
-        // TODO 获得B的共享课程XML内容
+        // TODO 这里是b的url
         String res = restTemplate.getForObject("http://localhost:8888/b/course/getSharedCoursesXml",String.class);
         System.out.println(res);
         // 验证
