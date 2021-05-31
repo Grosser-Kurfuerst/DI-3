@@ -23,4 +23,7 @@ public interface CourseService {
 
     /**获取所有的 共享课程的xml文件*/
     String getSharedCoursesXml();
+
+    /**获取其它院系的共享课程*/
+    List<Course> getOtherDepartmentCourses();
 }

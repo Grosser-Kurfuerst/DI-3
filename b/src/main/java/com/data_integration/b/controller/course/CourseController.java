@@ -47,5 +47,9 @@ public class CourseController {
         return courseService.getAllCourses();
     }
 
+    @GetMapping("/getOtherDepartmentCourses")
+    public List<Course> getOtherDepartmentCourses() throws Exception{
+        return courseService.getOtherDepartmentCourses();
+    }
 
 }

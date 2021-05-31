@@ -84,8 +84,8 @@ create table course(
 );
 
 -- 插入课程数据
-insert into course values('03586', 'sjjc', 4, 2, '6f', '202', '0',3);
-insert into course values('66666', 'fwd2021', 4, 2, 'taozs', 'zoom', '1',3);
+insert into course values('0001b', 'sjjc', 4, 2, '6f', '202', '0',3);
+insert into course values('0002b', 'fwd2021', 4, 2, 'taozs', 'zoom', '1',3);
 
 -- 创建学生 - 选课信息 的表
 create table election(
@@ -94,8 +94,8 @@ create table election(
     score varchar2(3) default null,
     constraint PK_election primary key (course_id, student_id)
 ) ;
-insert into election values('03586', '181250207', '91');
-insert into election values('66666', '181250207', '96');
+insert into election values('0001b', '00000001b', '91');
+insert into election values('0002b', '00000001b', '96');
 
 
 commit;
