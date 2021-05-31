@@ -32,8 +32,8 @@ public class CourseSelectingController {
     }
 
     @PostMapping("/addCourseSelecting")
-    public boolean addCourseSelecting(@RequestBody SelectCourseVO selectCourseVO){
-        return courseSelectingService.addCourseSelecting(selectCourseVO);
+    public boolean addCourseSelecting(@RequestBody CourseSelectingVO courseSelectingVO) throws Exception{
+        return courseSelectingService.addCourseSelecting(courseSelectingVO);
     }
 
     @PostMapping("/deleteCourseSelecting")

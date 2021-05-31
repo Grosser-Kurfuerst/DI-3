@@ -89,6 +89,17 @@
         - pla: varchar(18) 上课地点 
         - share: char(1) 是否共享
         - permission: integer 权限
+- GET /c/course/getOtherDepartmentCourses 获取其他院系共享课程
+    - 无参数
+    - 返回数组
+        - cno: char(4) 课程编号
+        - cnm: varchar(10) 课程名
+        - ctm: integer 课时 一定为null
+        - cpt: integer 学分
+        - tec: varchar(20) 教师名
+        - pla: varchar(18) 上课地点
+        - share: char(1) 是否共享 一定为null
+        - permission: integer 权限 一定为null
 - POST /c/course/updateCourseInfo 修改课程信息
     - RequestBody
         - cno: char(4) 课程编号
@@ -129,8 +140,9 @@
         - grd: integer 成绩，可能为null
 - POST /c/courseSelecting/addCourseSelecting 增加一个选课
     - RequestBody
-        - cno: char(4) 课程编号
+        - cno: string 课程编号
         - sno: char(9) 学号
+        - grd: integer 成绩，可以为null
     - 返回值
         - true为成功
         - false为失败，可能是无权限或异常

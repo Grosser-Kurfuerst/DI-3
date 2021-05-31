@@ -22,12 +22,13 @@ b发送xml到集成服务器，集成服务器使用xsd验证和xsl转换
         - 如果学生和课程院系不一致（学生一定是本院的学生），给集成服务器发送转换为集成格式的学生信息和选课信息
             - 集成服务器的接口名为: 集成服务器ip:9000/{a,b,c}/courseSelecting/addCourseSelecting
             - 比如a检测到选b的课，就向 集成服务器ip:9000/b/courseSelecting/addCourseSelecting 发送消息
-        - 生成学生和选课的xml字符串，再拼接，头部加上<chooseOther>，尾部加上</chooseOther>，发送给集成服务器
+        - 生成学生和选课的xml字符串，再拼接，发送给集成服务器
     - 6月4号24点前写完集成服务器向其他院系选课的功能
         - 如上所述，集成服务器的接口名为: 集成服务器ip:9000/{a,b,c}/courseSelecting/addCourseSelecting
-        - 集成服务器去除头部的<chooseOther>和尾部的</chooseOther>，分割学生xml和选课xml
-        - 将学生和选课转换为课程所在院系的格式，发送给课程所在院系的服务器
+        - 集成服务器分割学生xml和选课xml
+        - 将学生和选课转换为课程所在院系的格式，拼接后发送给课程所在院系的服务器
         - 院系服务器接口名为: 院系服务器ip:端口/{a,b,c}/courseSelecting/addCourseSelectingXml
+        - 院系服务器分割学生xml和选课xml，转换为对象
         - 院系服务器检验发过来的学生权限是否>=课程权限
         - 如果学生权限是否>=课程权限，数据库中插入选课并返回"true"，反之返回"false"
         - 集成服务器获得选课是否成功的信息，并原样返回
@@ -48,7 +49,7 @@ A服务器检测到学生和课程院系不一致，
 A院系先生成自己的选课格式和学生格式的xml，  
 再转化为统一格式发送到集成服务器（ABCtoFormat的xsl），  
 集成服务器检验（format的xsd）并转化为B或C的选课和学生格式（ABCtoFormat的xsl），发送给B或C，  
-B或C检查是否有权限，返回选课结果(“true” “false”)，  
+B或C检查是否有权限，返回选课结果(“true” “false”，不是xml)  
 选课信息同时存入两相关院系  
 
 # 数据格式

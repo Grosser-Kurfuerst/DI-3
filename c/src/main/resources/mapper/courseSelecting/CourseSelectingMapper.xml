@@ -14,7 +14,7 @@
         select * from course_selecting where sno=#{sno} and cno=#{cno}
     </select>
     <insert id="addCourseSelecting">
-        insert into course_selecting(cno,sno) values (#{cno},#{sno})
+        insert into course_selecting(cno,sno,grd) values (#{cno},#{sno},#{grd})
     </insert>
     <delete id="deleteCourseSelecting">
         delete from course_selecting where cno=#{cno} and sno=#{sno}

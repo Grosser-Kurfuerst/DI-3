@@ -8,10 +8,18 @@ import com.data_integration.c.VO.SelectCourseVO;
 import com.data_integration.c.mapper.course.CourseMapper;
 import com.data_integration.c.mapper.courseSelecting.CourseSelectingMapper;
 import com.data_integration.c.mapper.student.StudentMapper;
+import com.data_integration.c.utils.Utils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
+import java.io.File;
+import java.net.URL;
+import java.net.URLDecoder;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -23,6 +31,8 @@ public class CourseSelectingService {
     CourseMapper courseMapper;
     @Autowired
     StudentMapper studentMapper;
+    @Autowired
+    RestTemplate restTemplate;
 
     public List<CourseSelectingVO> getAllCourseSelecting(){
         List<CourseSelectingVO> courseSelectingVOList = courseSelectingMapper.getAllCourseSelecting().stream().map(courseSelecting -> {
@@ -53,19 +63,70 @@ public class CourseSelectingService {
         return courseSelectingVOList;
     }
 
-    public boolean addCourseSelecting(SelectCourseVO selectCourseVO){
-        Course course = courseMapper.getCourseByCno(selectCourseVO.cno);
-        Student student = studentMapper.getStudentBySno(selectCourseVO.sno);
-        if(student.permission<course.permission)
-            return false;
-        CourseSelecting courseSelecting = new CourseSelecting();
-        BeanUtils.copyProperties(selectCourseVO,courseSelecting);
-        try {
-            courseSelectingMapper.addCourseSelecting(courseSelecting);
-        }catch (Exception e){
-            return false;
+    public boolean addCourseSelecting(CourseSelectingVO courseSelectingVO) throws Exception {
+        Student student = studentMapper.getStudentBySno(courseSelectingVO.sno);
+        // 是本院的课
+        if(courseSelectingVO.cno.charAt(courseSelectingVO.cno.length()-1) == courseSelectingVO.sno.charAt(courseSelectingVO.sno.length()-1)){
+            Course course = courseMapper.getCourseByCno(courseSelectingVO.cno);
+            if(student.permission<course.permission)
+                return false;
+            CourseSelecting courseSelecting = new CourseSelecting();
+            BeanUtils.copyProperties(courseSelectingVO,courseSelecting);
+            try {
+                courseSelectingMapper.addCourseSelecting(courseSelecting);
+            }catch (Exception e){
+                return false;
+            }
+            return true;
         }
-        return true;
+
+        // 不是本院的课，生成xml并转为集成格式
+        // 学生
+        String studentXml = Utils.studentToXml(student);
+        // 验证
+        URL schemaUrl = getClass().getResource("/schema/studentC.xsd");
+        File schemaFile = new File(URLDecoder.decode(schemaUrl.getFile(),"UTF-8"));
+        Utils.validateSchema(schemaFile,studentXml);
+        // 转换为集成格式
+        URL xslUrl = getClass().getResource("/xsl/formatStudent.xsl");
+        studentXml = Utils.transform(URLDecoder.decode(xslUrl.getFile(),"UTF-8"),studentXml);
+
+        // 选课
+        String selectingXml = Utils.selectingToXml(courseSelectingVO);
+        // 验证
+        schemaUrl = getClass().getResource("/schema/choiceC.xsd");
+        schemaFile = new File(URLDecoder.decode(schemaUrl.getFile(),"UTF-8"));
+        Utils.validateSchema(schemaFile,selectingXml);
+        // 转换为集成格式
+        xslUrl = getClass().getResource("/xsl/formatClassChoice.xsl");
+        selectingXml = Utils.transform(URLDecoder.decode(xslUrl.getFile(),"UTF-8"),selectingXml);
+
+        // 拼接
+        String toSend = studentXml+selectingXml;
+
+        // 使用RestTemplate向集成服务器发送请求
+        HttpHeaders headers = new HttpHeaders();
+        MediaType type = MediaType.parseMediaType("application/xml;charset=UTF-8");
+        headers.setContentType(type);
+        HttpEntity<String> httpEntity = new HttpEntity<>(toSend,headers);
+
+        String res = "";
+        // 是a的课
+        if(courseSelectingVO.cno.charAt(courseSelectingVO.cno.length()-1)=='a'){
+            // res是集成服务器的ResponseBody，是xml字符串
+            // TODO 这里是集成服务器url
+            res = restTemplate.postForObject("http://localhost:9000/a/courseSelecting/addCourseSelecting",httpEntity,String.class);
+        }
+        // 是b的课
+        else if(courseSelectingVO.cno.charAt(courseSelectingVO.cno.length()-1)=='b'){
+            // res是集成服务器的ResponseBody，是xml字符串
+            // TODO 这里是集成服务器url
+            res = restTemplate.postForObject("http://localhost:9000/b/courseSelecting/addCourseSelecting",httpEntity,String.class);
+        }
+        if (res.equals("true"))
+            return true;
+        else
+            return false;
     }
 
     public void deleteCourseSelecting(SelectCourseVO selectCourseVO){
