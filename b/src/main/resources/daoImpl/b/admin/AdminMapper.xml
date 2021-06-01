@@ -10,7 +10,7 @@
     </resultMap>
 
     <select id="getAccountBySid" resultMap="accountResultMap">
-        select * from account where guest_id = #{sid};
+        select * from account where guest_id = #{sid}
     </select>
 
     <update id="updateAccount" parameterType="com.data_integration.b.pojo.account.Account">
