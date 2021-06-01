@@ -42,8 +42,8 @@
         select * from election where course_id = #{cid}
     </select>
 
-    <insert id="addElectionBySidCid">
-        insert into election(course_id, student_id) values(#{cid}, #{sid})
+    <insert id="addElectionBySidCidScore">
+        insert into election(course_id, student_id, score) values(#{cid}, #{sid}, #{score})
     </insert>
 
     <delete id="deleteElectionBySidCid">

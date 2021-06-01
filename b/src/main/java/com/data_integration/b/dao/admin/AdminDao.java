@@ -22,4 +22,6 @@ public interface AdminDao {
     int addAdmin(String aname, String password, int power_grade);
 
     int updateAccount(Account account);
+
+    Account getAccountBySid(String sid);
 }

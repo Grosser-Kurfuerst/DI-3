@@ -73,4 +73,10 @@ public class AdminServiceImpl  implements AdminService {
         if (updateNum == 1) return "更新成功";
         return "更新失败";
     }
+
+    /**根据学生id获取学生账户*/
+    @Override
+    public Account getAccountBySid(String sid) {
+        return adminDao.getAccountBySid(sid);
+    }
 }

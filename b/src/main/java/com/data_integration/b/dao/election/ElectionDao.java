@@ -12,7 +12,7 @@ public interface ElectionDao {
 
     List<Election> getElectionsBySid(String sid);
 
-    int addElectionBySidCid(String cid, String sid);
+    int addElectionBySidCidScore(String cid, String sid, String score);
 
     int deleteElectionBySidCid(String cid, String sid);
 

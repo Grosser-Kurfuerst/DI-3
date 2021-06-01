@@ -2,6 +2,7 @@ package com.data_integration.b.controller.course;
 
 
 import com.data_integration.b.pojo.course.Course;
+import com.data_integration.b.pojo.election.Election;
 import com.data_integration.b.service.course.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -51,5 +52,7 @@ public class CourseController {
     public List<Course> getOtherDepartmentCourses() throws Exception{
         return courseService.getOtherDepartmentCourses();
     }
+
+
 
 }
