@@ -1,10 +1,14 @@
 package com.data_integration.a.utils;
 
 import com.data_integration.a.PO.Course;
+import com.data_integration.a.PO.Student;
+import com.data_integration.a.VO.SelectCourseVO;
+import org.dom4j.io.DocumentResult;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
+import javax.xml.XMLConstants;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.transform.OutputKeys;
@@ -12,7 +16,12 @@ import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
+import javax.xml.transform.stream.StreamSource;
+import javax.xml.validation.Schema;
+import javax.xml.validation.SchemaFactory;
+import javax.xml.validation.Validator;
 import java.io.ByteArrayInputStream;
+import java.io.File;
 import java.io.StringWriter;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
@@ -78,7 +87,60 @@ public class Utils {
 
     }
 
+    /**
+     * 利用 xsl 将 xmlPath 对应的 xml 文件 转换成 targetPath 对应的xml 文件
+     */
+    public static String transform(String xslPath, String content) throws Exception {
 
+        // ① 获取转换器工厂
+        TransformerFactory transformerFactory = TransformerFactory.newInstance();
+        // ② 获取转换器对象实例
+        Transformer transformer = transformerFactory.newTransformer(new StreamSource(xslPath));
+        //③ 进行转换
+        DocumentResult result = new DocumentResult();
+        transformer.transform(new StreamSource(new ByteArrayInputStream(content.getBytes(StandardCharsets.UTF_8))), result);
+        org.dom4j.Document transformedDoc = result.getDocument();
+        return transformedDoc.asXML();
+    }
+    /**
+     * 验证Schema
+     */
+    public static void validateSchema(File schemaFile, String content) throws Exception{
+        String language = XMLConstants.W3C_XML_SCHEMA_NS_URI;
+        SchemaFactory factory = SchemaFactory.newInstance(language);
+        Schema schema = factory.newSchema(schemaFile);
+        Validator validator = schema.newValidator();
+        validator.validate(new StreamSource(new ByteArrayInputStream(content.getBytes(StandardCharsets.UTF_8))));
+    }
+    /**
+     * A格式的学生转xml
+     */
+    public static String studentToXml(Student student) throws Exception {
+        Document document = getDocument(null);
+        Element root = document.createElement("students");
+        root.setAttribute("xmlns", "http://a.nju.edu.cn/schema");
+        document.appendChild(root);
+        Element studentElement = document.createElement("student");
+        root.appendChild(studentElement);
+
+        Element snoElement = document.createElement("stunum");
+        snoElement.setTextContent(student.stunum);
+        studentElement.appendChild(snoElement);
+
+        Element snmElement = document.createElement("stuname");
+        snmElement.setTextContent(student.stuname);
+        studentElement.appendChild(snmElement);
+
+        Element sexElement = document.createElement("sex");
+        sexElement.setTextContent(student.sex);
+        studentElement.appendChild(sexElement);
+
+        Element sdeElement = document.createElement("department");
+        sdeElement.setTextContent(student.department);
+        studentElement.appendChild(sdeElement);
+
+        return toFormatedXML(document);
+    }
     /**
      * 将 XML解析成Document对象并返回
      * 如果传进来的是null，那么新建一个Document对象返回
@@ -134,6 +196,31 @@ public class Utils {
             classNode = classNode.getNextSibling();
         }
         return courseList;
+    }
+    /**
+     * C格式的选课转xml
+     */
+    public static String selectingToXml(SelectCourseVO courseSelectingVO) throws Exception {
+        Document document = getDocument(null);
+        Element root = document.createElement("choices");
+        root.setAttribute("xmlns", "http://a.nju.edu.cn/schema");
+        document.appendChild(root);
+        Element choiceElement = document.createElement("choice");
+        root.appendChild(choiceElement);
+
+        Element snoElement = document.createElement("studentnum");
+        snoElement.setTextContent(courseSelectingVO.studentnum);
+        choiceElement.appendChild(snoElement);
+
+        Element cnoElement = document.createElement("coursenum");
+        cnoElement.setTextContent(courseSelectingVO.coursenum);
+        choiceElement.appendChild(cnoElement);
+
+        Element grdElement = document.createElement("record");
+        grdElement.setTextContent(courseSelectingVO.record==null?null:""+courseSelectingVO.record);
+        choiceElement.appendChild(grdElement);
+
+        return toFormatedXML(document);
     }
 }
 

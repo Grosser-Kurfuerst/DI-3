@@ -14,7 +14,7 @@
         select * from courseselection where studentnum=#{studentnum} and coursenum=#{coursenum}
     </select>
     <insert id="addCourseSelecting">
-        insert into courseselection(coursenum,studentnum) values (#{coursenum},#{studentnum})
+        insert into courseselection(coursenum,studentnum,record) values (#{coursenum},#{studentnum},#{record})
     </insert>
     <delete id="deleteCourseSelecting">
         delete from courseselection where studentnum=#{studentnum} and coursenum=#{coursenum}

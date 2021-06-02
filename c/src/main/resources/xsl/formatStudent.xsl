@@ -13,16 +13,16 @@
             <xsl:for-each select="a:student">
                 <student>
                     <id>
-                        <xsl:value-of select="a:学号"/>
+                        <xsl:value-of select="a:stunum"/>
                     </id>
                     <name>
-                        <xsl:value-of select="a:姓名"/>
+                        <xsl:value-of select="a:stuname"/>
                     </name>
                     <sex>
-                        <xsl:value-of select="a:性别"/>
+                        <xsl:value-of select="a:sex"/>
                     </sex>
                     <major>
-                        <xsl:value-of select="a:院系"/>
+                        <xsl:value-of select="a:department"/>
                     </major>
                 </student>
             </xsl:for-each>

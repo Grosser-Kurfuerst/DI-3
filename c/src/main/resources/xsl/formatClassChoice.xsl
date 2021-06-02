@@ -13,13 +13,13 @@
             <xsl:for-each select="a:choice">
                 <choice>
                     <sid>
-                        <xsl:value-of select="a:学号"/>
+                        <xsl:value-of select="a:studentnum"/>
                     </sid>
                     <cid>
-                        <xsl:value-of select="a:课程编号"/>
+                        <xsl:value-of select="a:coursenum"/>
                     </cid>
                     <score>
-                        <xsl:value-of select="a:成绩"/>
+                        <xsl:value-of select="a:credit"/>
                     </score>
                 </choice>
             </xsl:for-each>
