@@ -28,9 +28,9 @@
         </restriction>
     </simpleType>
 
-<!--    密码类型-->
-    <simpleType name="密码类型">
-        <restriction base="string">
+<!--    权限类型-->
+    <simpleType name="权限类型">
+        <restriction base="unsignedByte">
         </restriction>
     </simpleType>
 
@@ -41,7 +41,7 @@
             <element name="名称" type="b:学生姓名类型"/>
             <element name="性别" type="b:性别类型"/>
             <element name="专业" type="b:专业类型"/>
-<!--            <element name="密码" type="b:密码类型"/>-->
+            <element name="权限" type="b:权限类型"/>
         </all>
     </complexType>
 
