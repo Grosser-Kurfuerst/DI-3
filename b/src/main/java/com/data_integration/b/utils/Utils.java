@@ -182,7 +182,7 @@ public class Utils {
     /**
      * B格式的学生转xml
      */
-    public static String studentToXml(Student student) throws Exception {
+    public static String studentToXml(Student student, int permission) throws Exception {
         Document document = getDocument(null);
         Element root = document.createElement("students");
         root.setAttribute("xmlns", "http://b.nju.edu.cn/schema");
@@ -205,6 +205,10 @@ public class Utils {
         Element sdeElement = document.createElement("专业");
         sdeElement.setTextContent(student.getDepartment());
         studentElement.appendChild(sdeElement);
+
+        Element permissionElement = document.createElement("权限");
+        permissionElement.setTextContent(String.valueOf(permission));
+        studentElement.appendChild(permissionElement);
 
         return toFormatedXML(document);
     }

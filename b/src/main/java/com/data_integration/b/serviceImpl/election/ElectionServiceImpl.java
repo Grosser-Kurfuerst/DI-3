@@ -120,7 +120,7 @@ public class ElectionServiceImpl implements ElectionService {
 
         // 不是本院的课，生成xml并转为集成格式
         // 学生
-        String studentXml = Utils.studentToXml(student);
+        String studentXml = Utils.studentToXml(student, permission);
         // 验证
         URL schemaUrl = getClass().getResource("/schema/studentB.xsd");
         File schemaFile = new File(URLDecoder.decode(schemaUrl.getFile(),"UTF-8"));
