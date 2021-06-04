@@ -47,12 +47,11 @@ public class BSelectingService {
         Utils.validateSchema(schemaFile, choiceXml);
 
         // 将B的student格式和choice格式的发送给B服务器
-
-        // 使用RestTemplate向集成服务器发送请求
         HttpHeaders headers = new HttpHeaders();
         MediaType type = MediaType.parseMediaType("application/xml;charset=UTF-8");
         headers.setContentType(type);
         HttpEntity<String> httpEntity = new HttpEntity<>(studentXml + choiceXml, headers);
+        // TODO 这里是b的url
         String res = restTemplate.postForObject("http://localhost:8888/b/courseSelecting/addCourseSelectingXml", httpEntity, String.class);
         System.out.println(res);
         return res;
