@@ -20,7 +20,6 @@ public class BSelectingController {
         int splitIndex = content.indexOf("</students>")+"</students>".length();
         String studentXml = content.substring(0,splitIndex);
         String choiceXml = content.substring(splitIndex);
-        // TODO 业务
         return selectingService.addCourseSelecting(studentXml, choiceXml);
 
     }

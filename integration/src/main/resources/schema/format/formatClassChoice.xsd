@@ -16,7 +16,7 @@
     </simpleType>
 
     <simpleType name="成绩类型">
-        <restriction base="unsignedByte">
+        <restriction base="string">
         </restriction>
     </simpleType>
 
