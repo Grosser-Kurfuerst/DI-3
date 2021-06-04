@@ -186,9 +186,11 @@ public class ElectionServiceImpl implements ElectionService {
         List<Student> studentList = Utils.xmlToStudents(studentXml);
         List<Election> electionList = Utils.xmlToElections(choiceXml);
 
-
-        // TODO 选课存取数据库逻辑
-
+        // 看该学生有没有权限选择该课程
+        Course courseToSelect = courseService.getCourseByCid(electionList.get(0).getCourseId());
+        if (courseToSelect == null ) return "false"; // 没有该课程Id对应的课程
+        if (courseToSelect.getPowerGrade() > studentList.get(0).getPermission()) return "false"; // 学生的权限不足
+        // 可以选，返回true
         return "true";
     }
 }
