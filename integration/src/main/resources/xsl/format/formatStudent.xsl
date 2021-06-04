@@ -24,6 +24,9 @@
                     <major>
                         <xsl:value-of select="a:department"/>
                     </major>
+                    <permission>
+                        <xsl:value-of select="a:permission"/>
+                    </permission>
                 </student>
             </xsl:for-each>
         </students>
@@ -74,6 +77,9 @@
                     <major>
                         <xsl:value-of select="c:Sde"/>
                     </major>
+                    <permission>
+                        <xsl:value-of select="c:permission"/>
+                    </permission>
                 </student>
             </xsl:for-each>
         </students>

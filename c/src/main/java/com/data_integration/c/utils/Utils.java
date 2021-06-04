@@ -209,6 +209,10 @@ public class Utils {
         sdeElement.setTextContent(student.sde);
         studentElement.appendChild(sdeElement);
 
+        Element permissionElement = document.createElement("permission");
+        permissionElement.setTextContent(""+student.permission);
+        studentElement.appendChild(permissionElement);
+
         return toFormatedXML(document);
     }
 
