@@ -1,6 +1,7 @@
 package com.data_integration.a.utils;
 
 import com.data_integration.a.PO.Course;
+import com.data_integration.a.PO.CourseSelecting;
 import com.data_integration.a.PO.Student;
 import com.data_integration.a.VO.SelectCourseVO;
 import org.dom4j.io.DocumentResult;
@@ -225,6 +226,86 @@ public class Utils {
         choiceElement.appendChild(grdElement);
 
         return toFormatedXML(document);
+    }
+    /**
+     * A格式的学生xml转对象
+     */
+    public static List<Student> xmlToStudents(String content) throws Exception{
+        List<Student> studentList = new ArrayList<>();
+        Document document = getDocument(content);
+        Node studentsNode = document.getFirstChild();
+        Node studentNode = studentsNode.getFirstChild();
+        // 遍历students
+        while (studentNode!=null){
+            Student student = new Student();
+            studentList.add(student);
+            // 遍历class下元素 坑在于元素名用getNodeName() 值要getFirstChild().getNodeValue()
+            for (Node child = studentNode.getFirstChild(); child != null; child = child.getNextSibling()) {
+                String nodeName = child.getNodeName();
+                // 因为转换到集成格式后会丢失课时信息，所以课时的getFirstChild()为null
+                String nodeTextValue = null;
+                if (child.getFirstChild()!=null)
+                    nodeTextValue = child.getFirstChild().getNodeValue();
+                switch (nodeName){
+                    case "stunum":
+                        student.setStunum(nodeTextValue);
+                        break;
+                    case "stuname":
+                        student.setStuname(nodeTextValue);
+                        break;
+                    case "sex":
+                        student.setSex(nodeTextValue);
+                        break;
+                    case "department":
+                        student.setDepartment(nodeTextValue);
+                        break;
+                    case "permission":
+                        student.setPermission(Integer.parseInt(nodeTextValue));
+                        break;
+                    default:
+                        break;
+                }
+            }
+            studentNode = studentNode.getNextSibling();
+        }
+        return studentList;
+    }
+    /**
+     * A格式的选课xml转对象
+     */
+    public static List<CourseSelecting> xmlToElections(String content) throws Exception{
+        List<CourseSelecting> electionList = new ArrayList<>();
+        Document document = getDocument(content);
+        Node electionsNode = document.getFirstChild();
+        Node electionNode = electionsNode.getFirstChild();
+        // 遍历students
+        while (electionNode!=null){
+            CourseSelecting election = new CourseSelecting();
+            electionList.add(election);
+            // 遍历class下元素 坑在于元素名用getNodeName() 值要getFirstChild().getNodeValue()
+            for (Node child = electionNode.getFirstChild(); child != null; child = child.getNextSibling()) {
+                String nodeName = child.getNodeName();
+                // 因为转换到集成格式后会丢失课时信息，所以课时的getFirstChild()为null
+                String nodeTextValue = null;
+                if (child.getFirstChild()!=null)
+                    nodeTextValue = child.getFirstChild().getNodeValue();
+                switch (nodeName){
+                    case "studentnum":
+                        election.setStudentnum(nodeTextValue);
+                        break;
+                    case "coursenum":
+                        election.setCoursenum(nodeTextValue);
+                        break;
+                    case "record":
+                        election.setRecord(Integer.valueOf(nodeTextValue));
+                        break;
+                    default:
+                        break;
+                }
+            }
+            electionNode = electionNode.getNextSibling();
+        }
+        return electionList;
     }
 }
 

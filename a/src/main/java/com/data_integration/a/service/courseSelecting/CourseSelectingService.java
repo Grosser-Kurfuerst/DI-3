@@ -8,6 +8,7 @@ import com.data_integration.a.VO.SelectCourseVO;
 import com.data_integration.a.mapper.course.CourseMapper;
 import com.data_integration.a.mapper.courseSelecting.CourseSelectingMapper;
 import com.data_integration.a.mapper.student.StudentMapper;
+import com.data_integration.a.service.course.CourseService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -35,6 +36,9 @@ public class CourseSelectingService {
     StudentMapper studentMapper;
     @Autowired
     RestTemplate restTemplate;
+    @Autowired
+    CourseService courseService;
+
 
     public List<CourseSelectingVO> getAllCourseSelecting(){
         List<CourseSelectingVO> courseSelectingVOList = courseSelectingMapper.getAllCourseSelecting().stream().map(courseSelecting -> {
@@ -141,5 +145,31 @@ public class CourseSelectingService {
         CourseSelecting courseSelecting = new CourseSelecting();
         BeanUtils.copyProperties(courseSelectingVO,courseSelecting);
         courseSelectingMapper.updateGrade(courseSelecting);
+    }
+
+    public String addCourseSelectingXml(String content) throws Exception{
+        // 分割学生和选课
+        int splitIndex = content.indexOf("</students>")+"</students>".length();
+        String studentXml = content.substring(0,splitIndex);
+        String choiceXml = content.substring(splitIndex);
+        // 验证
+        URL schemaUrl = getClass().getResource("/schema/studentA.xsd");
+        File schemaFile = new File(URLDecoder.decode(schemaUrl.getFile(),"UTF-8"));
+        Utils.validateSchema(schemaFile,studentXml);
+        // 验证
+        schemaUrl = getClass().getResource("/schema/choiceA.xsd");
+        schemaFile = new File(URLDecoder.decode(schemaUrl.getFile(),"UTF-8"));
+        Utils.validateSchema(schemaFile,choiceXml);
+
+        // 将学生xml转换成student对象
+        List<Student> studentList = Utils.xmlToStudents(studentXml);
+        List<CourseSelecting> electionList = Utils.xmlToElections(choiceXml);
+
+        // 看该学生有没有权限选择该课程
+        Course courseToSelect = courseMapper.getCourseByCno(electionList.get(0).getCoursenum());
+        if (courseToSelect == null ) return "false"; // 没有该课程Id对应的课程
+        if (courseToSelect.getPermission() > studentList.get(0).getPermission()) return "false"; // 学生的权限不足
+        // 可以选，返回true
+        return "true";
     }
 }

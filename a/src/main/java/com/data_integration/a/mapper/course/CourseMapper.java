@@ -13,4 +13,5 @@ public interface CourseMapper {
     Course getCourseByCno(String cno);
     void updateCourseInfo(Course course);
     void updateCourseShare(String coursenum, String share);
+
 }

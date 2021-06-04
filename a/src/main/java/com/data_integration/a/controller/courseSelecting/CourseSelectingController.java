@@ -43,4 +43,9 @@ public class CourseSelectingController {
     public void updateGrade(@RequestBody CourseSelectingVO courseSelectingVO){
         courseSelectingService.updateGrade(courseSelectingVO);
     }
+
+    @PostMapping("/addCourseSelectingXml")
+    public String addCourseSelectingXml(@RequestBody String content) throws Exception {
+        return courseSelectingService.addCourseSelectingXml(content);
+    }
 }
