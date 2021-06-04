@@ -129,8 +129,16 @@ public class CourseSelectingService {
             // TODO 这里是集成服务器url
             res = restTemplate.postForObject("http://localhost:9000/b/courseSelecting/addCourseSelecting",httpEntity,String.class);
         }
-        if (res.equals("true"))
+        if (res.equals("true")){
+            CourseSelecting courseSelecting = new CourseSelecting();
+            BeanUtils.copyProperties(selectCourseVO,courseSelecting);
+            try {
+                courseSelectingMapper.addCourseSelecting(courseSelecting);
+            }catch (Exception e){
+                return false;
+            }
             return true;
+        }
         else
             return false;
     }
@@ -168,8 +176,14 @@ public class CourseSelectingService {
         // 看该学生有没有权限选择该课程
         Course courseToSelect = courseMapper.getCourseByCno(electionList.get(0).getCoursenum());
         if (courseToSelect == null ) return "false"; // 没有该课程Id对应的课程
-        if (courseToSelect.getPermission() > studentList.get(0).getPermission()) return "false"; // 学生的权限不足
-        // 可以选，返回true
-        return "true";
+        if (courseToSelect.getPermission() <= studentList.get(0).getPermission()){
+            try {
+                courseSelectingMapper.addCourseSelecting(electionList.get(0));
+            }catch (Exception e){
+                return "false";
+            }
+            return "true";
+        }
+        return "false";
     }
 }
