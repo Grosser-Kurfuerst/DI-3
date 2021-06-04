@@ -24,6 +24,9 @@
                     <major>
                         <xsl:value-of select="a:department"/>
                     </major>
+                    <permission>
+                        <xsl:value-of select="a:permission"/>
+                    </permission>
                 </student>
             </xsl:for-each>
         </students>
@@ -47,6 +50,9 @@
                     <major>
                         <xsl:value-of select="b:专业"/>
                     </major>
+                    <permission>
+                        <xsl:value-of select="b:权限"/>
+                    </permission>
                 </student>
             </xsl:for-each>
         </students>
