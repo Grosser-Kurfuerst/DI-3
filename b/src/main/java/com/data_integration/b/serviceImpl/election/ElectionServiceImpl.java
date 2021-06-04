@@ -20,6 +20,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.io.File;
+import java.io.UnsupportedEncodingException;
 import java.net.URL;
 import java.net.URLDecoder;
 import java.util.List;
@@ -165,5 +166,22 @@ public class ElectionServiceImpl implements ElectionService {
             return true;
         else
             return false;
+    }
+
+
+    @Override
+    public void addCourseSelectingXml(String content) throws Exception {
+        // 分割学生和选课
+        int splitIndex = content.indexOf("</students>")+"</students>".length();
+        String studentXml = content.substring(0,splitIndex);
+        String choiceXml = content.substring(splitIndex);
+        // 验证
+        URL schemaUrl = getClass().getResource("/schema/studentB.xsd");
+        File schemaFile = new File(URLDecoder.decode(schemaUrl.getFile(),"UTF-8"));
+        Utils.validateSchema(schemaFile,studentXml);
+        // 验证
+        schemaUrl = getClass().getResource("/schema/choiceB.xsd");
+        schemaFile = new File(URLDecoder.decode(schemaUrl.getFile(),"UTF-8"));
+        Utils.validateSchema(schemaFile,choiceXml);
     }
 }

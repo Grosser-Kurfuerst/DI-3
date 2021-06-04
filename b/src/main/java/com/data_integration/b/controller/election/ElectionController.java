@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/b/election")
+@RequestMapping("/b/courseSelecting")
 public class ElectionController {
 
 
@@ -101,5 +101,15 @@ public class ElectionController {
         if (outcome == 1) return "成绩更新成功";
         return "成绩更新失败";
     }
+
+    /**
+     * 其它院系同学通过xml进行选课的接口
+     */
+    @PostMapping("/addCourseSelectingXml")
+    public String addCourseSelectingXml(@RequestBody String content) throws Exception {
+        electionService.addCourseSelectingXml(content);
+        return "false";
+    }
+
 
 }

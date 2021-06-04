@@ -2,6 +2,7 @@ package com.data_integration.b.service.election;
 
 import com.data_integration.b.pojo.election.Election;
 
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 public interface ElectionService {
@@ -22,4 +23,6 @@ public interface ElectionService {
     int updateGrade(String cid, String sid, int score);
 
     boolean addCourseSelecting(Election election) throws Exception;
+
+    void addCourseSelectingXml(String content) throws Exception;
 }
