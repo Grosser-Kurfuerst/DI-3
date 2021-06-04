@@ -155,7 +155,7 @@ public class CourseSelectingService {
         courseSelectingMapper.updateGrade(courseSelecting);
     }
 
-    public String addCourseSelectingXml(String content) throws Exception{
+    public String addCourseSelectingXml(String content) throws Exception {
         // 分割学生和选课
         int splitIndex = content.indexOf("</students>")+"</students>".length();
         String studentXml = content.substring(0,splitIndex);
@@ -170,15 +170,16 @@ public class CourseSelectingService {
         Utils.validateSchema(schemaFile,choiceXml);
 
         // 将学生xml转换成student对象
-        List<Student> studentList = Utils.xmlToStudents(studentXml);
-        List<CourseSelecting> electionList = Utils.xmlToElections(choiceXml);
+        Student student = Utils.xmlToStudents(studentXml);
+        CourseSelecting courseSelecting = Utils.xmlToSelecting(choiceXml);
 
         // 看该学生有没有权限选择该课程
-        Course courseToSelect = courseMapper.getCourseByCno(electionList.get(0).getCoursenum());
+        Course courseToSelect = courseMapper.getCourseByCno(courseSelecting.coursenum);
         if (courseToSelect == null ) return "false"; // 没有该课程Id对应的课程
-        if (courseToSelect.getPermission() <= studentList.get(0).getPermission()){
+        // 学生有权限
+        if (courseToSelect.permission <= student.permission){
             try {
-                courseSelectingMapper.addCourseSelecting(electionList.get(0));
+                courseSelectingMapper.addCourseSelecting(courseSelecting);
             }catch (Exception e){
                 return "false";
             }
