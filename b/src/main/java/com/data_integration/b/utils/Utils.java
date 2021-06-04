@@ -180,6 +180,88 @@ public class Utils {
     }
 
     /**
+     * B格式的学生xml转对象
+     */
+    public static List<Student> xmlToStudents(String content) throws Exception{
+        List<Student> studentList = new ArrayList<>();
+        Document document = getDocument(content);
+        Node studentsNode = document.getFirstChild();
+        Node studentNode = studentsNode.getFirstChild();
+        // 遍历students
+        while (studentNode!=null){
+            Student student = new Student();
+            studentList.add(student);
+            // 遍历class下元素 坑在于元素名用getNodeName() 值要getFirstChild().getNodeValue()
+            for (Node child = studentNode.getFirstChild(); child != null; child = child.getNextSibling()) {
+                String nodeName = child.getNodeName();
+                // 因为转换到集成格式后会丢失课时信息，所以课时的getFirstChild()为null
+                String nodeTextValue = null;
+                if (child.getFirstChild()!=null)
+                    nodeTextValue = child.getFirstChild().getNodeValue();
+                switch (nodeName){
+                    case "学号":
+                        student.setSid(nodeTextValue);
+                        break;
+                    case "名称":
+                        student.setSname(nodeTextValue);
+                        break;
+                    case "性别":
+                        student.setGender(nodeTextValue);
+                        break;
+                    case "专业":
+                        student.setDepartment(nodeTextValue);
+                        break;
+                    case "权限":
+                        student.setPermission(Integer.parseInt(nodeTextValue));
+                        break;
+                    default:
+                        break;
+                }
+            }
+            studentNode = studentNode.getNextSibling();
+        }
+        return studentList;
+    }
+
+    /**
+     * B格式的选课xml转对象
+     */
+    public static List<Election> xmlToElections(String content) throws Exception{
+        List<Election> electionList = new ArrayList<>();
+        Document document = getDocument(content);
+        Node electionsNode = document.getFirstChild();
+        Node electionNode = electionsNode.getFirstChild();
+        // 遍历students
+        while (electionNode!=null){
+            Election election = new Election();
+            electionList.add(election);
+            // 遍历class下元素 坑在于元素名用getNodeName() 值要getFirstChild().getNodeValue()
+            for (Node child = electionNode.getFirstChild(); child != null; child = child.getNextSibling()) {
+                String nodeName = child.getNodeName();
+                // 因为转换到集成格式后会丢失课时信息，所以课时的getFirstChild()为null
+                String nodeTextValue = null;
+                if (child.getFirstChild()!=null)
+                    nodeTextValue = child.getFirstChild().getNodeValue();
+                switch (nodeName){
+                    case "学生编号":
+                        election.setStudentId(nodeTextValue);
+                        break;
+                    case "课程编号":
+                        election.setCourseId(nodeTextValue);
+                        break;
+                    case "得分":
+                        election.setScore(nodeTextValue);
+                        break;
+                    default:
+                        break;
+                }
+            }
+            electionNode = electionNode.getNextSibling();
+        }
+        return electionList;
+    }
+
+    /**
      * B格式的学生转xml
      */
     public static String studentToXml(Student student, int permission) throws Exception {

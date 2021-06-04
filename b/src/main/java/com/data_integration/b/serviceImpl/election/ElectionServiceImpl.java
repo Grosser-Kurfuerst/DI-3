@@ -11,7 +11,6 @@ import com.data_integration.b.service.course.CourseService;
 import com.data_integration.b.service.election.ElectionService;
 import com.data_integration.b.service.student.StudentService;
 import com.data_integration.b.utils.Utils;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -20,7 +19,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.io.File;
-import java.io.UnsupportedEncodingException;
 import java.net.URL;
 import java.net.URLDecoder;
 import java.util.List;
@@ -170,7 +168,7 @@ public class ElectionServiceImpl implements ElectionService {
 
 
     @Override
-    public void addCourseSelectingXml(String content) throws Exception {
+    public String addCourseSelectingXml(String content) throws Exception {
         // 分割学生和选课
         int splitIndex = content.indexOf("</students>")+"</students>".length();
         String studentXml = content.substring(0,splitIndex);
@@ -183,5 +181,14 @@ public class ElectionServiceImpl implements ElectionService {
         schemaUrl = getClass().getResource("/schema/choiceB.xsd");
         schemaFile = new File(URLDecoder.decode(schemaUrl.getFile(),"UTF-8"));
         Utils.validateSchema(schemaFile,choiceXml);
+
+        // 将学生xml转换成student对象
+        List<Student> studentList = Utils.xmlToStudents(studentXml);
+        List<Election> electionList = Utils.xmlToElections(choiceXml);
+
+
+        // TODO 选课存取数据库逻辑
+
+        return "true";
     }
 }
