@@ -11,6 +11,7 @@ b发送xml到集成服务器，集成服务器使用xsd验证和xsl转换
     - 5月29号24点前写完各自服务器向集成服务器发送共享的课程列表xml的功能
         - 各院系服务器接口名为: 院系服务器ip:端口/{a,b,c}/course/getSharedCoursesXml
         - 只返回共享课程的xml
+        - 
     - 5月31号24点前写完集成服务器获取其他院系课程再返回给本院系再用json返回给前端的功能  
         - 各院系服务器给前端的接口名为: 院系服务器ip:端口/{a,b,c}/course/getOtherDepartmentCourses，该接口调用集成服务器接口  
         - 集成服务器的接口名为: 集成服务器ip:9000/{a,b,c}/course/getOtherDepartmentCourses
