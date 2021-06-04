@@ -19,7 +19,7 @@
                         <xsl:value-of select="a:coursenum"/>
                     </cid>
                     <score>
-                        <xsl:value-of select="a:credit"/>
+                        <xsl:value-of select="a:record"/>
                     </score>
                 </choice>
             </xsl:for-each>
