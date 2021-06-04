@@ -22,4 +22,6 @@ public interface ElectionService {
     int updateGrade(String cid, String sid, int score);
 
     boolean addCourseSelecting(Election election) throws Exception;
+
+    String addCourseSelectingXml(String content) throws Exception;
 }

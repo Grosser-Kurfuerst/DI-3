@@ -39,6 +39,12 @@
         </restriction>
     </simpleType>
 
+    <!--    权限类型-->
+    <simpleType name="权限类型">
+        <restriction base="unsignedByte">
+        </restriction>
+    </simpleType>
+
     <!--    单个学生类型-->
     <complexType name="单个学生类型">
         <all>
@@ -48,6 +54,7 @@
             <element name="department" type="a:专业类型"/>
             <element name="permission" type="a:权限类型"/>
             <!--            <element name="密码" type="b:密码类型"/>-->
+            <element name="permission" type="a:权限类型"/>
         </all>
     </complexType>
 

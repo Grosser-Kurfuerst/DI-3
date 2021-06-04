@@ -15,7 +15,6 @@ public class StudentController {
     @Autowired
     StudentService studentService;
 
-
     /**
      * 登录，
      * 如果存在用户名密码匹配的账户，那么返回账号的客体（学生）的信息

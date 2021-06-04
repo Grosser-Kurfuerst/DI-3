@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/b/election")
+@RequestMapping("/b/courseSelecting")
 public class ElectionController {
 
 
@@ -59,27 +59,6 @@ public class ElectionController {
     public boolean addCourseSelecting(@RequestBody Election election) throws Exception{
         return electionService.addCourseSelecting(election);
     }
-//    /**
-//     * 添加学生的选课
-//     * @param cid 长度小于等于5
-//     * @param sid 长度小于等于9
-//     */
-//    @GetMapping("/elect/{cid}/{sid}")
-//    public String addElectionByCidSid (@PathVariable String cid, @PathVariable String sid) {
-//        // 学生账户的权限大于课程的权限才可以添加选课记录
-//        Student student = studentService.getStudentBySid(sid);
-//        Account account = studentService.getAccountByGuestId(student.getSid());
-//        int studentPowerGrade = account.getPower_grade();
-//        Course course = courseService.getCourseByCid(cid);
-//        if (course == null) return "课程不存在";
-//        int coursePowerGrade = course.getPowerGrade();
-//        if (studentPowerGrade >= coursePowerGrade) {
-//            // 可以选课
-//            electionService.addElectionBySidCid(cid, sid);
-//            return "选课成功";
-//        }
-//        return "没有权限";
-//    }
 
 
     /**
@@ -101,5 +80,14 @@ public class ElectionController {
         if (outcome == 1) return "成绩更新成功";
         return "成绩更新失败";
     }
+
+    /**
+     * 其它院系同学通过xml进行选课的接口
+     */
+    @PostMapping("/addCourseSelectingXml")
+    public String addCourseSelectingXml(@RequestBody String content) throws Exception {
+        return electionService.addCourseSelectingXml(content);
+    }
+
 
 }

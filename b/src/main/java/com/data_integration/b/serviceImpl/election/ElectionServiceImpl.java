@@ -11,7 +11,6 @@ import com.data_integration.b.service.course.CourseService;
 import com.data_integration.b.service.election.ElectionService;
 import com.data_integration.b.service.student.StudentService;
 import com.data_integration.b.utils.Utils;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -165,5 +164,33 @@ public class ElectionServiceImpl implements ElectionService {
             return true;
         else
             return false;
+    }
+
+
+    @Override
+    public String addCourseSelectingXml(String content) throws Exception {
+        // 分割学生和选课
+        int splitIndex = content.indexOf("</students>")+"</students>".length();
+        String studentXml = content.substring(0,splitIndex);
+        String choiceXml = content.substring(splitIndex);
+        // 验证
+        URL schemaUrl = getClass().getResource("/schema/studentB.xsd");
+        File schemaFile = new File(URLDecoder.decode(schemaUrl.getFile(),"UTF-8"));
+        Utils.validateSchema(schemaFile,studentXml);
+        // 验证
+        schemaUrl = getClass().getResource("/schema/choiceB.xsd");
+        schemaFile = new File(URLDecoder.decode(schemaUrl.getFile(),"UTF-8"));
+        Utils.validateSchema(schemaFile,choiceXml);
+
+        // 将学生xml转换成student对象
+        List<Student> studentList = Utils.xmlToStudents(studentXml);
+        List<Election> electionList = Utils.xmlToElections(choiceXml);
+
+        // 看该学生有没有权限选择该课程
+        Course courseToSelect = courseService.getCourseByCid(electionList.get(0).getCourseId());
+        if (courseToSelect == null ) return "false"; // 没有该课程Id对应的课程
+        if (courseToSelect.getPowerGrade() > studentList.get(0).getPermission()) return "false"; // 学生的权限不足
+        // 可以选，返回true
+        return "true";
     }
 }
