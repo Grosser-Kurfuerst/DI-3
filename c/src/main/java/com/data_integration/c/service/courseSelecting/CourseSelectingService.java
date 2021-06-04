@@ -123,8 +123,16 @@ public class CourseSelectingService {
             // TODO 这里是集成服务器url
             res = restTemplate.postForObject("http://localhost:9000/b/courseSelecting/addCourseSelecting",httpEntity,String.class);
         }
-        if (res.equals("true"))
+        if (res.equals("true")) {
+            CourseSelecting courseSelecting = new CourseSelecting();
+            BeanUtils.copyProperties(courseSelectingVO,courseSelecting);
+            try {
+                courseSelectingMapper.addCourseSelecting(courseSelecting);
+            }catch (Exception e){
+                return false;
+            }
             return true;
+        }
         else
             return false;
     }
@@ -139,5 +147,38 @@ public class CourseSelectingService {
         CourseSelecting courseSelecting = new CourseSelecting();
         BeanUtils.copyProperties(courseSelectingVO,courseSelecting);
         courseSelectingMapper.updateGrade(courseSelecting);
+    }
+
+    public String addCourseSelectingXml(String content) throws Exception {
+        // 分割学生和选课
+        int splitIndex = content.indexOf("</students>")+"</students>".length();
+        String studentXml = content.substring(0,splitIndex);
+        String choiceXml = content.substring(splitIndex);
+        // 验证
+        URL schemaUrl = getClass().getResource("/schema/studentC.xsd");
+        File schemaFile = new File(URLDecoder.decode(schemaUrl.getFile(),"UTF-8"));
+        Utils.validateSchema(schemaFile,studentXml);
+        // 验证
+        schemaUrl = getClass().getResource("/schema/choiceC.xsd");
+        schemaFile = new File(URLDecoder.decode(schemaUrl.getFile(),"UTF-8"));
+        Utils.validateSchema(schemaFile,choiceXml);
+
+        // 将学生xml转换成student对象
+        Student student = Utils.xmlToStudents(studentXml);
+        CourseSelecting courseSelecting = Utils.xmlToSelecting(choiceXml);
+
+        // 看该学生有没有权限选择该课程
+        Course courseToSelect = courseMapper.getCourseByCno(courseSelecting.cno);
+        if (courseToSelect == null ) return "false"; // 没有该课程Id对应的课程
+        // 学生有权限
+        if (courseToSelect.permission <= student.permission){
+            try {
+                courseSelectingMapper.addCourseSelecting(courseSelecting);
+            }catch (Exception e){
+                return "false";
+            }
+            return "true";
+        }
+        return "false";
     }
 }

@@ -160,8 +160,14 @@ public class ElectionServiceImpl implements ElectionService {
             // TODO 这里是集成服务器url
             res = restTemplate.postForObject("http://localhost:9000/c/courseSelecting/addCourseSelecting",httpEntity,String.class);
         }
-        if (res.equals("true"))
+        if (res.equals("true")){
+            try {
+                electionDao.addElectionBySidCidScore(election.getCourseId(),election.getStudentId(),election.getScore());
+            }catch (Exception e){
+                return false;
+            }
             return true;
+        }
         else
             return false;
     }
@@ -189,8 +195,15 @@ public class ElectionServiceImpl implements ElectionService {
         // 看该学生有没有权限选择该课程
         Course courseToSelect = courseService.getCourseByCid(electionList.get(0).getCourseId());
         if (courseToSelect == null ) return "false"; // 没有该课程Id对应的课程
-        if (courseToSelect.getPowerGrade() > studentList.get(0).getPermission()) return "false"; // 学生的权限不足
-        // 可以选，返回true
-        return "true";
+        // 学生有权限
+        if (courseToSelect.getPowerGrade() <= studentList.get(0).getPermission()){
+            try {
+                electionDao.addElectionBySidCidScore(electionList.get(0).getCourseId(),electionList.get(0).getStudentId(),electionList.get(0).getScore());
+            }catch (Exception e){
+                return "false";
+            }
+            return "true";
+        }
+        return "false";
     }
 }

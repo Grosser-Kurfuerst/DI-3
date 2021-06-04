@@ -45,4 +45,12 @@ public class CourseSelectingController {
     public void updateGrade(@RequestBody CourseSelectingVO courseSelectingVO){
         courseSelectingService.updateGrade(courseSelectingVO);
     }
+
+    /**
+     * 其它院系同学通过xml进行选课的接口
+     */
+    @PostMapping("/addCourseSelectingXml")
+    public String addCourseSelectingXml(@RequestBody String content) throws Exception {
+        return courseSelectingService.addCourseSelectingXml(content);
+    }
 }

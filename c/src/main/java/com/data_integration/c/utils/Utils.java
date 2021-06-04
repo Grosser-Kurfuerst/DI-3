@@ -1,15 +1,13 @@
 package com.data_integration.c.utils;
 
 import com.data_integration.c.PO.Course;
+import com.data_integration.c.PO.CourseSelecting;
 import com.data_integration.c.PO.Student;
 import com.data_integration.c.VO.CourseSelectingVO;
-import com.fasterxml.jackson.dataformat.xml.JacksonXmlModule;
-import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import org.dom4j.io.DocumentResult;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
 
 import javax.xml.XMLConstants;
 import javax.xml.parsers.DocumentBuilder;
@@ -69,7 +67,7 @@ public class Utils {
     /**
      * 验证Schema
      */
-    public static void validateSchema(File schemaFile, String content) throws Exception{
+    public static void validateSchema(File schemaFile, String content) throws Exception {
         String language = XMLConstants.W3C_XML_SCHEMA_NS_URI;
         SchemaFactory factory = SchemaFactory.newInstance(language);
         Schema schema = factory.newSchema(schemaFile);
@@ -95,6 +93,7 @@ public class Utils {
 
     /**
      * course转c课程xml
+     *
      * @param courseList
      * @return
      * @throws Exception
@@ -104,7 +103,7 @@ public class Utils {
         Element root = document.createElement("classes");
         root.setAttribute("xmlns", "http://c.nju.edu.cn/schema");
         document.appendChild(root);
-        for (Course course:courseList){
+        for (Course course : courseList) {
             Element classElement = document.createElement("class");
             root.appendChild(classElement);
 
@@ -117,11 +116,11 @@ public class Utils {
             classElement.appendChild(cnmElement);
 
             Element ctmElement = document.createElement("Ctm");
-            ctmElement.setTextContent(""+course.ctm);
+            ctmElement.setTextContent("" + course.ctm);
             classElement.appendChild(ctmElement);
 
             Element cptElement = document.createElement("Cpt");
-            cptElement.setTextContent(""+course.cpt);
+            cptElement.setTextContent("" + course.cpt);
             classElement.appendChild(cptElement);
 
             Element tecElement = document.createElement("Tec");
@@ -137,17 +136,18 @@ public class Utils {
 
     /**
      * C格式的课程xml转对象
+     *
      * @param content
      * @return
      * @throws Exception
      */
-    public static List<Course> xmlToCourses(String content) throws Exception{
+    public static List<Course> xmlToCourses(String content) throws Exception {
         List<Course> courseList = new ArrayList<>();
         Document document = getDocument(content);
         Node classesNode = document.getFirstChild();
         Node classNode = classesNode.getFirstChild();
         // 遍历classes
-        while (classNode!=null){
+        while (classNode != null) {
             Course course = new Course();
             courseList.add(course);
             // 遍历class下元素 坑在于元素名用getNodeName() 值要getFirstChild().getNodeValue()
@@ -155,9 +155,9 @@ public class Utils {
                 String nodeName = child.getNodeName();
                 // 因为转换到集成格式后会丢失课时信息，所以课时的getFirstChild()为null
                 String nodeTextValue = null;
-                if (child.getFirstChild()!=null)
+                if (child.getFirstChild() != null)
                     nodeTextValue = child.getFirstChild().getNodeValue();
-                switch (nodeName){
+                switch (nodeName) {
                     case "Cno":
                         course.cno = nodeTextValue;
                         break;
@@ -210,10 +210,49 @@ public class Utils {
         studentElement.appendChild(sdeElement);
 
         Element permissionElement = document.createElement("permission");
-        permissionElement.setTextContent(""+student.permission);
+        permissionElement.setTextContent("" + student.permission);
         studentElement.appendChild(permissionElement);
 
         return toFormatedXML(document);
+    }
+
+    /**
+     * C格式的学生xml转对象
+     */
+    public static Student xmlToStudents(String content) throws Exception {
+        Document document = getDocument(content);
+        Node studentsNode = document.getFirstChild();
+        Node studentNode = studentsNode.getFirstChild();
+
+        Student student = new Student();
+        // 遍历student下元素 坑在于元素名用getNodeName() 值要getFirstChild().getNodeValue()
+        for (Node child = studentNode.getFirstChild(); child != null; child = child.getNextSibling()) {
+            String nodeName = child.getNodeName();
+            // 因为转换到集成格式后会丢失课时信息，所以课时的getFirstChild()为null
+            String nodeTextValue = null;
+            if (child.getFirstChild() != null)
+                nodeTextValue = child.getFirstChild().getNodeValue();
+            switch (nodeName) {
+                case "Sno":
+                    student.sno = nodeTextValue;
+                    break;
+                case "Snm":
+                    student.snm = nodeTextValue;
+                    break;
+                case "Sex":
+                    student.sex = nodeTextValue;
+                    break;
+                case "Sde":
+                    student.sde = nodeTextValue;
+                    break;
+                case "permission":
+                    student.permission = Integer.parseInt(nodeTextValue);
+                    break;
+                default:
+                    break;
+            }
+        }
+        return student;
     }
 
     /**
@@ -236,9 +275,44 @@ public class Utils {
         choiceElement.appendChild(cnoElement);
 
         Element grdElement = document.createElement("Grd");
-        grdElement.setTextContent(courseSelectingVO.grd==null?null:""+courseSelectingVO.grd);
+        grdElement.setTextContent(courseSelectingVO.grd == null ? null : "" + courseSelectingVO.grd);
         choiceElement.appendChild(grdElement);
 
         return toFormatedXML(document);
+    }
+
+    /**
+     * B格式的选课xml转对象
+     */
+    public static CourseSelecting xmlToSelecting(String content) throws Exception{
+        Document document = getDocument(content);
+        Node electionsNode = document.getFirstChild();
+        Node electionNode = electionsNode.getFirstChild();
+
+        CourseSelecting courseSelecting = new CourseSelecting();
+
+            // 遍历choice下元素 坑在于元素名用getNodeName() 值要getFirstChild().getNodeValue()
+            for (Node child = electionNode.getFirstChild(); child != null; child = child.getNextSibling()) {
+                String nodeName = child.getNodeName();
+                // 因为转换到集成格式后会丢失课时信息，所以课时的getFirstChild()为null
+                String nodeTextValue = null;
+                if (child.getFirstChild()!=null)
+                    nodeTextValue = child.getFirstChild().getNodeValue();
+                switch (nodeName){
+                    case "Sno":
+                        courseSelecting.sno = nodeTextValue;
+                        break;
+                    case "Cno":
+                        courseSelecting.cno = nodeTextValue;
+                        break;
+                    case "Grd":
+                        courseSelecting.grd = nodeTextValue==null?null:Integer.parseInt(nodeTextValue);
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+        return courseSelecting;
     }
 }
