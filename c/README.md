@@ -60,6 +60,7 @@
         - snm: varchar(10) 姓名
         - sex: varchar(1) 性别
         - sde: varchar(6) 部门
+        - pwd: char(6) 密码  
         - permission: integer 权限
 - GET /c/student/getAllStudents 获取所有学生
     - 无参数
@@ -68,6 +69,7 @@
         - snm: varchar(10) 姓名
         - sex: varchar(1) 性别
         - sde: varchar(6) 部门
+        - pwd: char(6) 密码  
         - permission: integer 权限
 - POST /c/student/updateStudentInfo 更新学生信息
     - RequestBody

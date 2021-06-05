@@ -16,23 +16,15 @@ public class AccountService {
     @Autowired
     private AccountMapper accountMapper;
 
-    public AccountVO accountLogin(AccountLoginVO accountLoginVO){
+    public Account accountLogin(AccountLoginVO accountLoginVO){
         Account account = accountMapper.getAccountByAcc(accountLoginVO.acc);
         if(account==null || !account.passwd.equals(accountLoginVO.passwd))
             return null;
-        AccountVO accountVO = new AccountVO();
-        BeanUtils.copyProperties(account,accountVO);
-        return accountVO;
+        return account;
     }
 
-    public List<AccountVO> getAllAccounts(){
-        List<Account> accountList = accountMapper.getAllAccounts();
-        List<AccountVO> accountVOList = accountList.stream().map(a->{
-            AccountVO accountVO = new AccountVO();
-            BeanUtils.copyProperties(a,accountVO);
-            return accountVO;
-        }).collect(Collectors.toList());
-        return accountVOList;
+    public List<Account> getAllAccounts(){
+        return accountMapper.getAllAccounts();
     }
 
     public boolean deleteAccount(String source,String acc){

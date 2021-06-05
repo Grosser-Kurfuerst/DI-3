@@ -16,12 +16,12 @@ public class AccountController {
     AccountService accountService;
 
     @PostMapping("/login")
-    public AccountVO accountLogin(@RequestBody AccountLoginVO accountLoginVO){
+    public Account accountLogin(@RequestBody AccountLoginVO accountLoginVO){
         return accountService.accountLogin(accountLoginVO);
     }
 
     @GetMapping("/getAllAccounts")
-    public List<AccountVO> getAllAccounts(){
+    public List<Account> getAllAccounts(){
         return accountService.getAllAccounts();
     }
 

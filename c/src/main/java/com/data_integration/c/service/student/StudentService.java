@@ -16,22 +16,15 @@ public class StudentService {
     @Autowired
     StudentMapper studentMapper;
 
-    public StudentVO studentLogin(StudentLoginVO studentLoginVO){
+    public Student studentLogin(StudentLoginVO studentLoginVO){
         Student student = studentMapper.getStudentBySno(studentLoginVO.sno);
         if(student==null || !student.pwd.equals(studentLoginVO.pwd))
             return null;
-        StudentVO studentVO = new StudentVO();
-        BeanUtils.copyProperties(student,studentVO);
-        return studentVO;
+        return student;
     }
 
-    public List<StudentVO> getAllStudents(){
-        List<StudentVO> studentVOList = studentMapper.getAllStudents().stream().map(s->{
-            StudentVO studentVO = new StudentVO();
-            BeanUtils.copyProperties(s,studentVO);
-            return studentVO;
-        }).collect(Collectors.toList());
-        return studentVOList;
+    public List<Student> getAllStudents(){
+        return studentMapper.getAllStudents();
     }
 
     public void updateStudentInfo(Student student){
