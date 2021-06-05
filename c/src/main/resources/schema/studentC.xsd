@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema"
+        targetNamespace="http://c.nju.edu.cn/schema"
+        xmlns:c="http://c.nju.edu.cn/schema"
+        elementFormDefault="qualified">
+
+    <!--    学号类型-->
+    <simpleType name="学号类型">
+        <restriction base="string">
+        </restriction>
+    </simpleType>
+
+    <!--    学生姓名类型-->
+    <simpleType name="学生姓名类型">
+        <restriction base="string">
+        </restriction>
+    </simpleType>
+
+    <!--    性别类型-->
+    <simpleType name="性别类型">
+        <restriction base="string">
+        </restriction>
+    </simpleType>
+
+    <!--    专业类型-->
+    <simpleType name="专业类型">
+        <restriction base="string">
+        </restriction>
+    </simpleType>
+
+    <!--    密码类型-->
+    <simpleType name="密码类型">
+        <restriction base="string">
+        </restriction>
+    </simpleType>
+
+    <!--    权限类型-->
+    <simpleType name="权限类型">
+        <restriction base="unsignedByte">
+        </restriction>
+    </simpleType>
+
+    <!--    单个学生类型-->
+    <complexType name="单个学生类型">
+        <all>
+            <element name="Sno" type="c:学号类型"/>
+            <element name="Snm" type="c:学生姓名类型"/>
+            <element name="Sex" type="c:性别类型"/>
+            <element name="Sde" type="c:专业类型"/>
+            <element name="permission" type="c:权限类型"/>
+        </all>
+    </complexType>
+
+    <!--    所有学生类型-->
+    <complexType name="所有学生类型">
+        <sequence minOccurs="1" maxOccurs="unbounded">
+            <element name="student" type="c:单个学生类型"/>
+        </sequence>
+    </complexType>
+
+    <element name="students" type="c:所有学生类型"/>
+
+</schema>

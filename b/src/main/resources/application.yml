@@ -4,7 +4,8 @@ server:
 spring:
   datasource:
       driver-class-name: oracle.jdbc.driver.OracleDriver
-      url: jdbc:oracle:thin:@localhost:1521:orcl
+      # XE版的最后要XE 完整版的要orcl
+      url: jdbc:oracle:thin:@localhost:1521:XE
       username: system
       password: system
 

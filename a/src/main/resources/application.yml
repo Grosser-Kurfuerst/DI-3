@@ -1,0 +1,13 @@
+server:
+  port: 8086
+
+spring:
+  datasource:
+    url: jdbc:sqlserver://localhost:1433;databaseName=data_integration_a
+    username: sa
+    password: root
+    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+
+mybatis:
+  mapper-locations: classpath:mapper/*/*Mapper.xml
+  identity: SQLSERVER

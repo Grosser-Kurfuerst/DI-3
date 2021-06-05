@@ -32,8 +32,8 @@ public class CourseSelectingController {
     }
 
     @PostMapping("/addCourseSelecting")
-    public boolean addCourseSelecting(@RequestBody SelectCourseVO selectCourseVO){
-        return courseSelectingService.addCourseSelecting(selectCourseVO);
+    public boolean addCourseSelecting(@RequestBody CourseSelectingVO courseSelectingVO) throws Exception{
+        return courseSelectingService.addCourseSelecting(courseSelectingVO);
     }
 
     @PostMapping("/deleteCourseSelecting")
@@ -44,5 +44,13 @@ public class CourseSelectingController {
     @PostMapping("/updateGrade")
     public void updateGrade(@RequestBody CourseSelectingVO courseSelectingVO){
         courseSelectingService.updateGrade(courseSelectingVO);
+    }
+
+    /**
+     * 其它院系同学通过xml进行选课的接口
+     */
+    @PostMapping("/addCourseSelectingXml")
+    public String addCourseSelectingXml(@RequestBody String content) throws Exception {
+        return courseSelectingService.addCourseSelectingXml(content);
     }
 }

@@ -17,4 +17,13 @@ public interface CourseService {
 
     /**获取所有课程的信息*/
     List<Course> getAllCourses();
+
+    /**获取所有的 共享课程*/
+    List<Course> getSharedCourses();
+
+    /**获取所有的 共享课程的xml文件*/
+    String getSharedCoursesXml() throws Exception;
+
+    /**获取其它院系的共享课程*/
+    List<Course> getOtherDepartmentCourses() throws Exception;
 }

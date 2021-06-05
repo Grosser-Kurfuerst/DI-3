@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/admin")
+@RequestMapping("/b/admin")
 public class AdminController {
 
     @Autowired
@@ -21,7 +21,7 @@ public class AdminController {
      * 管理员登录并返回管理员信息
      */
     @PostMapping("/login")
-    public Account login(Account account) {
+    public Account login(@RequestBody Account account) {
         return adminService.getAccountByNameAndPwd(account.getAname(), account.getPassword());
     }
 
@@ -39,7 +39,7 @@ public class AdminController {
      */
     @GetMapping("/deleteAccount/{sourceAname}/{targetAname}")
     public String deleteAdmin(@PathVariable String sourceAname, @PathVariable String targetAname) {
-        return adminService.deleteAdmin(sourceAname, targetAname);
+        return adminService.deleteAccount(sourceAname, targetAname);
     }
 
     /**

@@ -3,9 +3,13 @@ package com.data_integration.c.service.course;
 import com.data_integration.c.PO.Course;
 import com.data_integration.c.VO.CourseVO;
 import com.data_integration.c.mapper.course.CourseMapper;
+import com.data_integration.c.utils.Utils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -14,6 +18,8 @@ import java.util.stream.Collectors;
 public class CourseService {
     @Autowired
     CourseMapper courseMapper;
+    @Autowired
+    RestTemplate restTemplate;
 
     public List<CourseVO> getAllCourses(){
         List<CourseVO> courseVOList = courseMapper.getAllCourses().stream().map(course -> {
@@ -32,5 +38,19 @@ public class CourseService {
 
     public void updateCourseShare(String cno, String share){
         courseMapper.updateCourseShare(cno,share);
+    }
+
+    public String getSharedCoursesXml() throws Exception{
+        List<Course> sharedCourseList = courseMapper.getAllCourses()
+                .stream()
+                .filter(course -> course.share.equals("Y"))
+                .collect(Collectors.toList());
+        return Utils.coursesToXml(sharedCourseList);
+    }
+
+    public List<Course> getOtherDepartmentCourses() throws Exception {
+        // TODO 这里是集成服务器url
+        String content = restTemplate.getForObject("http://localhost:9000/c/course/getOtherDepartmentCourses",String.class);
+        return Utils.xmlToCourses(content);
     }
 }

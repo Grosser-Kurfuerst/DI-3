@@ -41,4 +41,11 @@ public class StudentServiceImpl implements StudentService {
     public List<Student> getAllStudents() {
         return studentDao.getAllStudents();
     }
+
+
+    /**根据学号获取学生Account*/
+    @Override
+    public Account getAccountByGuestId(String sid) {
+        return studentDao.getAccountByGuestId(sid);
+    }
 }

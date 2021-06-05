@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--一个B class的例子-->
+<choices xmlns="http://b.nju.edu.cn/schema">
+    <choice>
+        <学生编号>181250207</学生编号>
+        <课程编号>12345</课程编号>
+        <得分>60</得分>
+    </choice>
+    <choice>
+        <学生编号>181250207</学生编号>
+        <课程编号>54321</课程编号>
+        <得分>95</得分>
+    </choice>
+</choices>

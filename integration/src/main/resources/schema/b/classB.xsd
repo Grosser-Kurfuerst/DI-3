@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema"
+        targetNamespace="http://b.nju.edu.cn/schema"
+        xmlns:b="http://b.nju.edu.cn/schema"
+        elementFormDefault="qualified">
+
+    <!--    课程编号类型-->
+    <simpleType name="课程编号类型">
+        <restriction base="string">
+        </restriction>
+    </simpleType>
+
+    <!--    课程名称类型-->
+    <simpleType name="课程名称类型">
+        <restriction base="string">
+        </restriction>
+    </simpleType>
+
+    <!--    课时类型-->
+    <simpleType name="课时类型">
+        <restriction base="string">
+        </restriction>
+    </simpleType>
+
+    <!--    学分类型-->
+    <simpleType name="学分类型">
+        <restriction base="string">
+        </restriction>
+    </simpleType>
+
+    <!--    教师名称类型-->
+    <simpleType name="授课教师类型">
+        <restriction base="string">
+        </restriction>
+    </simpleType>
+
+    <!--    授课地点类型-->
+    <simpleType name="授课地点类型">
+        <restriction base="string">
+        </restriction>
+    </simpleType>
+
+<!--    是否共享类型-->
+    <simpleType name="共享类型">
+        <restriction base="string">
+        </restriction>
+    </simpleType>
+
+    <!--    单个课程类型-->
+    <complexType name="单个课程类型">
+        <all>
+            <element name="编号" type="b:课程编号类型"/>
+            <element name="名称" type="b:课程名称类型"/>
+            <element name="课时" type="b:课时类型"/>
+            <element name="学分" type="b:学分类型"/>
+            <element name="老师" type="b:授课教师类型"/>
+            <element name="地点" type="b:授课地点类型"/>
+<!--            <element name="共享" type="b:共享类型"/>-->
+        </all>
+    </complexType>
+
+    <!--    所有课程类型-->
+    <complexType name="所有课程类型">
+        <sequence minOccurs="1" maxOccurs="unbounded">
+            <element name="class" type="b:单个课程类型" />
+        </sequence>
+    </complexType>
+
+    <element name="classes" type="b:所有课程类型"/>
+</schema>

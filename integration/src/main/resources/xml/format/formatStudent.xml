@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<students xmlns:b="http://b.nju.edu.cn/schema" xmlns:a="http://a.nju.edu.cn/schema"
+          xmlns:jw="http://jw.nju.edu.cn/schema" xmlns:c="http://c.nju.edu.cn/schema"
+          xmlns="http://jw.nju.edu.cn/schema">
+    <student>
+        <id>181250207</id>
+        <name>周润兴</name>
+        <sex>M</sex>
+        <major>软件学院</major>
+    </student>
+    <student>
+        <id>181250000</id>
+        <name>Nobody</name>
+        <sex>F</sex>
+        <major>软件学院</major>
+    </student>
+</students>

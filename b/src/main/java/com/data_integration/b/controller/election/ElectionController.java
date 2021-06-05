@@ -1,21 +1,19 @@
 package com.data_integration.b.controller.election;
 
 import com.data_integration.b.pojo.account.Account;
+import com.data_integration.b.pojo.course.Course;
 import com.data_integration.b.pojo.election.Election;
 import com.data_integration.b.pojo.student.Student;
 import com.data_integration.b.service.course.CourseService;
 import com.data_integration.b.service.election.ElectionService;
 import com.data_integration.b.service.student.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/election")
+@RequestMapping("/b/courseSelecting")
 public class ElectionController {
 
 
@@ -54,24 +52,12 @@ public class ElectionController {
     }
 
 
-
     /**
      * 添加学生的选课
-     * @param cid 长度小于等于5
-     * @param sid 长度小于等于9
      */
-    @GetMapping("/elect/{cid}/{sid}")
-    public String addElectionByCidSid (@PathVariable String cid, @PathVariable String sid) {
-        // 学生账户的权限大于课程的权限才可以添加选课记录
-        Student student = studentService.getStudentBySid(sid);
-        int studentPowerGrade = studentService.getAccountByNameAndPassword(student.getSname(),student.getPassword()).getPower_grade();
-        int coursePowerGrade = courseService.getCourseByCid(cid).getPowerGrade();
-        if (studentPowerGrade >= coursePowerGrade) {
-            // 可以选课
-            electionService.addElectionBySidCid(cid, sid);
-            return "选课成功";
-        }
-        return "没有权限";
+    @PostMapping("/addCourseSelecting")
+    public boolean addCourseSelecting(@RequestBody Election election) throws Exception{
+        return electionService.addCourseSelecting(election);
     }
 
 
@@ -94,4 +80,14 @@ public class ElectionController {
         if (outcome == 1) return "成绩更新成功";
         return "成绩更新失败";
     }
+
+    /**
+     * 其它院系同学通过xml进行选课的接口
+     */
+    @PostMapping("/addCourseSelectingXml")
+    public String addCourseSelectingXml(@RequestBody String content) throws Exception {
+        return electionService.addCourseSelectingXml(content);
+    }
+
+
 }

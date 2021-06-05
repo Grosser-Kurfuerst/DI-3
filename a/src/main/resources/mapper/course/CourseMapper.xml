@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.data_integration.a.mapper.course.CourseMapper">
+    <select id="getAllCourses" resultMap="Course">
+        select * from course
+    </select>
+    <select id="getCourseByCno" resultMap="Course">
+        select * from course where coursenum=#{coursenum}
+    </select>
+    <update id="updateCourseInfo">
+        update course set coursename=#{coursename}, credit=#{credit}, teacher=#{teacher}, place=#{place}, share=#{share}, permission=#{permission} where coursenum=#{coursenum}
+    </update>
+    <update id="updateCourseShare">
+        update course set share=#{share} where coursenum=#{coursenum}
+    </update>
+
+    <resultMap id="Course" type="com.data_integration.a.PO.Course"></resultMap>
+</mapper>

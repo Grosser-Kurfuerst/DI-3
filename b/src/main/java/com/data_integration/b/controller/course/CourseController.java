@@ -2,6 +2,7 @@ package com.data_integration.b.controller.course;
 
 
 import com.data_integration.b.pojo.course.Course;
+import com.data_integration.b.pojo.election.Election;
 import com.data_integration.b.service.course.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -9,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/course")
+@RequestMapping("/b/course")
 public class CourseController {
 
     @Autowired
@@ -29,6 +30,11 @@ public class CourseController {
         return "修改失败";
     }
 
+    @GetMapping("/getSharedCoursesXml")
+    String getSharedCoursesXml() throws Exception {
+        return courseService.getSharedCoursesXml();
+    }
+
 
     @PostMapping("/updateCourse")
     String updateCourse (@RequestBody Course course) {
@@ -41,6 +47,12 @@ public class CourseController {
     List<Course> getAllCourses() {
         return courseService.getAllCourses();
     }
+
+    @GetMapping("/getOtherDepartmentCourses")
+    public List<Course> getOtherDepartmentCourses() throws Exception{
+        return courseService.getOtherDepartmentCourses();
+    }
+
 
 
 }

@@ -39,6 +39,10 @@
         select * from course
     </select>
 
+    <select id="getSharedCourses" resultMap="courseResultMap">
+        select * from course where share_flag = '1'
+    </select>
+
     <update id="updateCourseInfo" parameterType="com.data_integration.b.pojo.course.Course">
         update course
         set
@@ -48,7 +52,7 @@
             course_name = nvl (#{courseName}, course_name),
             teaching_place = nvl (#{teachingPlace}, teaching_place),
             share_flag = nvl (#{shareFlag}, share_flag),
-            power_grade = nvl(#{powerGrade}, power_grade)
+            power_grade = decode(#{powerGrade}, 0, power_grade, #{powerGrade})
         where course_id = #{courseId}
     </update>
 

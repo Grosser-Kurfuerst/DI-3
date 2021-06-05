@@ -9,11 +9,14 @@ public interface AdminService {
     /**根据账户的名称和密码获取管理员账户信息，管理员的权限登记 >= 5*/
     Account getAccountByNameAndPwd(String aname, String password);
 
+    /**根据学生Id获取账户*/
+    Account getAccountBySid (String sid);
+
     /**获取所有管理员类型的对象*/
     List<Account> getAllAdmins();
 
     /**删除管理员账户*/
-    String deleteAdmin(String sourceAname, String targetAname);
+    String deleteAccount(String sourceAname, String targetAname);
 
     /**添加管理员账户*/
     String addAccount(String source, Account account);

@@ -15,11 +15,13 @@ public interface AdminDao {
 
     List<Account> getAllAdmins();
 
-    Account getAccountByName(String sourceAname);
+    Account getAdminByName(String sourceAname);
 
     int deleteAccountByName(String targetAname);
 
     int addAdmin(String aname, String password, int power_grade);
 
     int updateAccount(Account account);
+
+    Account getAccountBySid(String sid);
 }

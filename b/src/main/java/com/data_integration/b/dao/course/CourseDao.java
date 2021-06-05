@@ -17,4 +17,6 @@ public interface CourseDao {
     int updateCourseInfo(Course course);
 
     List<Course> getAllCourses();
+
+    List<Course> getSharedCourses();
 }
