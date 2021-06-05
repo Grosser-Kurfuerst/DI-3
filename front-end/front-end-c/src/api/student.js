@@ -12,15 +12,17 @@ export function loginAPI(data) {
     })
 }
 
-export function updateCourseShareAPI(data) {
+export function updateStudentInfoAPI(data){
     return axios({
-        url:'/c/course/updateCourseShare',
+        url:`${api.studentPre}/updateStudentInfo`,
         method:'POST',
+        data,
+    })
+}
 
-        // TODO 这样搞，params是加在url，能成功
-        params:{
-            cno:data.cno,
-            share:data.share
-        }
+export function getAllStudentsAPI() {
+    return axios({
+        url: `${api.studentPre}/getAllStudents`,
+        method: 'GET',
     })
 }
