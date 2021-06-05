@@ -36,7 +36,7 @@ public class CSelectingService {
         xslUrl = getClass().getResource("/xsl/c/choiceToC.xsl");
         choiceXml = Utils.transform(URLDecoder.decode(xslUrl.getFile(), "UTF-8"), choiceXml);
 
-        // 验证所转换出来的B的xml
+        // 验证所转换出来的C的xml
         schemaUrl = getClass().getResource("/schema/c/studentC.xsd");
         schemaFile = new File(URLDecoder.decode(schemaUrl.getFile(), "UTF-8"));
         Utils.validateSchema(schemaFile, studentXml);

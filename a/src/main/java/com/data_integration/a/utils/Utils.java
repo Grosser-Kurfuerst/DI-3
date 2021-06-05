@@ -230,82 +230,74 @@ public class Utils {
     /**
      * A格式的学生xml转对象
      */
-    public static List<Student> xmlToStudents(String content) throws Exception{
-        List<Student> studentList = new ArrayList<>();
+    public static Student xmlToStudents(String content) throws Exception {
         Document document = getDocument(content);
         Node studentsNode = document.getFirstChild();
         Node studentNode = studentsNode.getFirstChild();
-        // 遍历students
-        while (studentNode!=null){
-            Student student = new Student();
-            studentList.add(student);
-            // 遍历class下元素 坑在于元素名用getNodeName() 值要getFirstChild().getNodeValue()
-            for (Node child = studentNode.getFirstChild(); child != null; child = child.getNextSibling()) {
-                String nodeName = child.getNodeName();
-                // 因为转换到集成格式后会丢失课时信息，所以课时的getFirstChild()为null
-                String nodeTextValue = null;
-                if (child.getFirstChild()!=null)
-                    nodeTextValue = child.getFirstChild().getNodeValue();
-                switch (nodeName){
-                    case "stunum":
-                        student.setStunum(nodeTextValue);
-                        break;
-                    case "stuname":
-                        student.setStuname(nodeTextValue);
-                        break;
-                    case "sex":
-                        student.setSex(nodeTextValue);
-                        break;
-                    case "department":
-                        student.setDepartment(nodeTextValue);
-                        break;
-                    case "permission":
-                        student.setPermission(Integer.parseInt(nodeTextValue));
-                        break;
-                    default:
-                        break;
-                }
+
+        Student student = new Student();
+        // 遍历student下元素 坑在于元素名用getNodeName() 值要getFirstChild().getNodeValue()
+        for (Node child = studentNode.getFirstChild(); child != null; child = child.getNextSibling()) {
+            String nodeName = child.getNodeName();
+            // 因为转换到集成格式后会丢失课时信息，所以课时的getFirstChild()为null
+            String nodeTextValue = null;
+            if (child.getFirstChild() != null)
+                nodeTextValue = child.getFirstChild().getNodeValue();
+            switch (nodeName) {
+                case "stunum":
+                    student.stunum = nodeTextValue;
+                    break;
+                case "stuname":
+                    student.stuname = nodeTextValue;
+                    break;
+                case "sex":
+                    student.sex = nodeTextValue;
+                    break;
+                case "department":
+                    student.department = nodeTextValue;
+                    break;
+                case "permission":
+                    student.permission = Integer.parseInt(nodeTextValue);
+                    break;
+                default:
+                    break;
             }
-            studentNode = studentNode.getNextSibling();
         }
-        return studentList;
+        return student;
     }
     /**
      * A格式的选课xml转对象
      */
-    public static List<CourseSelecting> xmlToElections(String content) throws Exception{
-        List<CourseSelecting> electionList = new ArrayList<>();
+    public static CourseSelecting xmlToSelecting(String content) throws Exception{
         Document document = getDocument(content);
         Node electionsNode = document.getFirstChild();
         Node electionNode = electionsNode.getFirstChild();
-        // 遍历students
-        while (electionNode!=null){
-            CourseSelecting election = new CourseSelecting();
-            electionList.add(election);
-            // 遍历class下元素 坑在于元素名用getNodeName() 值要getFirstChild().getNodeValue()
-            for (Node child = electionNode.getFirstChild(); child != null; child = child.getNextSibling()) {
-                String nodeName = child.getNodeName();
-                // 因为转换到集成格式后会丢失课时信息，所以课时的getFirstChild()为null
-                String nodeTextValue = null;
-                if (child.getFirstChild()!=null)
-                    nodeTextValue = child.getFirstChild().getNodeValue();
-                switch (nodeName){
-                    case "studentnum":
-                        election.setStudentnum(nodeTextValue);
-                        break;
-                    case "coursenum":
-                        election.setCoursenum(nodeTextValue);
-                        break;
-                    case "record":
-                        election.setRecord(Integer.valueOf(nodeTextValue));
-                        break;
-                    default:
-                        break;
-                }
+
+        CourseSelecting courseSelecting = new CourseSelecting();
+
+        // 遍历choice下元素 坑在于元素名用getNodeName() 值要getFirstChild().getNodeValue()
+        for (Node child = electionNode.getFirstChild(); child != null; child = child.getNextSibling()) {
+            String nodeName = child.getNodeName();
+            // 因为转换到集成格式后会丢失课时信息，所以课时的getFirstChild()为null
+            String nodeTextValue = null;
+            if (child.getFirstChild()!=null)
+                nodeTextValue = child.getFirstChild().getNodeValue();
+            switch (nodeName){
+                case "coursenum":
+                    courseSelecting.coursenum = nodeTextValue;
+                    break;
+                case "studentnum":
+                    courseSelecting.studentnum = nodeTextValue;
+                    break;
+                case "Grd":
+                    courseSelecting.record = nodeTextValue==null?null:Integer.parseInt(nodeTextValue);
+                    break;
+                default:
+                    break;
             }
-            electionNode = electionNode.getNextSibling();
         }
-        return electionList;
+
+        return courseSelecting;
     }
 }
 
