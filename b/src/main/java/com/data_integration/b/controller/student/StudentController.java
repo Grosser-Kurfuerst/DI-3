@@ -35,7 +35,6 @@ public class StudentController {
     @GetMapping("/{sid}")
     public Student getStudentInfoBySid(@PathVariable String sid) {
         Student student = studentService.getStudentBySid(sid);
-        student.setPassword("******");
         return student;
     }
 
@@ -46,7 +45,6 @@ public class StudentController {
     @PostMapping("/update")
     public Student updateStudentInfo(@RequestBody Student student) {
         Student updatedStudent = studentService.updateStudentInfo(student);
-        updatedStudent.setPassword("******");
         return updatedStudent;
     }
 
