@@ -49,16 +49,33 @@ service.interceptors.request.use((config) => {
 }, err)
 
 service.interceptors.response.use((response) => {
+    // console.log(response)
     switch (response.status) {
-        case 200:
-            console.log("axios成功")
-            console.log(response)
-            return response.data
+        case 200: // 包装一下res，data可能为空，统一为undefined
+            // console.log('response',response)
+            let res = {}
+            res.result = 'success'
+            let responseData = response.data
+            if (responseData === undefined || responseData == null
+                || JSON.stringify(responseData) === '{}'
+                || JSON.stringify(responseData) === '[]'
+                || JSON.stringify(responseData) === '\"\"'
+                || JSON.stringify(responseData) === '\'\''
+                ||responseData.length === 0
+            ) {
+                res.data = undefined
+            }
+            else{
+                res.data = response.data
+            }
+            // console.log("res", res)
+            return res
         case 404:
             message.error("404~")
             return false
         default:
-            message.error(response.status + '')
+            message.error(response.status + '错误')
+            return false
     }
 })
 

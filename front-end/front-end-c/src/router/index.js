@@ -19,8 +19,12 @@ const routes = [
         redirect: '/login'
     },
     {
-      path: '/student/:id',
-      component: () => import("@/components/student/studentIndex")
+        path: '/admin/:id',
+        component: () => import("@/components/admin/adminIndex")
+    },
+    {
+        path: '/student/:id',
+        component: () => import("@/components/student/studentIndex")
     },
 ]
 

@@ -1,14 +1,16 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import student from './modules/student'
+import course from './modules/course'
 import admin from './modules/admin'
 import getters from './getters'
 
 Vue.use(Vuex)
 
-export default new Vuex.Store({
+const store = new Vuex.Store({
     modules: {
         student,
+        course,
         admin,
     },
     state: {},
@@ -16,3 +18,4 @@ export default new Vuex.Store({
     actions: {},
     getters
 })
+export default store

@@ -1,10 +1,7 @@
 <template>
   <div id="app">
-<!--    <img alt="Vue logo" src="./assets/logo.png">-->
-<!--    <HelloWorld msg="Welcome to Your Vue.js App"/>-->
-<!--    <router-view></router-view>-->
     <a-page-header
-        style="border: 1px solid rgb(235, 237, 240);margin-bottom: 50px"
+        style="border: 1px solid rgb(235, 237, 240);margin-bottom: 30px"
         title="教务系统"
         sub-title="竭诚为您服务"
     />
@@ -15,12 +12,9 @@
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
 export default {
   name: 'App',
   components: {
-    HelloWorld
   }
 }
 </script>

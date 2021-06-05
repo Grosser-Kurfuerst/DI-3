@@ -1,11 +1,15 @@
 <template>
   <div>
-    <h1 style="text-align: center;">登录</h1>
+    <div style="display: flex;flex-direction: column;align-items: center;justify-content: center">
+      <h1 style="text-align: center; display: inline;">{{ this.userType === 'student' ? '学生登录' : '管理员登录' }}</h1>
+      <a style="display: inline;" @click="switchRole">切换身份</a>
+    </div>
     <a-form :form="form" @submit="handleSubmit" class="form-container">
       <a-form-item label="用户名/学号" class="form-item">
         <a-input
             v-decorator="['username', { rules: [{ required: true, message: '请输入用户名' }],
-             initialValue: '123456788'
+             //initialValue: '123456788'
+             initialValue: 'a'
              }]"
         >
           <!--        <a-icon slot="prefix" type="user" />-->
@@ -14,15 +18,14 @@
       <a-form-item label="密码" class="form-item">
         <a-input-password
             v-decorator="['password', { rules: [{ required: true, message: '请输入密码' }],
-             initialValue: '123456'
+             initialValue: '1'
             }]"
-
         />
       </a-form-item>
       <a-form-item class="form-item"
                    style="display: flex; align-items: center;justify-content: center;">
         <a-button type="primary" html-type="submit">
-          Submit
+          登录
         </a-button>
       </a-form-item>
     </a-form>
@@ -31,19 +34,34 @@
 
 <script>
 import {mapGetters, mapActions} from 'vuex'
+import {message} from "ant-design-vue";
 
 export default {
   name: "login",
   data() {
     return {
-      formLayout: 'horizontal',
       form: this.$form.createForm(this, {name: 'coordinated'}),
+      userType: 'admin',
     }
+  },
+  created() {
+    this.getAllCourses()
   },
   methods: {
     ...mapActions([
-      'login'
+      'login',
+      "adminLogin",
+      'getAllCourses',
     ]),
+    switchRole() {
+      if (this.userType === 'student') {
+        this.userType = 'admin'
+      }
+      else {
+        this.userType = 'student'
+      }
+      message.success('切换成功')
+    },
     handleSubmit(e) {
       e.preventDefault();
       this.form.validateFields((err, values) => {
@@ -52,7 +70,13 @@ export default {
             username: values.username,
             password: values.password,
           }
-          this.login(data)
+          // TODO 根据不同用户类型登录
+          if(this.userType === 'student'){
+            this.login(data)
+          }
+          else if(this.userType === 'admin'){
+            this.adminLogin(data)
+          }
         }
       });
     },
