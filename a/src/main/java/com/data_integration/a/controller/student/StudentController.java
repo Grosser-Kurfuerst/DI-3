@@ -16,12 +16,12 @@ public class StudentController {
     StudentService studentService;
 
     @PostMapping("/login")
-    public StudentVO studentLogin(@RequestBody StudentLoginVO studentLoginVO){
+    public Student studentLogin(@RequestBody StudentLoginVO studentLoginVO){
         return studentService.studentLogin(studentLoginVO);
     }
 
     @GetMapping("/getAllStudents")
-    public List<StudentVO> getAllStudents(){
+    public List<Student> getAllStudents(){
         return studentService.getAllStudents();
     }
 
