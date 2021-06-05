@@ -19,12 +19,14 @@
     - 返回对象
         - acc: varchar(12)
         - createDate：Timestamp（没有用，不用管）
+        - passwd: varchar(12) 密码
         - permission：int 权限
 - GET /c/account/getAllAccounts 获取所有管理员账号
     - 无参数
     - 返回数组
         - acc: varchar(12)
         - createDate：Timestamp（没有用，不用管）
+        - passwd: varchar(12) 密码
         - permission：int
 - POST /c/account/{source}/deleteAccount/{acc} 删除管理员
     - PathVariable1
