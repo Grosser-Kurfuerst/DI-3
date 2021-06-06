@@ -8,8 +8,8 @@
       <a-form-item label="用户名/学号" class="form-item">
         <a-input
             v-decorator="['username', { rules: [{ required: true, message: '请输入用户名' }],
-             //initialValue: '123456788'
-             initialValue: 'a'
+             //initialValue: '00000001c'
+             initialValue: 'c1'
              }]"
         >
           <!--        <a-icon slot="prefix" type="user" />-->
@@ -19,6 +19,7 @@
         <a-input-password
             v-decorator="['password', { rules: [{ required: true, message: '请输入密码' }],
              initialValue: '1'
+             //initialValue: '12345678'
             }]"
         />
       </a-form-item>

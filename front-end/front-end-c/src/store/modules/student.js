@@ -83,7 +83,7 @@ const student = {
             }
         },
 
-        updateStudentInfo: async ({commit}, studentInfo) => {
+        updateStudentInfo: async ({commit,rootState,dispatch}, studentInfo) => {
             const translatedData = {
                 sno: studentInfo.id,
                 snm: studentInfo.name,
@@ -95,6 +95,7 @@ const student = {
             const res = await updateStudentInfoAPI(translatedData)
             if (res) {
                 commit('setStudentInfo', studentInfo)
+                dispatch('getAllStudents')
                 message.success('更新成功')
             }
             else {
@@ -121,7 +122,7 @@ const student = {
             }
         },
 
-        selectCourse: async ({state,dispatch}, courseId) => {
+        selectCourse: async ({state,dispatch,rootGetters}, courseId) => {
             // console.log('选课，课程id-',courseId)
             const res = await selectCourseAPI(state.studentInfo.id, courseId)
             if(res){

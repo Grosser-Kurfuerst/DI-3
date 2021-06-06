@@ -13,7 +13,7 @@
           <admin-list></admin-list>
         </a-tab-pane>
         <a-tab-pane key="3" tab="我的信息" force-render>
-
+          <my-admin-info></my-admin-info>
         </a-tab-pane>
       </a-tabs>
     </div>
@@ -25,13 +25,14 @@ import {mapGetters, mapActions} from 'vuex'
 import studentList from "@/components/admin/studentList";
 import courseList from "@/components/admin/courseList";
 import adminList from "@/components/admin/adminList";
-
+import myAdminInfo from "@/components/admin/myAdminInfo";
 export default {
   name: "studentIndex",
   components: {
     studentList,
     courseList,
     adminList,
+    myAdminInfo,
   },
   data() {
     return {
@@ -48,7 +49,7 @@ export default {
   },
   methods: {
     onTabChange: function (key) {
-      console.log(this.adminInfo)
+      console.log(this.adminList)
     }
   },
 }
