@@ -4,6 +4,8 @@
     <a-table :columns="columns" :data-source="adminList" rowKey="id">
             <span slot="action" slot-scope="record">
               <a-button @click="editAdminInfo(record)">编辑管理员信息</a-button>
+              <a-divider type="vertical"></a-divider>
+              <a-button type="danger" @click="removeAdmin(record.id)">删除</a-button>
             </span>
     </a-table>
     <edit-admin-info-modal></edit-admin-info-modal>
@@ -15,6 +17,7 @@
 import {mapGetters, mapActions, mapMutations} from "vuex";
 import editAdminInfoModal from "@/components/admin/modals/editAdminInfoModal";
 import addAdminModal from "@/components/admin/modals/addAdminModal";
+
 const columns = [
   {
     title: '用户名',
@@ -34,7 +37,7 @@ const columns = [
 ];
 export default {
   name: "adminList",
-  components:{
+  components: {
     editAdminInfoModal,
     addAdminModal,
   },
@@ -54,11 +57,14 @@ export default {
       "setAddAdminVisibility",
       "setCurAdmin",
     ]),
+    ...mapActions([
+      'removeAdmin'
+    ]),
     editAdminInfo: function (record) {
       this.setCurAdmin(record)
       this.setEditAdminInfoVisibility(true)
     },
-    addAdminClicked:function () {
+    addAdminClicked: function () {
       this.setAddAdminVisibility(true)
     }
   }

@@ -9,7 +9,8 @@
         <a-tab-pane key="1" tab="课程管理" force-render>
           <course-list></course-list>
         </a-tab-pane>
-        <a-tab-pane v-if="Number(this.adminInfo.permission) > 1" key="2" tab="管理员列表" force-render>
+<!--        v-if="Number(this.adminInfo.permission) > 1"-->
+        <a-tab-pane  key="2" tab="管理员列表" force-render>
           <admin-list></admin-list>
         </a-tab-pane>
         <a-tab-pane key="3" tab="我的信息" force-render>

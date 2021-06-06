@@ -1,8 +1,8 @@
 import {axios} from "@/utils/request";
 
 const api = {
-    coursePre: '/c/course',
-    courseSelectingPre: '/c/courseSelecting'
+    coursePre: '/b/course',
+    courseSelectingPre: '/b/courseSelecting'
 }
 
 
@@ -10,6 +10,13 @@ const api = {
 export function getAllCoursesAPI() {
     return axios({
         url: `${api.coursePre}/getAllCourses`,
+        method: 'GET',
+    })
+}
+
+export function getOtherDepartmentCoursesAPI() {
+    return axios({
+        url: `${api.coursePre}/getOtherDepartmentCourses`,
         method: 'GET',
     })
 }
@@ -40,7 +47,7 @@ export function updateCourseInfoAPI(data) {
     // share: char(1) 是否共享
     // permission: integer 权限
     return axios({
-        url: `${api.coursePre}/updateCourseInfo`,
+        url: `${api.coursePre}/updateCourse`,
         method: 'POST',
         data,
     })
@@ -64,8 +71,9 @@ export function selectCourseAPI(studentId, courseId) {
         url: `${api.courseSelectingPre}/addCourseSelecting`,
         method: 'POST',
         data: {
-            cno: courseId,
-            sno: studentId,
+            courseId: courseId,
+            studentId: studentId,
+            score: null,
         }
     })
 }
@@ -73,19 +81,15 @@ export function selectCourseAPI(studentId, courseId) {
 // 退选
 export function removeSelectCourseAPI(studentId, courseId) {
     return axios({
-        url: `${api.courseSelectingPre}/deleteCourseSelecting`,
-        method: 'POST',
-        data: {
-            cno: courseId,
-            sno: studentId,
-        }
+        url: `${api.courseSelectingPre}/delete/${courseId}/${studentId}`,
+        method: 'GET',
     })
 }
 
 // 查看某个学生的选课
 export function getStudentCoursesAPI(studentId) {
     return axios({
-        url: `${api.courseSelectingPre}/getCourseSelectingBySno/${studentId}`,
+        url: `${api.courseSelectingPre}/getElectionsBySid/${studentId}`,
         method: 'GET',
     })
 }
@@ -93,7 +97,7 @@ export function getStudentCoursesAPI(studentId) {
 // 查看某门课程的选课情况
 export function getCourseSelectInfoAPI(courseId) {
     return axios({
-        url: `${api.courseSelectingPre}/getCourseSelectingByCno/${courseId}`,
+        url: `${api.courseSelectingPre}/getElectionsByCid/${courseId}`,
         method: 'GET',
     })
     // 返回数组
@@ -109,9 +113,9 @@ export function updateCourseGradeAPI(data) {
     // sno: char(9) 学号
     // grd: integer 成绩
     return axios({
-        url: `${api.courseSelectingPre}/updateGrade`,
-        method: 'POST',
-        data,
+        url: `${api.courseSelectingPre}/updateGrade/${data.courseId}/${data.studentId}/${data.score}`,
+        method: 'GET',
+        data
     })
 }
 

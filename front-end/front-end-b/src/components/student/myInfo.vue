@@ -13,9 +13,9 @@
       <a-descriptions-item label="院系">
         {{ this.studentInfo.department }}
       </a-descriptions-item>
-      <a-descriptions-item label="年级">
-        {{ this.studentInfo.permission }}
-      </a-descriptions-item>
+<!--      <a-descriptions-item label="年级">-->
+<!--        {{ this.studentInfo.permission }}-->
+<!--      </a-descriptions-item>-->
     </a-descriptions>
     <div class="my-info-btn-group"
          style="margin-top: 50px;display: flex; flex-direction: row;justify-content: center;align-items: center">
@@ -57,14 +57,14 @@
           </a-input>
         </a-form-item>
 
-        <a-form-item label="年级" class="form-item">
-          <a-input
-              v-decorator="['permission', { rules: [{ required: true, message: '请输入年级' }],
-             initialValue: this.studentInfo.permission
-             }]"
-          >
-          </a-input>
-        </a-form-item>
+<!--        <a-form-item label="年级" class="form-item">-->
+<!--          <a-input-->
+<!--              v-decorator="['permission', { rules: [{ required: true, message: '请输入年级' }],-->
+<!--             initialValue: this.studentInfo.permission-->
+<!--             }]"-->
+<!--          >-->
+<!--          </a-input>-->
+<!--        </a-form-item>-->
 
       </a-form>
     </a-modal>

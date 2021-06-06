@@ -1,7 +1,7 @@
 import {axios} from '@/utils/request'
 
 const api={
-    studentPre:'/c/student', // TODO 修改
+    studentPre:'/b/student', // TODO 修改
 }
 
 export function loginAPI(data) {
@@ -14,7 +14,7 @@ export function loginAPI(data) {
 
 export function updateStudentInfoAPI(data){
     return axios({
-        url:`${api.studentPre}/updateStudentInfo`,
+        url:`${api.studentPre}/update`,
         method:'POST',
         data,
     })

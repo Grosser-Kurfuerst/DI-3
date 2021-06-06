@@ -114,8 +114,8 @@ const admin = {
     actions: {
         adminLogin: async function ({commit, dispatch}, loginData) {
             const translatedData = {
-                acc: loginData.username,
-                passwd: loginData.password,
+                aname: loginData.username,
+                password: loginData.password,
             }
             const res = await adminLoginAPI(translatedData)
             if (res) {
@@ -125,7 +125,7 @@ const admin = {
                 }
                 message.success('登录成功')
                 const translatedRes = {
-                    id: res.data.acc,
+                    id: res.data.aname,
                     password: loginData.password,
                     permission: Number(res.data.permission)
                 }
@@ -133,10 +133,10 @@ const admin = {
                 console.log('管理员信息', translatedRes)
                 dispatch('getAllCourses')  // 获取所有课程
                 dispatch('getAllStudents') // 获取所有学生
-                if (translatedRes.permission > 1) {
+                // if (translatedRes.permission > 1) {
                     // 获取管理员列表
                     dispatch('getAllAdmins')
-                }
+                // }
                 await router.push('/admin/' + translatedRes.id)
             }
         },
@@ -146,12 +146,12 @@ const admin = {
                 if (res.data) {
                     let translatedRes = res.data.map((x) => {
                         return {
-                            id: x.sno,
-                            name: x.snm,
-                            gender: x.sex === 'M' ? '男' : '女',
-                            department: x.sde,
+                            id: x.sid,
+                            name: x.sname,
+                            gender: x.gender === 'M' ? '男' : '女',
+                            department: x.department,
                             permission: Number(x.permission),
-                            password: x.pwd,
+                            password: x.password,
                         }
                     })
                     commit('setStudentList', translatedRes)
@@ -162,12 +162,13 @@ const admin = {
         getAllAdmins: async function ({state,commit}) {
             const res = await getAllAdminsAPI()
             if (res) {
+                console.log('allAdmin',res)
                 if (res.data) {
                     let translatedRes = res.data.map((x) => {
                         return {
-                            id: x.acc,
-                            permission: x.permission,
-                            password: x.passwd,
+                            id: x.aname,
+                            permission: x.power_grade,
+                            password: x.password,
                         }
                     })
                     commit('setAdminList', translatedRes)
@@ -184,12 +185,13 @@ const admin = {
         addAdmin: async function ({dispatch, state}, data) {
             const translatedData = {
                 operatorId: state.adminInfo.id,
-                acc: data.id,
-                passwd: data.password,
-                permission: data.permission
+                aname: data.id,
+                password: data.password,
+                power_grade: data.permission
             }
             const res = await addAdminAPI(translatedData)
             if (res && res.data !== undefined) {
+                message.warn(res.data)
                 if (res.data === true) {
                     dispatch('getAllAdmins')
                     message.success('添加成功')
@@ -197,6 +199,7 @@ const admin = {
                 else if (res.data === false) {
                     message.error('没有权限或异常')
                 }
+                dispatch('getAllAdmins')
             }
             else {
                 message.error('网络错误')
@@ -205,14 +208,14 @@ const admin = {
         updateAdminInfo: async function ({state, dispatch}, data) {
             const translatedData = {
                 operatorId: state.adminInfo.id,
-                acc: data.id,
-                passwd: data.password,
-                permission: data.permission
+                aname: data.id,
+                password: data.password,
+                power_grade: data.permission
             }
             const res = await updateAdminAPI(translatedData)
             if (res) {
+                message.warn(res.data)
                 dispatch('getAllAdmins')
-                message.success('更新成功')
             }
             else {
                 message.error('更新失败')
@@ -225,13 +228,8 @@ const admin = {
             }
             const res = await deleteAdminAPI(translatedData)
             if (res && res.data !== undefined) {
-                if (res.data === true) {
-                    dispatch('getAllAdmins')
-                    message.success('删除成功')
-                }
-                else if (res.data === false) {
-                    message.error('没有权限或异常')
-                }
+                dispatch('getAllAdmins')
+                message.info(res.data)
             }
             else {
                 message.error('网络错误')
@@ -239,19 +237,19 @@ const admin = {
         },
         updateCourseInfo: async function ({state, dispatch}, data) {
             const translatedData = {
-                cno: data.id,
-                cnm: data.name,
-                ctm: data.time,
-                cpt: data.point,
-                tec: data.teacher,
-                pla: data.place,
-                share: data.share === '是' ? 'Y' : 'N',
-                permission: Number(data.permission)
+                courseId: data.id,
+                courseName: data.name,
+                courseTime: data.time,
+                score: data.point,
+                teacherName: data.teacher,
+                teachingPlace: data.place,
+                shareFlay: data.share === '是' ? 1 : 0,
+                powerGrade: Number(data.permission)
             }
             const res = await updateCourseInfoAPI(translatedData)
             if (res) {
+                message.info(res.data)
                 dispatch('getAllCourses')
-                message.success('更新成功')
             }
             else {
                 message.error('网络错误')
@@ -264,8 +262,8 @@ const admin = {
                 const translatedRes = res.data.map((x) => {
                     return {
                         courseId: courseId,
-                        studentId: x.sno,
-                        grade: x.grd === null ? '暂无' : Number(x.grd)
+                        studentId: x.studentId,
+                        grade: x.score === null ? '暂无' : Number(x.score)
                     }
                 })
                 console.log('该课程成绩信息', translatedRes)
@@ -274,14 +272,16 @@ const admin = {
         },
         updateCourseGrade: async function ({dispatch}, data) {
             const translatedData = {
-                cno: data.courseId,
-                sno: data.studentId,
-                grd: Number(data.grade)
+                courseId: data.courseId,
+                studentId: data.studentId,
+                score: Number(data.grade)
             }
             const res = await updateCourseGradeAPI(translatedData)
+            console.log('res', res)
             if (res) {
+                message.info(res.data)
                 dispatch('getCourseSelectInfo', data.courseId)
-                message.success('登记成绩成功')
+                // message.success('登记成绩成功')
             }
             else {
                 message.error('网络错误')
@@ -295,7 +295,7 @@ const admin = {
                 // 修改属性名称
                 // console.log(resData)   //{cno: "1233", sno: "123456788", grd: 80} // grd可能为null
                 let translatedRes1 = resData.map((x) => {
-                    let targetCourse = rootGetters.getCourseById(x.cno) // 只有这里(还有下面)需要修改
+                    let targetCourse = rootGetters.getCourseById(x.courseId)
                     // console.log("targetCourse",targetCourse)
                     // return Object.assign({grade: String(x.grd)==='null'? '暂无':String(x.grd) },targetCourse) // 课程信息加上成绩
                     return Object.assign({},targetCourse)
@@ -340,7 +340,8 @@ const admin = {
             const res = await removeSelectCourseAPI(state.curStudent.id, courseId)
             if(res){
                 if(res.result){
-                    message.success('退选成功')
+                    message.info(res.data)
+                    // message.success('退选成功')
                     dispatch('getAdminStudentCourse',state.curStudent.id)
                 }
                 else{

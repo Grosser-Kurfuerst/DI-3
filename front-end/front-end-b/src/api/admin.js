@@ -1,8 +1,8 @@
 import {axios} from '@/utils/request'
 
 const api = {
-    studentPre: '/c/student', // TODO 修改
-    adminPre: '/c/account',
+    studentPre: '/b/student', // TODO 修改
+    adminPre: '/b/admin',
 }
 
 export function adminLoginAPI(data) {
@@ -15,7 +15,7 @@ export function adminLoginAPI(data) {
 
 export function getAllAdminsAPI() {
     return axios({
-        url: `${api.adminPre}/getAllAccounts`,
+        url: `${api.adminPre}/getAllAdmins`,
         method: 'GET',
     })
 }
@@ -23,17 +23,18 @@ export function getAllAdminsAPI() {
 
 export function deleteAdminAPI(data) {
     return axios({
-        url: `${api.adminPre}/${data.operatorId}/deleteAccount/${data.operandId}`,
-        method: 'POST',
+        url: `${api.adminPre}/deleteAccount/${data.operatorId}/${data.operandId}`,
+        method: 'GET',
     })
 }
 
 export function addAdminAPI(data) {
     const tmp = {
-        acc: data.acc,
-        passwd: data.passwd,
-        permission: data.permission
+        aname: data.aname,
+        password: data.password,
+        power_grade: data.power_grade
     }
+    console.log(tmp)
     return axios({
         url: `${api.adminPre}/${data.operatorId}/addAccount`,
         method: 'POST',
@@ -43,9 +44,9 @@ export function addAdminAPI(data) {
 
 export function updateAdminAPI(data) {
     const tmp = {
-        acc: data.acc,
-        passwd: data.passwd,
-        permission: data.permission
+        aname: data.aname,
+        password: data.password,
+        power_grade: data.power_grade
     }
     return axios({
         url: `${api.adminPre}/updateAccount`,

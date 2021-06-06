@@ -52,10 +52,11 @@ const student = {
 
         login: async ({commit, dispatch, state, rootState}, loginData) => {
             const translatedData = {
-                sno: loginData.username,
-                pwd: loginData.password,
+                aname: loginData.username,
+                password: loginData.password,
             }
             const res = await loginAPI(translatedData)
+            console.log('登录res',res)
             if (res) {
                 if (res.data === undefined) {
                     message.error('登录失败，密码或用户名错误')
@@ -63,11 +64,12 @@ const student = {
                 }
                 message.success('登录成功')
                 const translatedRes = {
-                    id: res.data.sno,
-                    name: res.data.snm,
-                    gender: res.data.sex === 'M' ? '男' : '女',
-                    department: res.data.sde,
-                    permission: Number(res.data.permission),
+                    accountName:loginData.username,
+                    id: res.data.sid,
+                    name: res.data.sname,
+                    gender: res.data.gender === 'M' ? '男' : '女',
+                    department: res.data.department,
+                    permission: Number(res.data.permission), // TODO 判断
                     password: loginData.password,
                 }
                 commit("setStudentInfo", translatedRes)
@@ -85,12 +87,12 @@ const student = {
 
         updateStudentInfo: async ({commit,rootState,dispatch}, studentInfo) => {
             const translatedData = {
-                sno: studentInfo.id,
-                snm: studentInfo.name,
-                sex: studentInfo.gender === '男' ? 'M' : 'F',
-                sde: studentInfo.department,
-                pwd: studentInfo.password,
-                permission: studentInfo.permission
+                sid: studentInfo.id,
+                sname: studentInfo.name,
+                gender: studentInfo.gender === '男' ? 'M' : 'F',
+                department: studentInfo.department,
+                password: studentInfo.password,
+                // permission: studentInfo.permission
             }
             const res = await updateStudentInfoAPI(translatedData)
             if (res) {
@@ -108,11 +110,11 @@ const student = {
             if (res) {
                 const resData = res.data // 可能为空
                 // 修改属性名称
-                // console.log(resData)   //{cno: "1233", sno: "123456788", grd: 80} // grd可能为null
+                console.log(resData)   //{cno: "1233", sno: "123456788", grd: 80} // grd可能为null
                 let translatedRes = resData.map((x) => {
-                    let targetCourse = rootGetters.getCourseById(x.cno) // 只有这里(还有下面)需要修改
+                    let targetCourse = rootGetters.getCourseById(x.courseId) // 只有这里(还有下面)需要修改
                    // console.log("targetCourse",targetCourse)
-                    return Object.assign({grade: String(x.grd)==='null'? '暂无':String(x.grd) },targetCourse) // 课程信息加上成绩
+                    return Object.assign({grade: String(x.score)==='null'? '暂无':String(x.score) },targetCourse) // 课程信息加上成绩
                 })
                 commit('setStudentCourses', translatedRes)
                 console.log("已选课程：", translatedRes)
@@ -147,7 +149,12 @@ const student = {
             const res = await removeSelectCourseAPI(state.studentInfo.id,courseId)
             if(res){
                 if(res.result){
-                    message.success('退选成功')
+                    if(res.data === '删除成功'){
+                        message.success('退选成功')
+                    }
+                    else if(res.data === '删除失败'){
+                        message.error('退选失败')
+                    }
                     dispatch('getStudentCourses',state.studentInfo.id)
                 }
                 else{
