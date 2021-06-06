@@ -114,8 +114,8 @@ const admin = {
     actions: {
         adminLogin: async function ({commit, dispatch}, loginData) {
             const translatedData = {
-                acc: loginData.username,
-                passwd: loginData.password,
+                account: loginData.username,
+                password: loginData.password,
             }
             const res = await adminLoginAPI(translatedData)
             if (res) {
@@ -125,7 +125,7 @@ const admin = {
                 }
                 message.success('登录成功')
                 const translatedRes = {
-                    id: res.data.acc,
+                    id: res.data.account,
                     password: loginData.password,
                     permission: Number(res.data.permission)
                 }
@@ -146,10 +146,10 @@ const admin = {
                 if (res.data) {
                     let translatedRes = res.data.map((x) => {
                         return {
-                            id: x.sno,
-                            name: x.snm,
+                            id: x.stunum,
+                            name: x.stuname,
                             gender: x.sex === 'M' ? '男' : '女',
-                            department: x.sde,
+                            department: x.department,
                             permission: Number(x.permission),
                             password: x.pwd,
                         }
@@ -165,9 +165,9 @@ const admin = {
                 if (res.data) {
                     let translatedRes = res.data.map((x) => {
                         return {
-                            id: x.acc,
+                            id: x.account,
                             permission: x.permission,
-                            password: x.passwd,
+                            password: x.password,
                         }
                     })
                     commit('setAdminList', translatedRes)
@@ -184,8 +184,8 @@ const admin = {
         addAdmin: async function ({dispatch, state}, data) {
             const translatedData = {
                 operatorId: state.adminInfo.id,
-                acc: data.id,
-                passwd: data.password,
+                account: data.id,
+                password: data.password,
                 permission: data.permission
             }
             const res = await addAdminAPI(translatedData)
@@ -205,8 +205,8 @@ const admin = {
         updateAdminInfo: async function ({state, dispatch}, data) {
             const translatedData = {
                 operatorId: state.adminInfo.id,
-                acc: data.id,
-                passwd: data.password,
+                account: data.id,
+                password: data.password,
                 permission: data.permission
             }
             const res = await updateAdminAPI(translatedData)
@@ -239,12 +239,12 @@ const admin = {
         },
         updateCourseInfo: async function ({state, dispatch}, data) {
             const translatedData = {
-                cno: data.id,
-                cnm: data.name,
-                ctm: data.time,
-                cpt: data.point,
-                tec: data.teacher,
-                pla: data.place,
+                coursenum: data.id,
+                coursename: data.name,
+                // ctm: data.time,
+                credit: data.point,
+                teacher: data.teacher,
+                place: data.place,
                 share: data.share === '是' ? 'Y' : 'N',
                 permission: Number(data.permission)
             }
@@ -260,12 +260,14 @@ const admin = {
         getCourseSelectInfo: async function ({state, commit}, courseId) {
             commit('setCurCourseSelectList', [])
             const res = await getCourseSelectInfoAPI(courseId)
+            console.log('该课程成绩信息res', res)
+
             if (res && res.data !== undefined) {
                 const translatedRes = res.data.map((x) => {
                     return {
                         courseId: courseId,
-                        studentId: x.sno,
-                        grade: x.grd === null ? '暂无' : Number(x.grd)
+                        studentId: x.studentnum,
+                        grade: x.record === null ? '暂无' : Number(x.record)
                     }
                 })
                 console.log('该课程成绩信息', translatedRes)
@@ -274,9 +276,9 @@ const admin = {
         },
         updateCourseGrade: async function ({dispatch}, data) {
             const translatedData = {
-                cno: data.courseId,
-                sno: data.studentId,
-                grd: Number(data.grade)
+                coursenum: data.courseId,
+                studentnum: data.studentId,
+                record: Number(data.grade)
             }
             const res = await updateCourseGradeAPI(translatedData)
             if (res) {
@@ -295,7 +297,7 @@ const admin = {
                 // 修改属性名称
                 // console.log(resData)   //{cno: "1233", sno: "123456788", grd: 80} // grd可能为null
                 let translatedRes1 = resData.map((x) => {
-                    let targetCourse = rootGetters.getCourseById(x.cno) // 只有这里(还有下面)需要修改
+                    let targetCourse = rootGetters.getCourseById(x.coursenum) // 只有这里(还有下面)需要修改
                     // console.log("targetCourse",targetCourse)
                     // return Object.assign({grade: String(x.grd)==='null'? '暂无':String(x.grd) },targetCourse) // 课程信息加上成绩
                     return Object.assign({},targetCourse)

@@ -1,7 +1,7 @@
 import {axios} from '@/utils/request'
 
 const api={
-    studentPre:'/c/student', // TODO 修改
+    studentPre:'/a/student', // TODO 修改
 }
 
 export function loginAPI(data) {

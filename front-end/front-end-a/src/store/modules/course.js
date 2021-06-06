@@ -1,5 +1,6 @@
 import {
-    getAllCoursesAPI
+    getAllCoursesAPI,
+    getOtherDepartmentCoursesAPI,
 } from "@/api/course";
 
 const course = {
@@ -31,21 +32,27 @@ const course = {
     actions: {
         async getAllCourses({commit, state}) {
             const res = await getAllCoursesAPI()
+            const res2 = await getOtherDepartmentCoursesAPI()
+            // console.log('所有课程', res)
+            // console.log('其他院系课程',res2)
+            res.data = res.data.concat(res2.data)
+            console.log('所有课程res', res)
+
             if (res.data !== undefined) {
                 let translatedRes = res.data.map((x) => {
                     return {
-                        id: x.cno,
-                        name: x.cnm,
-                        time: x.ctm,
-                        point: x.cpt,
-                        teacher: x.tec,
-                        place: x.pla,
+                        id: x.coursenum,
+                        name: x.coursename,
+                        // time: x.ctm,
+                        point: x.credit,
+                        teacher: x.teacher,
+                        place: x.place,
                         share: x.share === 'Y' ? '是':'否',
                         permission: x.permission,
                     }
                 })
                 commit('setCourseList', translatedRes)
-                // console.log('所有课程', state.courseList)
+                console.log('所有课程', state.courseList)
             }
         }
     },

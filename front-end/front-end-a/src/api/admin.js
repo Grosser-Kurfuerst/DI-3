@@ -1,8 +1,8 @@
 import {axios} from '@/utils/request'
 
 const api = {
-    studentPre: '/c/student', // TODO 修改
-    adminPre: '/c/account',
+    studentPre: '/a/student', // TODO 修改
+    adminPre: '/a/account',
 }
 
 export function adminLoginAPI(data) {
@@ -30,8 +30,8 @@ export function deleteAdminAPI(data) {
 
 export function addAdminAPI(data) {
     const tmp = {
-        acc: data.acc,
-        passwd: data.passwd,
+        account: data.account,
+        password: data.password,
         permission: data.permission
     }
     return axios({
@@ -43,8 +43,8 @@ export function addAdminAPI(data) {
 
 export function updateAdminAPI(data) {
     const tmp = {
-        acc: data.acc,
-        passwd: data.passwd,
+        account: data.account,
+        password: data.password,
         permission: data.permission
     }
     return axios({

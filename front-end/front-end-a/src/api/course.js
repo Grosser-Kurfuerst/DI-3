@@ -1,8 +1,8 @@
 import {axios} from "@/utils/request";
 
 const api = {
-    coursePre: '/c/course',
-    courseSelectingPre: '/c/courseSelecting'
+    coursePre: '/a/course',
+    courseSelectingPre: '/a/courseSelecting'
 }
 
 
@@ -10,6 +10,13 @@ const api = {
 export function getAllCoursesAPI() {
     return axios({
         url: `${api.coursePre}/getAllCourses`,
+        method: 'GET',
+    })
+}
+
+export function getOtherDepartmentCoursesAPI() {
+    return axios({
+        url: `${api.coursePre}/getOtherDepartmentCourses`,
         method: 'GET',
     })
 }
@@ -64,8 +71,8 @@ export function selectCourseAPI(studentId, courseId) {
         url: `${api.courseSelectingPre}/addCourseSelecting`,
         method: 'POST',
         data: {
-            cno: courseId,
-            sno: studentId,
+            coursenum: courseId,
+            studentnum: studentId,
         }
     })
 }
@@ -76,8 +83,8 @@ export function removeSelectCourseAPI(studentId, courseId) {
         url: `${api.courseSelectingPre}/deleteCourseSelecting`,
         method: 'POST',
         data: {
-            cno: courseId,
-            sno: studentId,
+            coursenum: courseId,
+            studentnum: studentId,
         }
     })
 }

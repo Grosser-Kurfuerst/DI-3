@@ -9,7 +9,7 @@
         <a-input
             v-decorator="['username', { rules: [{ required: true, message: '请输入用户名' }],
              //initialValue: '00000001c'
-             initialValue: 'c1'
+             initialValue: '0001a'
              }]"
         >
           <!--        <a-icon slot="prefix" type="user" />-->
@@ -18,7 +18,7 @@
       <a-form-item label="密码" class="form-item">
         <a-input-password
             v-decorator="['password', { rules: [{ required: true, message: '请输入密码' }],
-             initialValue: '1'
+             initialValue: '123'
              //initialValue: '12345678'
             }]"
         />
@@ -42,7 +42,7 @@ export default {
   data() {
     return {
       form: this.$form.createForm(this, {name: 'coordinated'}),
-      userType: 'admin',
+      userType: 'student',
     }
   },
   created() {

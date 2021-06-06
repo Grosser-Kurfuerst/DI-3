@@ -52,7 +52,7 @@ const student = {
 
         login: async ({commit, dispatch, state, rootState}, loginData) => {
             const translatedData = {
-                sno: loginData.username,
+                stunum: loginData.username,
                 pwd: loginData.password,
             }
             const res = await loginAPI(translatedData)
@@ -63,16 +63,15 @@ const student = {
                 }
                 message.success('登录成功')
                 const translatedRes = {
-                    id: res.data.sno,
-                    name: res.data.snm,
+                    id: res.data.stunum,
+                    name: res.data.stuname,
                     gender: res.data.sex === 'M' ? '男' : '女',
-                    department: res.data.sde,
+                    department: res.data.department,
                     permission: Number(res.data.permission),
                     password: loginData.password,
                 }
                 commit("setStudentInfo", translatedRes)
                 commit("setStudentId", translatedRes.id)
-
                 console.log("学生信息:", translatedRes)
                 await router.push('/student/' + translatedRes.id)
                 dispatch('getAllCourses')  // 获取所有课程
@@ -85,12 +84,13 @@ const student = {
 
         updateStudentInfo: async ({commit,rootState,dispatch}, studentInfo) => {
             const translatedData = {
-                sno: studentInfo.id,
-                snm: studentInfo.name,
+                stunum: studentInfo.id,
+                stuname: studentInfo.name,
                 sex: studentInfo.gender === '男' ? 'M' : 'F',
-                sde: studentInfo.department,
+                department: studentInfo.department,
                 pwd: studentInfo.password,
-                permission: studentInfo.permission
+                permission: studentInfo.permission,
+                // account:'neverUsed',
             }
             const res = await updateStudentInfoAPI(translatedData)
             if (res) {
@@ -105,14 +105,15 @@ const student = {
 
         getStudentCourses: async ({commit, state,dispatch,rootGetters}, studentId) => {
             const res = await getStudentCoursesAPI(studentId)
+            console.log("已选课程res：", res)
             if (res) {
                 const resData = res.data // 可能为空
                 // 修改属性名称
                 // console.log(resData)   //{cno: "1233", sno: "123456788", grd: 80} // grd可能为null
                 let translatedRes = resData.map((x) => {
-                    let targetCourse = rootGetters.getCourseById(x.cno) // 只有这里(还有下面)需要修改
+                    let targetCourse = rootGetters.getCourseById(x.coursenum) // 只有这里(还有下面)需要修改
                    // console.log("targetCourse",targetCourse)
-                    return Object.assign({grade: String(x.grd)==='null'? '暂无':String(x.grd) },targetCourse) // 课程信息加上成绩
+                    return Object.assign({grade: String(x.record)==='null'? '暂无':String(x.record) },targetCourse) // 课程信息加上成绩
                 })
                 commit('setStudentCourses', translatedRes)
                 console.log("已选课程：", translatedRes)
