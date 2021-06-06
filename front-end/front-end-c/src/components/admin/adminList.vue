@@ -4,6 +4,15 @@
     <a-table :columns="columns" :data-source="adminList" rowKey="id">
             <span slot="action" slot-scope="record">
               <a-button @click="editAdminInfo(record)">编辑管理员信息</a-button>
+              <a-divider type="vertical"></a-divider>
+                <a-popconfirm
+                    title="确认删除？"
+                    ok-text="是"
+                    cancel-text="否"
+                    @confirm="removeAdmin(record.id)"
+                >
+              <a-button type="danger">删除</a-button>
+                </a-popconfirm>
             </span>
     </a-table>
     <edit-admin-info-modal></edit-admin-info-modal>
@@ -53,6 +62,9 @@ export default {
       "setEditAdminInfoVisibility",
       "setAddAdminVisibility",
       "setCurAdmin",
+    ]),
+    ...mapActions([
+        "removeAdmin"
     ]),
     editAdminInfo: function (record) {
       this.setCurAdmin(record)
