@@ -18,6 +18,11 @@ import editCourseInfoModal from "@/components/admin/modals/editCourseInfoModal";
 import courseSelectInfoModal from "@/components/admin/modals/courseSelectInfoModal";
 const columns = [
   {
+    title: '课程id',
+    dataIndex: 'id',
+    key: 'id',
+  },
+  {
     title: '课程名',
     dataIndex: 'name',
     key: 'name',

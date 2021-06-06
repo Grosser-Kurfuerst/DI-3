@@ -14,6 +14,13 @@ export function getAllCoursesAPI() {
     })
 }
 
+export function getOtherDepartmentCoursesAPI() {
+    return axios({
+        url: `${api.coursePre}/getOtherDepartmentCourses`,
+        method: 'GET',
+    })
+}
+
 // 更新课程共享信息
 export function updateCourseShareAPI(data) {
     return axios({

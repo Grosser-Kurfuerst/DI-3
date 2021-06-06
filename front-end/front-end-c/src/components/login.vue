@@ -9,7 +9,7 @@
         <a-input
             v-decorator="['username', { rules: [{ required: true, message: '请输入用户名' }],
              //initialValue: '00000001c'
-             initialValue: 'c1'
+             initialValue: '00000001c'
              }]"
         >
           <!--        <a-icon slot="prefix" type="user" />-->
@@ -42,7 +42,7 @@ export default {
   data() {
     return {
       form: this.$form.createForm(this, {name: 'coordinated'}),
-      userType: 'admin',
+      userType: 'student',
     }
   },
   created() {

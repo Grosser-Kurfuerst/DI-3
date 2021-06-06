@@ -1,5 +1,6 @@
 import {
-    getAllCoursesAPI
+    getAllCoursesAPI,
+    getOtherDepartmentCoursesAPI,
 } from "@/api/course";
 
 const course = {
@@ -31,6 +32,10 @@ const course = {
     actions: {
         async getAllCourses({commit, state}) {
             const res = await getAllCoursesAPI()
+            const res2 = await getOtherDepartmentCoursesAPI()
+            // console.log('所有课程', res)
+            // console.log('其他院系课程',res2)
+            res.data = res.data.concat(res2.data)
             if (res.data !== undefined) {
                 let translatedRes = res.data.map((x) => {
                     return {

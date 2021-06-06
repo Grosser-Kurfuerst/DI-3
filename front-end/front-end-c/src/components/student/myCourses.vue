@@ -6,6 +6,11 @@
 <script>
 const columns = [
   {
+    title: '课程id',
+    dataIndex: 'id',
+    key: 'id',
+  },
+  {
     title:'课程名',
     dataIndex: 'name',
     key: 'name',

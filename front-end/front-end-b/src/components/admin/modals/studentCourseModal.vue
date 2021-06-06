@@ -33,6 +33,11 @@ import {mapActions, mapGetters, mapMutations} from "vuex";
 
 const columns = [
   {
+    title: '课程id',
+    dataIndex: 'id',
+    key: 'id',
+  },
+  {
     title: '课程名',
     dataIndex: 'name',
     key: 'name',
@@ -42,16 +47,16 @@ const columns = [
     dataIndex: 'time',
     key: 'time',
   },
-  {
-    title: '教师',
-    dataIndex: 'teacher',
-    key: 'teacher',
-  },
-  {
-    title: '地点',
-    key: 'place',
-    dataIndex: 'place',
-  },
+  // {
+  //   title: '教师',
+  //   dataIndex: 'teacher',
+  //   key: 'teacher',
+  // },
+  // {
+  //   title: '地点',
+  //   key: 'place',
+  //   dataIndex: 'place',
+  // },
   {
     title: '是否共享',
     key: 'share',
