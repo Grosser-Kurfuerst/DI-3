@@ -2,17 +2,24 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.data_integration.a.mapper.course.CourseMapper">
     <select id="getAllCourses" resultMap="Course">
-        select * from course
+        select * from 课程
     </select>
     <select id="getCourseByCno" resultMap="Course">
-        select * from course where coursenum=#{coursenum}
+        select * from 课程 where 课程编号=#{coursenum}
     </select>
     <update id="updateCourseInfo">
-        update course set coursename=#{coursename}, credit=#{credit}, teacher=#{teacher}, place=#{place}, share=#{share}, permission=#{permission} where coursenum=#{coursenum}
+        update 课程 set 课程名称=#{coursename}, 学分=#{credit}, 授课老师=#{teacher}, 授课地点=#{place}, 共享=#{share} where 课程编号=#{coursenum}
     </update>
     <update id="updateCourseShare">
-        update course set share=#{share} where coursenum=#{coursenum}
+        update 课程 set 共享=#{share} where 课程编号=#{coursenum}
     </update>
 
-    <resultMap id="Course" type="com.data_integration.a.PO.Course"></resultMap>
+    <resultMap id="Course" type="com.data_integration.a.PO.Course">
+        <id column="课程编号" property="coursenum"></id>
+        <result column="课程名称" property="coursename"></result>
+        <result column="学分" property="credit"></result>
+        <result column="授课老师" property="teacher"></result>
+        <result column="授课地点" property="place"></result>
+        <result column="共享" property="share"></result>
+    </resultMap>
 </mapper>

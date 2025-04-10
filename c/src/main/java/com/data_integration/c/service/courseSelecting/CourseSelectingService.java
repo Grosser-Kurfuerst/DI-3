@@ -34,12 +34,23 @@ public class CourseSelectingService {
     @Autowired
     RestTemplate restTemplate;
 
-    public List<CourseSelectingVO> getAllCourseSelecting(){
-        List<CourseSelectingVO> courseSelectingVOList = courseSelectingMapper.getAllCourseSelecting().stream().map(courseSelecting -> {
+    public List<CourseSelectingVO> getAllCourseSelecting() {
+//        List<CourseSelecting> coursesSelectings = courseSelectingMapper.getAllCourseSelecting();
+//        List<CourseSelectingVO> courseSelectingVOList = coursesSelectings.stream().map(courseSelecting -> {
+//            Course c = courseMapper.getCourseByCno(courseSelecting.cno);
+//            CourseSelectingVO courseSelectingVO = new CourseSelectingVO();
+//            BeanUtils.copyProperties(c, courseSelectingVO);
+//            courseSelectingVO.grd = courseSelecting.grd;
+//            courseSelectingVO.sno = courseSelecting.sno;
+//            return courseSelectingVO;
+//        }).collect(Collectors.toList());
+        List<CourseSelecting> courses = courseSelectingMapper.getAllCourseSelecting();
+        List<CourseSelectingVO> courseSelectingVOList = courses.stream().map(course -> {
             CourseSelectingVO courseSelectingVO = new CourseSelectingVO();
-            BeanUtils.copyProperties(courseSelecting,courseSelectingVO);
+            BeanUtils.copyProperties(course, courseSelectingVO);
             return courseSelectingVO;
         }).collect(Collectors.toList());
+
         return courseSelectingVOList;
     }
 
@@ -50,6 +61,14 @@ public class CourseSelectingService {
             BeanUtils.copyProperties(courseSelecting,courseSelectingVO);
             return courseSelectingVO;
         }).collect(Collectors.toList());
+//        List<CourseSelectingVO> courseSelectingVOList = courseSelectingList.stream().map(courseSelecting -> {
+//            Course c = courseMapper.getCourseByCno(courseSelecting.cno);
+//            CourseSelectingVO courseSelectingVO = new CourseSelectingVO();
+//            BeanUtils.copyProperties(c, courseSelectingVO);
+//            courseSelectingVO.grd = courseSelecting.grd;
+//            courseSelectingVO.sno = courseSelecting.sno;
+//            return courseSelectingVO;
+//        }).collect(Collectors.toList());
         return courseSelectingVOList;
     }
 
@@ -60,18 +79,26 @@ public class CourseSelectingService {
             BeanUtils.copyProperties(courseSelecting,courseSelectingVO);
             return courseSelectingVO;
         }).collect(Collectors.toList());
+//        List<CourseSelectingVO> courseSelectingVOList = courseSelectingList.stream().map(courseSelecting -> {
+//            Course c = courseMapper.getCourseByCno(courseSelecting.cno);
+//            CourseSelectingVO courseSelectingVO = new CourseSelectingVO();
+//            BeanUtils.copyProperties(c, courseSelectingVO);
+//            courseSelectingVO.grd = courseSelecting.grd;
+//            courseSelectingVO.sno = courseSelecting.sno;
+//            return courseSelectingVO;
+//        }).collect(Collectors.toList());
         return courseSelectingVOList;
     }
 
     public boolean addCourseSelecting(CourseSelectingVO courseSelectingVO) throws Exception {
         Student student = studentMapper.getStudentBySno(courseSelectingVO.sno);
         // 是本院的课
-        if(courseSelectingVO.cno.charAt(courseSelectingVO.cno.length()-1) == courseSelectingVO.sno.charAt(courseSelectingVO.sno.length()-1)){
+        if(courseSelectingVO.cno.startsWith("CS")){
             Course course = courseMapper.getCourseByCno(courseSelectingVO.cno);
-            if(student.permission<course.permission)
-                return false;
+//            if(student.permission<course.permission)
+//                return false;
             CourseSelecting courseSelecting = new CourseSelecting();
-            BeanUtils.copyProperties(courseSelectingVO,courseSelecting);
+            BeanUtils.copyProperties(courseSelectingVO, courseSelecting);
             try {
                 courseSelectingMapper.addCourseSelecting(courseSelecting);
             }catch (Exception e){
@@ -112,20 +139,20 @@ public class CourseSelectingService {
 
         String res = "";
         // 是a的课
-        if(courseSelectingVO.cno.charAt(courseSelectingVO.cno.length()-1)=='a'){
+        if(courseSelectingVO.cno.startsWith("BA")){
             // res是集成服务器的ResponseBody，是xml字符串
             // TODO 这里是集成服务器url
-            res = restTemplate.postForObject("http://localhost:9000/a/courseSelecting/addCourseSelecting",httpEntity,String.class);
+            res = restTemplate.postForObject(Utils.serverIntegrator + "/a/courseSelecting/addCourseSelecting",httpEntity,String.class);
         }
         // 是b的课
-        else if(courseSelectingVO.cno.charAt(courseSelectingVO.cno.length()-1)=='b'){
+        else if(courseSelectingVO.cno.length() == 5){
             // res是集成服务器的ResponseBody，是xml字符串
             // TODO 这里是集成服务器url
-            res = restTemplate.postForObject("http://localhost:9000/b/courseSelecting/addCourseSelecting",httpEntity,String.class);
+            res = restTemplate.postForObject(Utils.serverIntegrator + "/b/courseSelecting/addCourseSelecting",httpEntity,String.class);
         }
         if (res.equals("true")) {
             CourseSelecting courseSelecting = new CourseSelecting();
-            BeanUtils.copyProperties(courseSelectingVO,courseSelecting);
+            BeanUtils.copyProperties(courseSelectingVO, courseSelecting);
             try {
                 courseSelectingMapper.addCourseSelecting(courseSelecting);
             }catch (Exception e){
@@ -137,15 +164,77 @@ public class CourseSelectingService {
             return false;
     }
 
-    public void deleteCourseSelecting(SelectCourseVO selectCourseVO){
+    public void deleteCourseSelecting(SelectCourseVO selectCourseVO) throws Exception {
         CourseSelecting courseSelecting = new CourseSelecting();
-        BeanUtils.copyProperties(selectCourseVO,courseSelecting);
-        courseSelectingMapper.deleteCourseSelecting(courseSelecting);
+        BeanUtils.copyProperties(selectCourseVO, courseSelecting);
+        // 是本院的课
+        if(selectCourseVO.cno.startsWith("CS")){
+            try {
+                courseSelectingMapper.deleteCourseSelecting(courseSelecting);
+            }catch (Exception e){
+                return;
+            }
+            return;
+        }
+
+        // 不是本院的课，生成xml并转为集成格式
+        // 学生
+//        String studentXml = Utils.studentToXml(student);
+//        // 验证
+//        URL schemaUrl = getClass().getResource("/schema/studentC.xsd");
+//        File schemaFile = new File(URLDecoder.decode(schemaUrl.getFile(),"UTF-8"));
+//        Utils.validateSchema(schemaFile,studentXml);
+//        // 转换为集成格式
+//        URL xslUrl = getClass().getResource("/xsl/formatStudent.xsl");
+//        studentXml = Utils.transform(URLDecoder.decode(xslUrl.getFile(),"UTF-8"),studentXml);
+
+        // 选课
+        CourseSelectingVO courseSelectingVO = new CourseSelectingVO();
+        BeanUtils.copyProperties(selectCourseVO, courseSelectingVO);
+        String selectingXml = Utils.selectingToXml(courseSelectingVO);
+        // 验证
+        URL schemaUrl = getClass().getResource("/schema/choiceC.xsd");
+        File schemaFile = new File(URLDecoder.decode(schemaUrl.getFile(),"UTF-8"));
+        Utils.validateSchema(schemaFile, selectingXml);
+        // 转换为集成格式
+        URL xslUrl = getClass().getResource("/xsl/formatClassChoice.xsl");
+        selectingXml = Utils.transform(URLDecoder.decode(xslUrl.getFile(),"UTF-8"),selectingXml);
+
+        // 拼接
+        String toSend = selectingXml;
+
+        // 使用RestTemplate向集成服务器发送请求
+        HttpHeaders headers = new HttpHeaders();
+        MediaType type = MediaType.parseMediaType("application/xml;charset=UTF-8");
+        headers.setContentType(type);
+        HttpEntity<String> httpEntity = new HttpEntity<>(toSend,headers);
+
+        String res = "";
+        // 是a的课
+        if(courseSelectingVO.cno.startsWith("BA")){
+            // res是集成服务器的ResponseBody，是xml字符串
+            // TODO 这里是集成服务器url
+            res = restTemplate.postForObject(Utils.serverIntegrator + "/a/courseSelecting/deleteCourseSelecting",httpEntity,String.class);
+        }
+        // 是b的课
+        else if(courseSelectingVO.cno.length() == 5){
+            // res是集成服务器的ResponseBody，是xml字符串
+            // TODO 这里是集成服务器url
+            res = restTemplate.postForObject(Utils.serverIntegrator + "/b/courseSelecting/deleteCourseSelecting",httpEntity,String.class);
+        }
+        if (res.equals("true")) {
+            try {
+                courseSelectingMapper.deleteCourseSelecting(courseSelecting);
+            }catch (Exception e){
+                return;
+            }
+            return;
+        }
     }
 
     public void updateGrade(CourseSelectingVO courseSelectingVO){
         CourseSelecting courseSelecting = new CourseSelecting();
-        BeanUtils.copyProperties(courseSelectingVO,courseSelecting);
+        BeanUtils.copyProperties(courseSelectingVO, courseSelecting);
         courseSelectingMapper.updateGrade(courseSelecting);
     }
 
@@ -171,14 +260,49 @@ public class CourseSelectingService {
         Course courseToSelect = courseMapper.getCourseByCno(courseSelecting.cno);
         if (courseToSelect == null ) return "false"; // 没有该课程Id对应的课程
         // 学生有权限
-        if (courseToSelect.permission <= student.permission){
-            try {
-                courseSelectingMapper.addCourseSelecting(courseSelecting);
-            }catch (Exception e){
-                return "false";
-            }
-            return "true";
+//        if (courseToSelect.permission <= student.permission){
+//
+//            return "true";
+//        }
+        try {
+            courseSelectingMapper.addCourseSelecting(courseSelecting);
+        }catch (Exception e){
+            return "false";
         }
-        return "false";
+        return "true";
+    }
+
+    public String deleteCourseSelectingXml(String content) throws Exception {
+        // 分割学生和选课
+//        int splitIndex = content.indexOf("</students>")+"</students>".length();
+//        String studentXml = content.substring(0,splitIndex);
+        String choiceXml = content;
+        // 验证
+//        schemaUrl = getClass().getResource("/schema/studentC.xsd");
+        // File schemaFile = new File(URLDecoder.decode(schemaUrl.getFile(),"UTF-8"));
+        // Utils.validateSchema(schemaFile,studentXml);
+        // 验证
+        URL schemaUrl = getClass().getResource("/schema/choiceC.xsd");
+        File schemaFile = new File(URLDecoder.decode(schemaUrl.getFile(),"UTF-8"));
+        Utils.validateSchema(schemaFile,choiceXml);
+
+        // 将学生xml转换成student对象
+        // Student student = Utils.xmlToStudents(studentXml);
+        CourseSelecting courseSelecting = Utils.xmlToSelecting(choiceXml);
+
+        // 看该学生有没有权限选择该课程
+        Course courseToSelect = courseMapper.getCourseByCno(courseSelecting.cno);
+        if (courseToSelect == null ) return "false"; // 没有该课程Id对应的课程
+        // 学生有权限
+//        if (courseToSelect.permission <= student.permission){
+//
+//            return "true";
+//        }
+        try {
+            courseSelectingMapper.deleteCourseSelecting(courseSelecting);
+        }catch (Exception e){
+            return "false";
+        }
+        return "true";
     }
 }

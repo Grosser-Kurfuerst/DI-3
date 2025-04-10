@@ -1,8 +1,10 @@
 package com.data_integration.a.service.student;
 
+import com.data_integration.a.PO.Account;
 import com.data_integration.a.PO.Student;
 import com.data_integration.a.VO.StudentLoginVO;
 import com.data_integration.a.VO.StudentVO;
+import com.data_integration.a.mapper.account.AccountMapper;
 import com.data_integration.a.mapper.student.StudentMapper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,10 +17,18 @@ import java.util.stream.Collectors;
 public class StudentService {
     @Autowired
     StudentMapper studentMapper;
+    @Autowired
+    AccountMapper accountMapper;
 
     public Student studentLogin(StudentLoginVO studentLoginVO){
-        Student student = studentMapper.getStudentBySno(studentLoginVO.stunum);
-        if(student==null || !student.pwd.equals(studentLoginVO.pwd))
+        Student temp = studentMapper.getStudentBySno(studentLoginVO.stunum);
+        Student student = temp == null ?
+                studentMapper.getStudentByAcc(studentLoginVO.stunum) : temp;
+        if (student == null) {
+            return null;
+        }
+        Account account = accountMapper.getAccountByAcc(student.account);
+        if(account==null || !account.password.equals(studentLoginVO.pwd))
             return null;
         return student;
     }

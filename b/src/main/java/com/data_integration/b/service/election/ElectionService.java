@@ -10,7 +10,7 @@ public interface ElectionService {
     List<Election> getElectionsBySid(String sid);
 
     /**删除选课记录*/
-    int deleteElectionBySidCid(String cid, String sid);
+    int deleteElectionBySidCid(String cid, String sid) throws Exception;
 
     /**获取某门课程的选课信息*/
     List<Election> getElectionsByCid(String cid);
@@ -24,4 +24,6 @@ public interface ElectionService {
     boolean addCourseSelecting(Election election) throws Exception;
 
     String addCourseSelectingXml(String content) throws Exception;
+
+    String deleteCourseSelectingXml(String content) throws Exception;
 }

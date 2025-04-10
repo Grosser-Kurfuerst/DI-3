@@ -8,15 +8,15 @@ public class Course {
     public String tec;
     public String pla;
     public String share;
-    public Integer permission;
+    // public Integer permission;
 
-    public Integer getPermission() {
-        return permission;
-    }
-
-    public void setPermission(Integer permission) {
-        this.permission = permission;
-    }
+//    public Integer getPermission() {
+//        return permission;
+//    }
+//
+//    public void setPermission(Integer permission) {
+//        this.permission = permission;
+//    }
 
     public String getCno() {
         return cno;

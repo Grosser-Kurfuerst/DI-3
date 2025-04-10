@@ -33,7 +33,7 @@ const course = {
         async getAllCourses({commit, state}) {
             const res = await getAllCoursesAPI()
             const res2 = await getOtherDepartmentCoursesAPI()
-            // console.log('所有课程', res)
+            console.log('所有课程', res)
             // console.log('其他院系课程',res2)
             res.data = res.data.concat(res2.data)
             if (res.data !== undefined) {
@@ -45,12 +45,11 @@ const course = {
                         point: x.cpt,
                         teacher: x.tec,
                         place: x.pla,
-                        share: x.share === 'Y' ? '是':'否',
-                        permission: x.permission,
+                        share: x.share === 'N' ? '否':'是',
                     }
                 })
                 commit('setCourseList', translatedRes)
-                // console.log('所有课程', state.courseList)
+                console.log('所有课程', state.courseList)
             }
         }
     },

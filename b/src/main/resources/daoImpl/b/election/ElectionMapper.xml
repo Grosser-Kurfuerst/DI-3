@@ -2,56 +2,38 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.data_integration.b.dao.election.ElectionDao">
 
-
-    <resultMap id="courseResultMap" type="com.data_integration.b.pojo.course.Course">
-        <id column="course_id" property="courseId"/>
-        <result column="teacher_name" property="teacherName"/>
-        <result column="score" property="score"/>
-        <result column="course_time" property="courseTime"/>
-        <result column="course_name" property="courseName"/>
-        <result column="teaching_place" property="teachingPlace"/>
-        <result column="share_flag" property="shareFlag"/>
-    </resultMap>
-
-    <resultMap id="accountResultMap" type="com.data_integration.b.pojo.account.Account">
-        <id column="aname" property="aname"/>
-        <result column="password" property="password"/>
-        <result column="power_grade" property="power_grade"/>
-        <result column="guest_id" property="guest_id"/>
-    </resultMap>
-
     <resultMap id="electionResultMap" type="com.data_integration.b.pojo.election.Election">
-        <result column="course_id" property="courseId"/>
-        <result column="student_id" property="studentId"/>
-        <result column="score" property="score"/>
+        <result column="课程编号" property="courseId"/>
+        <result column="学号" property="studentId"/>
+        <result column="得分" property="score"/>
     </resultMap>
 
     <select id="getElectionsBySid" resultMap="electionResultMap">
-        select * from election where student_id = #{sid}
+        select * from 选课 where 学号 = #{sid}
     </select>
 
     <select id="getElections" resultMap="electionResultMap">
-        select * from election
+        select * from 选课
     </select>
 
     <select id="getElectionByCidSid" resultMap="electionResultMap">
-        select * from election where student_id = #{sid} and course_id = #{cid}
+        select * from 选课 where 学号 = #{sid} and 课程编号 = #{cid}
     </select>
 
     <select id="getElectionsByCid" resultMap="electionResultMap">
-        select * from election where course_id = #{cid}
+        select * from 选课 where 课程编号 = #{cid}
     </select>
 
     <insert id="addElectionBySidCidScore">
-        insert into election(course_id, student_id, score) values(#{cid}, #{sid}, #{score})
+        insert into 选课(课程编号, 学号, 得分) values(#{cid}, #{sid}, #{score})
     </insert>
 
     <delete id="deleteElectionBySidCid">
-        delete from election where course_id = #{cid} and student_id = #{sid}
+        delete from 选课 where 课程编号 = #{cid} and 学号 = #{sid}
     </delete>
 
     <update id="updateGrade">
-        update election set score = #{score} where student_id = #{sid} and course_id = #{cid}
+        update 选课 set 得分 = #{score} where 学号 = #{sid} and 课程编号 = #{cid}
     </update>
 
 </mapper>

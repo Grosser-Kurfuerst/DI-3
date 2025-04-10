@@ -3,41 +3,41 @@
 <mapper namespace="com.data_integration.b.dao.student.StudentDao">
 
     <resultMap id="studentResultMap" type="com.data_integration.b.pojo.student.Student">
-        <id column="sid" property="sid"/>
-        <result column="sname" property="sname"/>
-        <result column="gender" property="gender"/>
-        <result column="department" property="department"/>
-        <result column="password" property="password"/>
+        <id column="学号" property="sid"/>
+        <result column="姓名" property="sname"/>
+        <result column="性别" property="gender"/>
+        <result column="专业" property="department"/>
+        <result column="密码" property="password"/>
     </resultMap>
 
     <resultMap id="accountResultMap" type="com.data_integration.b.pojo.account.Account">
-        <id column="aname" property="aname"/>
-        <result column="password" property="password"/>
-        <result column="power_grade" property="power_grade"/>
-        <result column="guest_id" property="guest_id"/>
+        <id column="账户名" property="aname"/>
+        <result column="密码" property="password"/>
+        <result column="级别" property="power_grade"/>
+        <result column="客体" property="guest_id"/>
     </resultMap>
 
     <select id="getAllStudents" resultMap="studentResultMap">
-        select * from student
+        select * from 学生
     </select>
 
 
     <select id="getAccountByGuestId" resultMap="accountResultMap">
-        select * from account where guest_id = #{sid}
+        select * from 账户 where 客体 = #{sid}
     </select>
 
     <select id="getAccountByNameAndPassword" resultMap="accountResultMap">
-        select * from account  where aname =#{name} and password = #{password}
+        select * from 账户  where 账户名 =#{name} and 密码 = #{password}
     </select>
 
     <select id="getStudentBySid" resultMap="studentResultMap">
-        select * from student where sid = #{sid}
+        select * from 学生 where 学号 = #{sid}
     </select>
 
     <update id="updateStudentInfo" parameterType="com.data_integration.b.pojo.student.Student">
-        update student set
-            sname = nvl(#{sname}, sname), gender = nvl(#{gender}, gender), department = nvl(#{department}, department),  password = nvl(#{password}, password)
-        where sid = #{sid}
+        update 学生 set
+            姓名 = nvl(#{sname}, 姓名), 性别 = nvl(#{gender}, 性别), 专业 = nvl(#{department}, 专业),  密码 = nvl(#{password}, 密码)
+        where 学号 = #{sid}
     </update>
 
 </mapper>

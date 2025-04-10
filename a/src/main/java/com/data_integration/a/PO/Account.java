@@ -19,17 +19,17 @@ public class Account {
         this.password = password;
     }
 
-    public Integer getPermission() {
+    public String getPermission() {
         return permission;
     }
 
-    public void setPermission(Integer permission) {
+    public void setPermission(String permission) {
         this.permission = permission;
     }
 
     public String account;
     public String password;
-    public Integer permission;
+    public String permission;
 
 
 }

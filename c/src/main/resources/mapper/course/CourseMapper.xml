@@ -2,17 +2,25 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.data_integration.c.mapper.course.CourseMapper">
     <select id="getAllCourses" resultMap="Course">
-        select * from course
+        select * from Course
     </select>
     <select id="getCourseByCno" resultMap="Course">
-        select * from course where cno=#{cno}
+        select * from Course where Cno=#{cno}
     </select>
     <update id="updateCourseInfo">
-        update course set cnm=#{cnm}, ctm=#{ctm}, cpt=#{cpt}, tec=#{tec}, pla=#{pla}, share=#{share}, permission=#{permission} where cno=#{cno}
+        update Course set Cnm=#{Cnm}, Ctm=#{ctm}, Cpt=#{cpt}, Tec=#{tec}, Pla=#{pla}, Share=#{share} where Cno=#{cno}
     </update>
     <update id="updateCourseShare">
-        update course set share=#{share} where cno=#{cno}
+        update Course set Share=#{share} where Cno=#{cno}
     </update>
 
-    <resultMap id="Course" type="com.data_integration.c.PO.Course"></resultMap>
+    <resultMap id="Course" type="com.data_integration.c.PO.Course">
+        <id column="Cno" property="cno"></id>
+        <result column="Cnm" property="cnm"></result>
+        <result column="Ctm" property="ctm"></result>
+        <result column="Cpt" property="cpt"></result>
+        <result column="Tec" property="tec"></result>
+        <result column="Pla" property="pla"></result>
+        <result column="Share" property="share"></result>
+    </resultMap>
 </mapper>

@@ -1,13 +1,13 @@
 server:
-  port: 8888
+  port: 9362
 
 spring:
   datasource:
       driver-class-name: oracle.jdbc.driver.OracleDriver
       # XE版的最后要XE 完整版的要orcl
-      url: jdbc:oracle:thin:@localhost:1521:XE
-      username: system
-      password: system
+      url: jdbc:oracle:thin:@10.60.254.36:1521/pdb20
+      username: pdb_admin
+      password: passwd
 
 mybatis:
   mapper-locations: classpath:daoImpl/b/*/*Mapper.xml

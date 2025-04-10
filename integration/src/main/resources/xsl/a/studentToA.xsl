@@ -22,9 +22,9 @@
                     <department>
                         <xsl:value-of select="jw:major"/>
                     </department>
-                    <permission>
-                        <xsl:value-of select="jw:permission"/>
-                    </permission>
+<!--                    <permission>-->
+<!--                        <xsl:value-of select="jw:permission"/>-->
+<!--                    </permission>-->
                 </student>
             </xsl:for-each>
         </students>

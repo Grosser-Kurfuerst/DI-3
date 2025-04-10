@@ -110,12 +110,13 @@ const student = {
                 // 修改属性名称
                 // console.log(resData)   //{cno: "1233", sno: "123456788", grd: 80} // grd可能为null
                 let translatedRes = resData.map((x) => {
+                    console.log(x.cno)
                     let targetCourse = rootGetters.getCourseById(x.cno) // 只有这里(还有下面)需要修改
-                   // console.log("targetCourse",targetCourse)
+                    // console.log("targetCourse",targetCourse)
                     return Object.assign({grade: String(x.grd)==='null'? '暂无':String(x.grd) },targetCourse) // 课程信息加上成绩
                 })
                 commit('setStudentCourses', translatedRes)
-                console.log("已选课程：", translatedRes)
+                // console.log("已选课程：", translatedRes)
             }
             else {
                 message.error('获取课程信息失败')

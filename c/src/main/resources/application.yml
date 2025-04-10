@@ -1,11 +1,11 @@
 server:
-  port: 8085
+  port: 9363
 
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/data_integration_c
+    url: jdbc:mysql:// 10.60.254.37:3420/C_Database
     username: root
-    password: root
+    password: helloworld@914
     driver-class-name: com.mysql.cj.jdbc.Driver
 
 mybatis:

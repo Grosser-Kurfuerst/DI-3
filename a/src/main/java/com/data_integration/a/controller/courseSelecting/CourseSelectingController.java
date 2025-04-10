@@ -35,7 +35,7 @@ public class CourseSelectingController {
     }
 
     @PostMapping("/deleteCourseSelecting")
-    public void deleteCourseSelecting(@RequestBody SelectCourseVO selectCourseVO){
+    public void deleteCourseSelecting(@RequestBody SelectCourseVO selectCourseVO) throws Exception{
         courseSelectingService.deleteCourseSelecting(selectCourseVO);
     }
 
@@ -47,5 +47,10 @@ public class CourseSelectingController {
     @PostMapping("/addCourseSelectingXml")
     public String addCourseSelectingXml(@RequestBody String content) throws Exception {
         return courseSelectingService.addCourseSelectingXml(content);
+    }
+
+    @PostMapping("/deleteCourseSelectingXml")
+    public String deleteCourseSelectingXml(@RequestBody String content) throws Exception {
+        return courseSelectingService.deleteCourseSelectingXml(content);
     }
 }

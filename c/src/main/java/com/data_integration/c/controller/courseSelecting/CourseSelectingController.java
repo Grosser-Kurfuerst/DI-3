@@ -1,10 +1,8 @@
 package com.data_integration.c.controller.courseSelecting;
 
-import com.data_integration.c.PO.CourseSelecting;
 import com.data_integration.c.VO.CourseSelectingVO;
 import com.data_integration.c.VO.SelectCourseVO;
 import com.data_integration.c.service.courseSelecting.CourseSelectingService;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -37,7 +35,7 @@ public class CourseSelectingController {
     }
 
     @PostMapping("/deleteCourseSelecting")
-    public void deleteCourseSelecting(@RequestBody SelectCourseVO selectCourseVO){
+    public void deleteCourseSelecting(@RequestBody SelectCourseVO selectCourseVO) throws Exception {
         courseSelectingService.deleteCourseSelecting(selectCourseVO);
     }
 
@@ -52,5 +50,13 @@ public class CourseSelectingController {
     @PostMapping("/addCourseSelectingXml")
     public String addCourseSelectingXml(@RequestBody String content) throws Exception {
         return courseSelectingService.addCourseSelectingXml(content);
+    }
+
+    /**
+     * 其它院系同学通过xml进行退课的接口
+     */
+    @PostMapping("/deleteCourseSelectingXml")
+    public String deleteCourseSelectingXml(@RequestBody String content) throws Exception {
+        return courseSelectingService.deleteCourseSelectingXml(content);
     }
 }

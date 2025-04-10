@@ -2,25 +2,29 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.data_integration.a.mapper.courseSelecting.CourseSelectingMapper">
     <select id="getAllCourseSelecting" resultMap="CourseSelecting">
-        select * from courseselection
+        select * from 选课
     </select>
     <select id="getCourseSelectingBySno" resultMap="CourseSelecting">
-        select * from courseselection where studentnum=#{studentnum}
+        select * from 选课 where 学生编号=#{studentnum}
     </select>
     <select id="getCourseSelectingByCno" resultMap="CourseSelecting">
-        select * from courseselection where coursenum=#{coursenum}
+        select * from 选课 where 课程编号=#{coursenum}
     </select>
     <select id="getCourseSelectingBySnoAndCno" resultMap="CourseSelecting">
-        select * from courseselection where studentnum=#{studentnum} and coursenum=#{coursenum}
+        select * from 选课 where 学生编号=#{studentnum} and 课程编号=#{coursenum}
     </select>
     <insert id="addCourseSelecting">
-        insert into courseselection(coursenum,studentnum,record) values (#{coursenum},#{studentnum},#{record})
+        insert into 选课(课程编号,学生编号,成绩) values (#{coursenum},#{studentnum},#{record})
     </insert>
     <delete id="deleteCourseSelecting">
-        delete from courseselection where studentnum=#{studentnum} and coursenum=#{coursenum}
+        delete from 选课 where 学生编号=#{studentnum} and 课程编号=#{coursenum}
     </delete>
     <update id="updateGrade">
-        update courseselection set record=#{record} where studentnum=#{studentnum} and coursenum=#{coursenum}
+        update 选课 set 成绩=#{record} where 学生编号=#{studentnum} and 课程编号=#{coursenum}
     </update>
-    <resultMap id="CourseSelecting" type="com.data_integration.a.PO.CourseSelecting"></resultMap>
+    <resultMap id="CourseSelecting" type="com.data_integration.a.PO.CourseSelecting">
+        <id column="课程编号" property="coursenum"></id>
+        <result column="学生编号" property="studentnum"></result>
+        <result column="成绩" property="record"></result>
+    </resultMap>
 </mapper>

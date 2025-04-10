@@ -49,7 +49,7 @@ public class CourseService {
 
     public List<Course> getOtherDepartmentCourses() throws Exception {
         // TODO 这里是集成服务器url
-        String content = restTemplate.getForObject("http://localhost:9000/a/course/getOtherDepartmentCourses",String.class);
+        String content = restTemplate.getForObject(Utils.serverIntegrator + "/a/course/getOtherDepartmentCourses",String.class);
         return Utils.xmlToCourses(content);
     }
 }

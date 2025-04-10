@@ -65,7 +65,7 @@ public class ElectionController {
      * 删除学生的选课
      */
     @GetMapping("/delete/{cid}/{sid}")
-    public String deleteElectionBySidCid(@PathVariable String cid, @PathVariable String sid) {
+    public String deleteElectionBySidCid(@PathVariable String cid, @PathVariable String sid) throws Exception {
         int outcome = electionService.deleteElectionBySidCid(cid, sid);
         if (outcome == 1) return "删除成功";
         return "删除失败";
@@ -87,6 +87,11 @@ public class ElectionController {
     @PostMapping("/addCourseSelectingXml")
     public String addCourseSelectingXml(@RequestBody String content) throws Exception {
         return electionService.addCourseSelectingXml(content);
+    }
+
+    @PostMapping("/deleteCourseSelectingXml")
+    public String deleteCourseSelectingXml(@RequestBody String content) throws Exception {
+        return electionService.deleteCourseSelectingXml(content);
     }
 
 

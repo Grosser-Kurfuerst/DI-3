@@ -47,7 +47,7 @@ const course = {
                         point: x.credit,
                         teacher: x.teacher,
                         place: x.place,
-                        share: x.share === 'Y' ? '是':'否',
+                        share: x.share === 'N' ? '否':'是',
                         permission: x.permission,
                     }
                 })

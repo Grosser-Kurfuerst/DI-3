@@ -43,7 +43,7 @@
             <element name="sex" type="a:性别类型"/>
             <element name="department" type="a:专业类型"/>
             <!--            <element name="密码" type="b:密码类型"/>-->
-            <element name="permission" type="a:权限类型"/>
+<!--            <element name="permission" type="a:权限类型"/>-->
         </all>
     </complexType>
 

@@ -22,12 +22,15 @@ import javax.xml.validation.SchemaFactory;
 import javax.xml.validation.Validator;
 import java.io.ByteArrayInputStream;
 import java.io.File;
+import java.io.InputStream;
 import java.io.StringWriter;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Utils {
+//    public static String serverIntegrator = "http://10.60.254.41:9365";
+    public static String serverIntegrator = "http://192.168.1.11:9365";
     /**
      * xml dom转字符串
      */
@@ -82,6 +85,8 @@ public class Utils {
         TransformerFactory transformerFactory = TransformerFactory.newInstance();
         // ② 获取转换器对象实例
         Transformer transformer = transformerFactory.newTransformer(new StreamSource(xslPath));
+//        InputStream inputStream = Utils.class.getResourceAsStream(xslPath);
+//        Transformer transformer = transformerFactory.newTransformer(new StreamSource(inputStream));
         //③ 进行转换
         DocumentResult result = new DocumentResult();
         transformer.transform(new StreamSource(new ByteArrayInputStream(content.getBytes(StandardCharsets.UTF_8))), result);
@@ -211,9 +216,9 @@ public class Utils {
                     case "专业":
                         student.setDepartment(nodeTextValue);
                         break;
-                    case "权限":
-                        student.setPermission(Integer.parseInt(nodeTextValue));
-                        break;
+//                    case "权限":
+//                        student.setPermission(Integer.parseInt(nodeTextValue));
+//                        break;
                     default:
                         break;
                 }
@@ -288,9 +293,9 @@ public class Utils {
         sdeElement.setTextContent(student.getDepartment());
         studentElement.appendChild(sdeElement);
 
-        Element permissionElement = document.createElement("权限");
-        permissionElement.setTextContent(String.valueOf(permission));
-        studentElement.appendChild(permissionElement);
+//        Element permissionElement = document.createElement("权限");
+//        permissionElement.setTextContent(String.valueOf(permission));
+//        studentElement.appendChild(permissionElement);
 
         return toFormatedXML(document);
     }

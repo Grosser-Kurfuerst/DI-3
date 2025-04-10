@@ -6,7 +6,7 @@ import store from '@/store'
 
 // 创建 axios 实例
 const service = axios.create({
-    baseURL: process.env.NODE_ENV === 'production' ? '' : 'http://10.211.55.8:8086', // TODO 修改
+    baseURL: process.env.NODE_ENV === 'production' ? 'http://127.0.0.1:9361' : 'http://127.0.0.1:9361', // TODO 修改
     withCredentials: true
 })
 // service.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';

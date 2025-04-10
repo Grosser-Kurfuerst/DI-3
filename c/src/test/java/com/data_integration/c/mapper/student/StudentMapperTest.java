@@ -29,24 +29,22 @@ public class StudentMapperTest {
     public void testGetAllStudents() throws Exception{
         List<Student> studentList = studentMapper.getAllStudents();
         for(Student student:studentList)
-            System.out.println(student.sno+student.snm);
+            System.out.println(student.sno +student.snm);
     }
 
     @Test
     public void testUpdateStudentInfo() throws Exception{
         Student student = new Student();
-        student.sno="123456788";
-        student.snm="Billy";
-        student.pwd="123";
-        student.sex="M";
-        student.sde="CS";
-        student.permission=2;
+        student.sno ="123456788";
+        student.snm ="Billy";
+        student.pwd ="123";
+        student.sex ="M";
+        student.sde ="CS";
         studentMapper.updateStudentInfo(student);
         student = studentMapper.getStudentBySno("123456788");
         Assert.assertEquals("Billy",student.snm);
         Assert.assertEquals("123",student.pwd);
         Assert.assertEquals("M",student.sex);
         Assert.assertEquals("CS",student.sde);
-        Assert.assertEquals(Integer.valueOf(2),student.permission);
     }
 }

@@ -23,12 +23,15 @@ import javax.xml.validation.SchemaFactory;
 import javax.xml.validation.Validator;
 import java.io.ByteArrayInputStream;
 import java.io.File;
+import java.io.InputStream;
 import java.io.StringWriter;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Utils {
+//    public static String serverIntegrator = "http://10.60.254.41:9365";
+    public static String serverIntegrator = "http://192.168.1.11:9365";
 
     /**
      * course转a课程xml
@@ -97,6 +100,8 @@ public class Utils {
         TransformerFactory transformerFactory = TransformerFactory.newInstance();
         // ② 获取转换器对象实例
         Transformer transformer = transformerFactory.newTransformer(new StreamSource(xslPath));
+//        InputStream inputStream = Utils.class.getResourceAsStream(xslPath);
+//        Transformer transformer = transformerFactory.newTransformer(new StreamSource(inputStream));
         //③ 进行转换
         DocumentResult result = new DocumentResult();
         transformer.transform(new StreamSource(new ByteArrayInputStream(content.getBytes(StandardCharsets.UTF_8))), result);
@@ -140,9 +145,9 @@ public class Utils {
         sdeElement.setTextContent(student.department);
         studentElement.appendChild(sdeElement);
 
-        Element permissionElement = document.createElement("permission");
-        permissionElement.setTextContent(""+student.permission);
-        studentElement.appendChild(permissionElement);
+//        Element permissionElement = document.createElement("permission");
+//        permissionElement.setTextContent(""+student.permission);
+//        studentElement.appendChild(permissionElement);
 
         return toFormatedXML(document);
     }
@@ -256,9 +261,9 @@ public class Utils {
                 case "department":
                     student.department = nodeTextValue;
                     break;
-                case "permission":
-                    student.permission = Integer.parseInt(nodeTextValue);
-                    break;
+//                case "permission":
+//                    student.permission = Integer.parseInt(nodeTextValue);
+//                    break;
                 default:
                     break;
             }

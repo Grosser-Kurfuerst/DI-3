@@ -4,14 +4,13 @@
 
 
     <resultMap id="courseResultMap" type="com.data_integration.b.pojo.course.Course">
-        <id column="course_id" property="courseId"/>
-        <result column="teacher_name" property="teacherName"/>
-        <result column="score" property="score"/>
-        <result column="course_time" property="courseTime"/>
-        <result column="course_name" property="courseName"/>
-        <result column="teaching_place" property="teachingPlace"/>
-        <result column="share_flag" property="shareFlag"/>
-        <result column="power_grade" property="powerGrade"/>
+        <id column="编号" property="courseId"/>
+        <result column="老师" property="teacherName"/>
+        <result column="学分" property="score"/>
+        <result column="课时" property="courseTime"/>
+        <result column="名称" property="courseName"/>
+        <result column="地点" property="teachingPlace"/>
+        <result column="共享" property="shareFlag"/>
     </resultMap>
 
     <resultMap id="accountResultMap" type="com.data_integration.b.pojo.account.Account">
@@ -22,38 +21,37 @@
     </resultMap>
 
     <resultMap id="electionResultMap" type="com.data_integration.b.pojo.election.Election">
-        <id column="course_id" property="courseId"/>
+        <id column="课程编号" property="courseId"/>
         <id column="student_id" property="studentId"/>
         <result column="score" property="score"/>
     </resultMap>
 
     <select id="getCourseByCid" resultMap="courseResultMap">
-        select * from course where course_id = #{cid}
+        select * from 课程 where 编号 = #{cid}
     </select>
 
     <update id="setCourseShareFlag">
-        update course set share_flag = #{flag} where course_id = #{courseId}
+        update 课程 set 共享 = #{flag} where 编号 = #{courseId}
     </update>
 
     <select id="getAllCourses" resultMap="courseResultMap">
-        select * from course
+        select * from 课程
     </select>
 
     <select id="getSharedCourses" resultMap="courseResultMap">
-        select * from course where share_flag = '1'
+        select * from 课程 where 共享 = 'Y'
     </select>
 
     <update id="updateCourseInfo" parameterType="com.data_integration.b.pojo.course.Course">
-        update course
+        update 课程
         set
-            teacher_name = nvl ( #{teacherName}, teacher_name ),
-            score = nvl ( #{score}, score ),
-            course_time = nvl (#{courseTime}, course_time),
-            course_name = nvl (#{courseName}, course_name),
-            teaching_place = nvl (#{teachingPlace}, teaching_place),
-            share_flag = nvl (#{shareFlag}, share_flag),
-            power_grade = decode(#{powerGrade}, 0, power_grade, #{powerGrade})
-        where course_id = #{courseId}
+            老师 = nvl ( #{teacherName}, 老师 ),
+            学分 = nvl ( #{score}, 学分 ),
+            课时 = nvl (#{courseTime}, 课时),
+            名称 = nvl (#{courseName}, 名称),
+            地点 = nvl (#{teachingPlace}, 地点),
+            共享 = nvl (#{shareFlag}, 共享)
+        where 编号 = #{courseId}
     </update>
 
 </mapper>

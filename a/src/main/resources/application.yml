@@ -1,11 +1,11 @@
 server:
-  port: 8086
+  port: 9361
 
 spring:
   datasource:
-    url: jdbc:sqlserver://localhost:1433;databaseName=data_integration_a
+    url: jdbc:sqlserver://10.60.254.42:1420;databaseName=A_Database
     username: sa
-    password: root
+    password: helloworld@914
     driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
 
 mybatis:

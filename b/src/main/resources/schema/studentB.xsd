@@ -29,10 +29,10 @@
     </simpleType>
 
 <!--    权限类型-->
-    <simpleType name="权限类型">
-        <restriction base="unsignedByte">
-        </restriction>
-    </simpleType>
+<!--    <simpleType name="权限类型">-->
+<!--        <restriction base="unsignedByte">-->
+<!--        </restriction>-->
+<!--    </simpleType>-->
 
     <!--    单个学生类型-->
     <complexType name="单个学生类型">
@@ -41,7 +41,7 @@
             <element name="名称" type="b:学生姓名类型"/>
             <element name="性别" type="b:性别类型"/>
             <element name="专业" type="b:专业类型"/>
-            <element name="权限" type="b:权限类型"/>
+<!--            <element name="权限" type="b:权限类型"/>-->
         </all>
     </complexType>
 

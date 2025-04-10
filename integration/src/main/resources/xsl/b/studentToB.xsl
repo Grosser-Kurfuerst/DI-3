@@ -22,9 +22,9 @@
                     <专业>
                         <xsl:value-of select="jw:major"/>
                     </专业>
-                    <权限>
-                        <xsl:value-of select="jw:permission"/>
-                    </权限>
+<!--                    <权限>-->
+<!--                        <xsl:value-of select="jw:permission"/>-->
+<!--                    </权限>-->
                 </student>
             </xsl:for-each>
         </students>

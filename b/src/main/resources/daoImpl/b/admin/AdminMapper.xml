@@ -3,42 +3,42 @@
 <mapper namespace="com.data_integration.b.dao.admin.AdminDao">
 
     <resultMap id="accountResultMap" type="com.data_integration.b.pojo.account.Account">
-        <id column="aname" property="aname"/>
-        <result column="password" property="password"/>
-        <result column="power_grade" property="power_grade"/>
-        <result column="guest_id" property="guest_id"/>
+        <id column="账户名" property="aname"/>
+        <result column="密码" property="password"/>
+        <result column="级别" property="power_grade"/>
+        <result column="客体" property="guest_id"/>
     </resultMap>
 
     <select id="getAccountBySid" resultMap="accountResultMap">
-        select * from account where guest_id = #{sid}
+        select * from 账户 where 客体 = #{sid}
     </select>
 
     <update id="updateAccount" parameterType="com.data_integration.b.pojo.account.Account">
-        update account set
-            password = nvl(#{password}, password),
-            power_grade = decode(#{power_grade}, 0, power_grade, #{power_grade}),
-            guest_id = nvl(#{guest_id}, guest_id)
-        where aname = #{aname}
+        update 账户 set
+            密码 = nvl(#{password}, 密码),
+            级别 = decode(#{power_grade}, 0, 级别, #{power_grade}),
+            客体 = nvl(#{guest_id}, 客体)
+        where 账户名 = #{aname}
     </update>
 
     <insert id="addAdmin">
-        insert into account values(#{aname}, #{password}, #{power_grade}, null)
+        insert into 账户 values(#{aname}, #{password}, #{power_grade}, null)
     </insert>
 
     <select id="getAccountByNameAndPwd" resultMap="accountResultMap">
-        select * from account where aname = #{aname} and password = #{password} and power_grade > 4
+        select * from 账户 where 账户名 = #{aname} and 密码 = #{password} and 级别 >= 0
     </select>
 
     <select id="getAllAdmins" resultMap="accountResultMap">
-        select * from account where power_grade > 4
+        select * from 账户 where 级别 > 4
     </select>
 
     <select id="getAdminByName" resultMap="accountResultMap">
-        select * from account where aname = #{sourceAname} and power_grade > 4
+        select * from 账户 where 账户名 = #{sourceAname} and 级别 > 4
     </select>
 
     <delete id="deleteAccountByName">
-        delete from account where aname = #{targetAname}
+        delete from 账户 where 账户名 = #{targetAname}
     </delete>
 
 </mapper>

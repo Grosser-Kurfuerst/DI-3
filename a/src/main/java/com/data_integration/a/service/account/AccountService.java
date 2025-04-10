@@ -1,9 +1,11 @@
 package com.data_integration.a.service.account;
 
 import com.data_integration.a.PO.Account;
+import com.data_integration.a.PO.Student;
 import com.data_integration.a.VO.AccountLoginVO;
 import com.data_integration.a.VO.AccountVO;
 import com.data_integration.a.mapper.account.AccountMapper;
+import com.data_integration.a.mapper.student.StudentMapper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,9 +17,13 @@ import java.util.stream.Collectors;
 public class AccountService {
     @Autowired
     private AccountMapper accountMapper;
+    @Autowired
+    StudentMapper studentMapper;
 
     public Account accountLogin(AccountLoginVO accountLoginVO){
-        Account account = accountMapper.getAccountByAcc(accountLoginVO.account);
+        Student student = studentMapper.getStudentBySno(accountLoginVO.account);
+        String acc = student == null ? accountLoginVO.account : student.getAccount();
+        Account account = accountMapper.getAccountByAcc(acc);
         if(account==null || !account.password.equals(accountLoginVO.password))
             return null;
 
@@ -30,7 +36,7 @@ public class AccountService {
     }
 
     public boolean deleteAccount(String source,String acc){
-        if(accountMapper.getAccountByAcc(source).permission<2)
+        if(accountMapper.getAccountByAcc(source).permission.equals("user"))
             return false;
         try {
             accountMapper.deleteAccount(acc);
@@ -41,7 +47,7 @@ public class AccountService {
     }
 
     public boolean addAccount(String source,Account account){
-        if(accountMapper.getAccountByAcc(source).permission<2)
+        if(accountMapper.getAccountByAcc(source).permission.equals("user"))
             return false;
         try {
             accountMapper.addAccount(account);

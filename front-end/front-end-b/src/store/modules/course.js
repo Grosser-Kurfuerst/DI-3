@@ -53,7 +53,7 @@ const course = {
                         point: x.score,
                         teacher: x.teacherName,
                         place: x.teachingPlace,
-                        share: Number(x.shareFlag) === 1 ? '是':'否',
+                        share: x.shareFlag === 'N' ? '否':'是',
                         permission: x.powerGrade,
                     }
                 })

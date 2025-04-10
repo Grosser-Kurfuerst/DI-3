@@ -26,12 +26,13 @@ public class SharedCoursesGetter {
     public String getASharedCourses() throws Exception{
         // 获得共享课程
         // TODO 这里是a服务器url
-        String res = restTemplate.getForObject("http://localhost:8086/a/course/getSharedCoursesXml",String.class);
+        String res = restTemplate.getForObject(Utils.serverA + "/a/course/getSharedCoursesXml",String.class);
         System.out.println(res);
 
         // 验证
-        URL schemaUrl = getClass().getResource("/schema/a/classA.xsd");
-        File schemaFile = new File(URLDecoder.decode(schemaUrl.getFile(),"UTF-8"));
+//        URL schemaUrl = getClass().getResource("/schema/a/classA.xsd");
+//        File schemaFile = new File(URLDecoder.decode(schemaUrl.getFile(),"UTF-8"));
+        File schemaFile = Utils.resource2File("/schema/a/classA.xsd");
         Utils.validateSchema(schemaFile,res);
 
         // 转换为统一格式
@@ -41,26 +42,28 @@ public class SharedCoursesGetter {
 
     public String getBSharedCourses() throws Exception {
         // TODO 这里是b的url
-        String res = restTemplate.getForObject("http://localhost:8888/b/course/getSharedCoursesXml",String.class);
+        String res = restTemplate.getForObject(Utils.serverB + "/b/course/getSharedCoursesXml", String.class);
         System.out.println(res);
         // 验证
-        URL schemaUrl = getClass().getResource("/schema/b/classB.xsd");
-        File schemaFile = new File(URLDecoder.decode(schemaUrl.getFile(),"UTF-8"));
-        Utils.validateSchema(schemaFile,res);
+//        URL schemaUrl = getClass().getResource("/schema/b/classB.xsd");
+//        File schemaFile = new File(URLDecoder.decode(schemaUrl.getFile(),"UTF-8"));
+        File schemaFile = Utils.resource2File("/schema/b/classB.xsd");
+        Utils.validateSchema(schemaFile, res);
         // 转换为统一格式
         URL xslUrl = getClass().getResource("/xsl/format/formatClass.xsl");
-        return Utils.transform(URLDecoder.decode(xslUrl.getFile(),"UTF-8"),res);
+        return Utils.transform(URLDecoder.decode(xslUrl.getFile(),"UTF-8"), res);
     }
 
     public String getCSharedCourses() throws Exception {
         // 获得共享课程
         // TODO 这里是c服务器url
-        String res = restTemplate.getForObject("http://localhost:8085/c/course/getSharedCoursesXml",String.class);
+        String res = restTemplate.getForObject(Utils.serverC + "/c/course/getSharedCoursesXml",String.class);
         System.out.println(res);
 
         // 验证
-        URL schemaUrl = getClass().getResource("/schema/c/classC.xsd");
-        File schemaFile = new File(URLDecoder.decode(schemaUrl.getFile(),"UTF-8"));
+//        URL schemaUrl = getClass().getResource("/schema/c/classC.xsd");
+//        File schemaFile = new File(URLDecoder.decode(schemaUrl.getFile(),"UTF-8"));
+        File schemaFile = Utils.resource2File("/schema/c/classC.xsd");
         Utils.validateSchema(schemaFile,res);
 
         // 转换为统一格式

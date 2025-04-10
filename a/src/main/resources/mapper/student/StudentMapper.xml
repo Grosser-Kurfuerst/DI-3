@@ -2,14 +2,23 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.data_integration.a.mapper.student.StudentMapper">
     <select id="getStudentBySno" resultMap="Student">
-        select * from student where stunum=#{stunum}
+        select * from 学生 where 学号=#{stunum}
+    </select>
+    <select id="getStudentByAcc" resultMap="Student">
+        select * from 学生 where 关联账户=#{acc}
     </select>
     <select id="getAllStudents" resultMap="Student">
-        select * from student
+        select * from 学生
     </select>
     <update id="updateStudentInfo">
-        update student set stuname=#{stuname}, sex=#{sex}, department=#{department}, pwd=#{pwd}, permission=#{permission},account=#{account} where stunum=#{stunum}
+        update 学生 set 姓名=#{stuname}, 性别=#{sex}, 院系=#{department}, 关联账户=#{account} where 学号=#{stunum}
     </update>
 
-    <resultMap id="Student" type="com.data_integration.a.PO.Student"></resultMap>
+    <resultMap id="Student" type="com.data_integration.a.PO.Student">
+        <id column="学号" property="stunum"></id>
+        <result column="姓名" property="stuname"></result>
+        <result column="性别" property="sex"></result>
+        <result column="院系" property="department"></result>
+        <result column="关联账户" property="account"></result>
+    </resultMap>
 </mapper>

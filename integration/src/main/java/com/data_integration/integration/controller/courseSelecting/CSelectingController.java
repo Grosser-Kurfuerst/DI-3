@@ -21,4 +21,10 @@ public class CSelectingController {
         String choiceXml = content.substring(splitIndex);
         return selectingService.addCourseSelecting(studentXml,choiceXml);
     }
+
+    @PostMapping("/deleteCourseSelecting")
+    public String deleteCourseSelecting(@RequestBody String content) throws Exception {
+        // String choiceXml = content.substring(splitIndex);
+        return selectingService.deleteCourseSelecting(content);
+    }
 }

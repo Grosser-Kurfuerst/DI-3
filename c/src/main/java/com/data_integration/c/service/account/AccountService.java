@@ -28,8 +28,8 @@ public class AccountService {
     }
 
     public boolean deleteAccount(String source,String acc){
-        if(accountMapper.getAccountByAcc(source).permission<2)
-            return false;
+//        if(accountMapper.getAccountByAcc(source).permission<2)
+//            return false;
         try {
             accountMapper.deleteAccount(acc);
         }catch (Exception e){
@@ -39,8 +39,8 @@ public class AccountService {
     }
 
     public boolean addAccount(String source,Account account){
-        if(accountMapper.getAccountByAcc(source).permission<2)
-            return false;
+//        if(accountMapper.getAccountByAcc(source).permission<2)
+//            return false;
         try {
             accountMapper.addAccount(account);
         }catch (Exception e){

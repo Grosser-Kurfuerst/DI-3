@@ -33,21 +33,21 @@ public class Student {
         this.department = department;
     }
 
-    public String getPwd() {
-        return pwd;
-    }
-
-    public void setPwd(String pwd) {
-        this.pwd = pwd;
-    }
-
-    public Integer getPermission() {
-        return permission;
-    }
-
-    public void setPermission(Integer permission) {
-        this.permission = permission;
-    }
+//    public String getPwd() {
+//        return pwd;
+//    }
+//
+//    public void setPwd(String pwd) {
+//        this.pwd = pwd;
+//    }
+//
+//    public Integer getPermission() {
+//        return permission;
+//    }
+//
+//    public void setPermission(Integer permission) {
+//        this.permission = permission;
+//    }
 
     public String getAccount() {
         return account;
@@ -61,8 +61,8 @@ public class Student {
     public String stuname;
     public String sex;
     public String department;
-    public String pwd;
-    public Integer permission;
+//    public String pwd;
+//    public Integer permission;
     public String account;
 
 }

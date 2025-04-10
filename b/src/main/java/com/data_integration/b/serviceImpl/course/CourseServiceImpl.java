@@ -62,7 +62,9 @@ public class CourseServiceImpl implements CourseService {
     /**获取其它院系的共享课程*/
     @Override
     public List<Course> getOtherDepartmentCourses() throws Exception {
-        String content = restTemplate.getForObject("http://localhost:9000/b/course/getOtherDepartmentCourses",String.class);
+        // TODO:继承服务器
+        String content = restTemplate.getForObject(Utils.serverIntegrator + "/b/course/getOtherDepartmentCourses",String.class);
         return Utils.xmlToCourses(content);
+//        return null;
     }
 }

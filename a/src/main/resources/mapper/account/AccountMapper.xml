@@ -2,24 +2,24 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.data_integration.a.mapper.account.AccountMapper">
     <select id="getAccountByAcc" resultMap="Account">
-        select * from account where account=#{account}
+        select * from 账户 where 账户名=#{account}
     </select>
     <select id="getAllAccounts" resultMap="Account">
-        select * from account
+        select * from 账户
     </select>
     <insert id="addAccount">
-        insert into account(account,password,permission) values(#{account},#{password},#{permission})
+        insert into 账户(账户名,密码,权限) values(#{account},#{password},#{permission})
     </insert>
     <delete id="deleteAccount">
-        delete from account where account=#{account}
+        delete from 账户 where 账户名=#{account}
     </delete>
     <update id="updateAccount">
-        update account set password=#{password}, permission=#{permission} where account=#{account}
+        update 账户 set 密码=#{password}, 权限=#{permission} where 账户名=#{account}
     </update>
 
     <resultMap id="Account" type="com.data_integration.a.PO.Account">
-        <id column="account" property="account"></id>
-        <result column="password" property="password"></result>
-        <result column="permission" property="permission"></result>
+        <id column="账户名" property="account"></id>
+        <result column="密码" property="password"></result>
+        <result column="权限" property="permission"></result>
     </resultMap>
 </mapper>

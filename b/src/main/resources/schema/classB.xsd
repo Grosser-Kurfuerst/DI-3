@@ -47,6 +47,17 @@
     </simpleType>
 
     <!--    单个课程类型-->
+<!--    <complexType name="单个课程类型">-->
+<!--        <all>-->
+<!--            <element name="编号" type="b:课程编号类型"/>-->
+<!--            <element name="名称" type="b:课程名称类型"/>-->
+<!--            <element name="课时" type="b:课时类型"/>-->
+<!--            <element name="学分" type="b:学分类型"/>-->
+<!--            <element name="老师" type="b:授课教师类型"/>-->
+<!--            <element name="地点" type="b:授课地点类型"/>-->
+<!--&lt;!&ndash;            <element name="共享" type="b:共享类型"/>&ndash;&gt;-->
+<!--        </all>-->
+<!--    </complexType>-->
     <complexType name="单个课程类型">
         <all>
             <element name="编号" type="b:课程编号类型"/>
@@ -55,7 +66,7 @@
             <element name="学分" type="b:学分类型"/>
             <element name="老师" type="b:授课教师类型"/>
             <element name="地点" type="b:授课地点类型"/>
-<!--            <element name="共享" type="b:共享类型"/>-->
+            <!--            <element name="共享" type="b:共享类型"/>-->
         </all>
     </complexType>
 

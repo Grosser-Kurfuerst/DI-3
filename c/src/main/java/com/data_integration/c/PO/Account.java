@@ -6,15 +6,15 @@ public class Account {
     public String acc;
     public String passwd;
     public Timestamp createDate;
-    public Integer permission;
+//    public Integer permission;
 
-    public Integer getPermission() {
-        return permission;
-    }
-
-    public void setPermission(Integer permission) {
-        this.permission = permission;
-    }
+//    public Integer getPermission() {
+//        return permission;
+//    }
+//
+//    public void setPermission(Integer permission) {
+//        this.permission = permission;
+//    }
 
     public String getAcc() {
         return acc;

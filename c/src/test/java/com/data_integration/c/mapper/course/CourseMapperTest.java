@@ -22,23 +22,22 @@ public class CourseMapperTest {
     public void testGetAllCourses() throws Exception{
         List<Course> courseList = courseMapper.getAllCourses();
         for(Course course:courseList)
-            System.out.println(course.cno+course.cnm);
+            System.out.println(course.cno +course.cnm);
     }
 
     @Test
     public void testUpdateCourseInfo() throws Exception{
         Course course = new Course();
-        course.cno="1233";
-        course.cnm="Calc";
-        course.ctm=4;
-        course.cpt=4;
-        course.tec="zyq";
-        course.pla="404";
-        course.share="Y";
-        course.permission=2;
+        course.cno ="1233";
+        course.cnm ="Calc";
+        course.ctm =4;
+        course.cpt =4;
+        course.tec ="zyq";
+        course.pla ="404";
+        course.share ="Y";
         courseMapper.updateCourseInfo(course);
         course = courseMapper.getCourseByCno("1233");
-        Assert.assertEquals("1233Calc44zyq404Y2", course.cno+course.cnm+course.ctm+course.cpt+course.tec+course.pla+course.share+course.permission);
+        Assert.assertEquals("1233Calc44zyq404Y2", course.cno +course.cnm +course.ctm +course.cpt +course.tec +course.pla +course.share);
     }
 
     @Test

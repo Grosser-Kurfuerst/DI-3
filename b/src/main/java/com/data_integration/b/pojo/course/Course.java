@@ -25,7 +25,7 @@ public class Course {
     private String shareFlag;
 
     /**权限*/
-    private int powerGrade;
+    // private int powerGrade;
 
     public Course() {
     }
@@ -38,16 +38,16 @@ public class Course {
         this.courseName = courseName;
         this.teachingPlace = teachingPlace;
         this.shareFlag = shareFlag;
-        this.powerGrade = powerGrade;
+        // this.powerGrade = powerGrade;
     }
 
-    public int getPowerGrade() {
-        return powerGrade;
-    }
-
-    public void setPowerGrade(int powerGrade) {
-        this.powerGrade = powerGrade;
-    }
+//    public int getPowerGrade() {
+//        return powerGrade;
+//    }
+//
+//    public void setPowerGrade(int powerGrade) {
+//        this.powerGrade = powerGrade;
+//    }
 
     public String getCourseId() {
         return courseId;

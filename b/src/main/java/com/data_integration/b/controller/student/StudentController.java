@@ -24,6 +24,12 @@ public class StudentController {
     public Student login(@RequestBody Account account) {
         // 获取匹配的账户
         Account matchedAccount = studentService.getAccountByNameAndPassword(account.getAname(), account.getPassword());
+        if (matchedAccount == null) {
+            Account temp = studentService.getAccountByGuestId(account.getAname());
+            if (account.getPassword() != null && account.getPassword().equals(temp.getPassword())) {
+                matchedAccount = temp;
+            }
+        }
         //判断账户是否为null
         if (matchedAccount == null) return null;
         return getStudentInfoBySid(matchedAccount.getGuest_id());

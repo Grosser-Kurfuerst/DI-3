@@ -22,7 +22,14 @@ public class AdminController {
      */
     @PostMapping("/login")
     public Account login(@RequestBody Account account) {
-        return adminService.getAccountByNameAndPwd(account.getAname(), account.getPassword());
+        Account matchedAccount = adminService.getAccountByNameAndPwd(account.getAname(), account.getPassword());
+        if (matchedAccount == null) {
+            Account temp = adminService.getAccountBySid(account.getAname());
+            if (temp != null && account.getPassword() != null && account.getPassword().equals(temp.getPassword())) {
+                matchedAccount = temp;
+            }
+        }
+        return matchedAccount;
     }
 
 

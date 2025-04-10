@@ -28,10 +28,10 @@ public class Student {
      */
     private String password;
 
-    /**
-     * 学生权限
-     */
-    private int permission;
+//    /**
+//     * 学生权限
+//     */
+//    private int permission;
 
     public Student() {
     }
@@ -84,14 +84,14 @@ public class Student {
     public void setPassword(String password) {
         this.password = password;
     }
-
-    public int getPermission() {
-        return permission;
-    }
-
-    public void setPermission(int permission) {
-        this.permission = permission;
-    }
+//
+//    public int getPermission() {
+//        return permission;
+//    }
+//
+//    public void setPermission(int permission) {
+//        this.permission = permission;
+//    }
 }
 
 

@@ -42,11 +42,9 @@ public class AccountMapperTest {
     public void testAddAccount() throws Exception{
         accountMapper.addAccount(new Account(){{this.acc="zzzzzzzzzzzz";
             this.passwd="000";
-            this.permission=2;
         }});
         Account account = accountMapper.getAccountByAcc("zzzzzzzzzzzz");
         Assert.assertEquals("000",account.passwd);
-        Assert.assertEquals(Integer.valueOf(2),account.permission);
     }
 
     @Test
@@ -54,10 +52,8 @@ public class AccountMapperTest {
         Account account = new Account();
         account.acc="b";
         account.passwd="123";
-        account.permission=3;
         accountMapper.updateAccount(account);
         account = accountMapper.getAccountByAcc("b");
         Assert.assertEquals("123",account.passwd);
-        Assert.assertEquals(Integer.valueOf(3),account.permission);
     }
 }

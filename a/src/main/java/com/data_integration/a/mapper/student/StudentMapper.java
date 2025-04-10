@@ -10,6 +10,7 @@ import java.util.List;
 @Repository
 public interface StudentMapper {
     Student getStudentBySno(String stunum);
+    Student getStudentByAcc(String acc);
     List<Student> getAllStudents();
     void updateStudentInfo(Student student);
 }

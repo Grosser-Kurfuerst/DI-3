@@ -6,15 +6,15 @@ public class Student {
     public String sex;
     public String sde;
     public String pwd;
-    public Integer permission;
+//    public Integer permission;
 
-    public Integer getPermission() {
-        return permission;
-    }
-
-    public void setPermission(Integer permission) {
-        this.permission = permission;
-    }
+//    public Integer getPermission() {
+//        return permission;
+//    }
+//
+//    public void setPermission(Integer permission) {
+//        this.permission = permission;
+//    }
 
     public String getSno() {
         return sno;

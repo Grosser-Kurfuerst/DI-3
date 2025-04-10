@@ -1,5 +1,6 @@
 package com.data_integration.integration.service.courseSelecting;
 
+import com.data_integration.integration.service.course.SharedCoursesGetter;
 import com.data_integration.integration.utils.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
@@ -16,18 +17,22 @@ import java.net.URLDecoder;
 public class CSelectingService {
     @Autowired
     RestTemplate restTemplate;
+    @Autowired
+    private SharedCoursesGetter sharedCoursesGetter;
 
     /**
      * 将学生和选课转换为课程所在院系的格式，拼接后发送给课程所在院系的服务器
      */
     public String addCourseSelecting(String studentXml, String choiceXml) throws Exception {
         // 验证集成服务器的studentXML
-        URL schemaUrl = getClass().getResource("/schema/format/formatStudent.xsd");
-        File schemaFile = new File(URLDecoder.decode(schemaUrl.getFile(), "UTF-8"));
+//        URL schemaUrl = getClass().getResource("/schema/format/formatStudent.xsd");
+//        File schemaFile = new File(URLDecoder.decode(schemaUrl.getFile(), "UTF-8"));
+        File schemaFile = Utils.resource2File("/schema/format/formatStudent.xsd");
         Utils.validateSchema(schemaFile, studentXml);
         // 验证集成服务器的choiceXML
-        schemaUrl = getClass().getResource("/schema/format/formatClassChoice.xsd");
-        schemaFile = new File(URLDecoder.decode(schemaUrl.getFile(), "UTF-8"));
+//        schemaUrl = getClass().getResource("/schema/format/formatClassChoice.xsd");
+//        schemaFile = new File(URLDecoder.decode(schemaUrl.getFile(), "UTF-8"));
+        schemaFile = Utils.resource2File("/schema/format/formatClassChoice.xsd");
         Utils.validateSchema(schemaFile, choiceXml);
 
         // 验证没问题后转换为c的xml
@@ -37,11 +42,13 @@ public class CSelectingService {
         choiceXml = Utils.transform(URLDecoder.decode(xslUrl.getFile(), "UTF-8"), choiceXml);
 
         // 验证所转换出来的C的xml
-        schemaUrl = getClass().getResource("/schema/c/studentC.xsd");
-        schemaFile = new File(URLDecoder.decode(schemaUrl.getFile(), "UTF-8"));
+//        schemaUrl = getClass().getResource("/schema/c/studentC.xsd");
+//        schemaFile = new File(URLDecoder.decode(schemaUrl.getFile(), "UTF-8"));
+        schemaFile = Utils.resource2File("/schema/c/studentC.xsd");
         Utils.validateSchema(schemaFile, studentXml);
-        schemaUrl = getClass().getResource("/schema/c/choiceC.xsd");
-        schemaFile = new File(URLDecoder.decode(schemaUrl.getFile(), "UTF-8"));
+//        schemaUrl = getClass().getResource("/schema/c/choiceC.xsd");
+//        schemaFile = new File(URLDecoder.decode(schemaUrl.getFile(), "UTF-8"));
+        schemaFile = Utils.resource2File("/schema/c/choiceC.xsd");
         Utils.validateSchema(schemaFile, choiceXml);
 
         // 将C的student格式和choice格式的发送给C服务器
@@ -50,7 +57,46 @@ public class CSelectingService {
         headers.setContentType(type);
         HttpEntity<String> httpEntity = new HttpEntity<>(studentXml + choiceXml, headers);
         // TODO 这里是C的url
-        String res = restTemplate.postForObject("http://localhost:8085/c/courseSelecting/addCourseSelectingXml", httpEntity, String.class);
+        String res = restTemplate.postForObject(Utils.serverC + "/c/courseSelecting/addCourseSelectingXml", httpEntity, String.class);
+        System.out.println(res);
+        return res;
+    }
+
+    public String deleteCourseSelecting(String choiceXml) throws Exception {
+        // 验证集成服务器的studentXML
+//        URL schemaUrl = getClass().getResource("/schema/format/formatStudent.xsd");
+//        File schemaFile = new File(URLDecoder.decode(schemaUrl.getFile(), "UTF-8"));
+//        Utils.validateSchema(schemaFile, studentXml);
+        // 验证集成服务器的choiceXML
+//        URL schemaUrl = getClass().getResource("/schema/format/formatClassChoice.xsd");
+//        File schemaFile = new File(URLDecoder.decode(schemaUrl.getFile(), "UTF-8"));
+        File schemaFile = Utils.resource2File("/schema/format/formatClassChoice.xsd");
+        Utils.validateSchema(schemaFile, choiceXml);
+
+        // 验证没问题后转换为c的xml
+//        URL xslUrl = getClass().getResource("/xsl/c/studentToC.xsl");
+//        studentXml = Utils.transform(URLDecoder.decode(xslUrl.getFile(), "UTF-8"), studentXml);
+        URL xslUrl = getClass().getResource("/xsl/c/choiceToC.xsl");
+        choiceXml = Utils.transform(URLDecoder.decode(xslUrl.getFile(), "UTF-8"), choiceXml);
+
+//        // 验证所转换出来的C的xml
+//        schemaUrl = getClass().getResource("/schema/c/studentC.xsd");
+//        schemaFile = new File(URLDecoder.decode(schemaUrl.getFile(), "UTF-8"));
+//        Utils.validateSchema(schemaFile, studentXml);
+//        schemaUrl = getClass().getResource("/schema/c/choiceC.xsd");
+//        schemaFile = new File(URLDecoder.decode(schemaUrl.getFile(), "UTF-8"));
+        schemaFile = Utils.resource2File("/schema/c/choiceC.xsd");
+        Utils.validateSchema(schemaFile, choiceXml);
+
+
+        // 将C的student格式和choice格式的发送给C服务器
+        HttpHeaders headers = new HttpHeaders();
+        MediaType type = MediaType.parseMediaType("application/xml;charset=UTF-8");
+        headers.setContentType(type);
+//        HttpEntity<String> httpEntity = new HttpEntity<>(studentXml + choiceXml, headers);
+        HttpEntity<String> httpEntity = new HttpEntity<>(choiceXml, headers);
+        // TODO 这里是C的url
+        String res = restTemplate.postForObject(Utils.serverC + "/c/courseSelecting/deleteCourseSelectingXml", httpEntity, String.class);
         System.out.println(res);
         return res;
     }

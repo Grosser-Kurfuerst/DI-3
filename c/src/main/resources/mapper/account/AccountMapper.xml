@@ -2,25 +2,24 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.data_integration.c.mapper.account.AccountMapper">
     <select id="getAccountByAcc" resultMap="Account">
-        select * from account where acc=#{acc}
+        select * from Account where acc=#{acc}
     </select>
     <select id="getAllAccounts" resultMap="Account">
-        select * from account
+        select * from Account
     </select>
     <insert id="addAccount">
-        insert into account(acc,passwd,permission) values(#{acc},#{passwd},#{permission})
+        insert into Account(acc,passwd) values(#{acc},#{passwd})
     </insert>
     <delete id="deleteAccount">
-        delete from account where acc=#{acc}
+        delete from Account where acc=#{acc}
     </delete>
     <update id="updateAccount">
-        update account set passwd=#{passwd}, permission=#{permission} where acc=#{acc}
+        update Account set passwd=#{passwd} where acc=#{acc}
     </update>
 
     <resultMap id="Account" type="com.data_integration.c.PO.Account">
         <id column="acc" property="acc"></id>
         <result column="passwd" property="passwd"></result>
-        <result column="create_date" property="createDate"></result>
-        <result column="permission" property="permission"></result>
+        <result column="CreateDate" property="createDate"></result>
     </resultMap>
 </mapper>

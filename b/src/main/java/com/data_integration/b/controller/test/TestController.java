@@ -1,6 +1,7 @@
 package com.data_integration.b.controller.test;
 
 import com.data_integration.b.pojo.election.Election;
+import com.data_integration.b.utils.Utils;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -76,7 +77,7 @@ public class TestController {
         HttpEntity<String> httpEntity = new HttpEntity<>(content,headers);
         // TODO 这里是集成服务器url
         // res是集成服务器的ResponseBody，是xml字符串
-        String res = restTemplate.postForObject("http://localhost:9000/test/test",httpEntity,String.class);
+        String res = restTemplate.postForObject(Utils.serverIntegrator + "/test/test",httpEntity,String.class);
         System.out.println(res);
         return res;
     }
